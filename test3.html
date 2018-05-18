@@ -12,6 +12,8 @@
       var digitalData = {"page":{"category":{"pageType":"content","subCategory1":"reference-drug-search-for-cada","primaryCategory":"common","siteName":"gwl","pageLanguage":"en_ca"},"pageInfo":{"pageName":"en_ca:gwl:common:reference-drug-search-for-cada"}}}
     </script>
 
+	
+	<a class="button js-modal-open modal-link modal-state-hidden" href="javascript:void(0)" data-modal-type="video" data-modal-media-url="https://youtu.be/QKl_cosp1BM?enablejsapi=1&amp;rel=0&amp;modestbranding=1&amp;controls=2&amp;cc_load_policy=1" data-modal-controls="modal-8328a6126620679" data-modal-video-origin="youtube">
 	<script src="https://www.youtube.com/iframe_api"></script>
 <TITLE>GA and Adobe Playbook</TITLE>
 
@@ -34,43 +36,7 @@ is a link to another nifty site
 
 <H2>This is a Medium Header</H2>
   
-	Plug-in Code
-Here is the snippet of code that you should drop into the plug-ins section of s_code.js or AppMeasurement.js. It should also work with any TMS that supports plug-in usage.
-
-/*
- * Copyright 2011-2013 Adobe Systems, Inc.
- * s_getLoadTime v1.36 - Get page load time in units of 1/10 seconds
- */
-function s_getLoadTime(){if(!window.s_loadT){var b=new Date().getTime(),o=window.performance?performance.timing:0,a=o?o.requestStart:window.inHeadTS||0;s_loadT=a?Math.round((b-a)/100):''}return s_loadT}
-Now, it’s worth noting that this plug-in takes advantage of the window.performance.timing object, which is supported by current versions of all major browsers. In many cases, not supporting older browsers is probably okay; odds are you don’t have a large percentage of users on older browsers. Further, the aspect of page load time that you can control isn’t dependent on browser choice, so the business requirement of understanding site speed impact on conversion can still be met. That said, if you want to make sure to capture site speed data from users of older browsers, you can install this code snippet in the <head></head> section of your pages, near the beginning of that section and prior to calling any JavaScript, CSS, etc.
-<script type="text/javascript">var inHeadTS=(new Date()).getTime();</script>
-This will ensure that you’re covered for all major browsers including older ones.
-Plug-in Call and Assignment to Variables
-The next step is to pick a custom variable (or two) where you want to store load times. (In this example, I’ll use prop1. This could be any prop or eVar variable, or both. I’ll cover variable setup in the Admin Console below. Here is how you call the plug-in within the s_doPlugins() function in the JavaScript code. (For more information on s_doPlugins(), see our product documentation.)
-
-s.prop1=s_getLoadTime();
-
-This will assign the page load time, in tenths of a second, to prop1. For example, if my page took 3.75 seconds to load, I would get a raw value of 38 in the Page Load Time (prop1) report. The report will look something like this, initially:
-
-(Hopefully your values will be much lower; I performed my tests while using airport WiFi. Not quite as slow as my dial-up connection from 1995, but close!)
-
-Classifying Page Load Times
-You probably won’t want detail down to tenths of a second for your reporting; in most cases, that’s too granular to be actionable in terms of working with your internal stakeholders to understand how to improve usability. Fortunately, classifying these values is really easy, and only needs to be done once. Let’s say you want to group page load time by seconds, and also by broader groups, such as “5-10 seconds.” This is as simple as setting up two new classifications based on the variable I am using for page load time, then building a very simple Excel file out of your classification template. The key column should be millisecond values from 1 through, say, 600 (which is 60 seconds, a VERY long page load time!). Do not use commas or periods in this key column. In the other columns, you will group these raw values by seconds or other groupings based on the level of granularity you want in your reporting. Upload via your web browser and within a few minutes or hours, you should be all set. You should get reports that look like this, with values that are available for segmentation and are easily understandable by stakeholders around you:
-
-As a bonus, you could also use the new Classification Rule Builder with regular expressions to even-more-quickly, even-more-easily build the classifications that you will need in order to report on page load times.
-
-Where Should I Start with Page Load Analysis?
-One of the great things about using classifications to great groupings based on page load time is that you can segment your visits and visitors based on these custom groupings to analyze how behavior differs based on this aspect of user experience. For example, you can create a segment for visits where the landing page loaded in less than three seconds, and compare that against visits where the landing page loaded in 5-10 seconds. How did conversion rate differ? It was lower for the group that had a slower experience early in their visit? Not shocking, but impactful when presented to people designing heavy landing pages.
-
-You can also easily isolate specific pages that are loading slowly. Run one of your new classification reports based on page load time. See the group that represents “Longer than 5 seconds?” or similar? Break that down by page to see which pages most frequently fall into that bucket. If a page you own is at that top of that list, it might be time to review the contents of that page and see if you can tighten it up a little bit. To enhance this jumping off point for analysis a little further, use the ad hoc analysis tool (f.k.a. Discover) and perform this breakdown using “Exit Rate” (Exits/Page Views) as your metric. Now you can see which pages from the “very slow load time” bucket produced the most exits when load time for that page was slow. You can then compare that with faster load times to see just how significant page load time is in driving away prospects and customers.
-
-Another fun use for page load data might be to write a little bit of code on top of our Real-Time API to pull these values as they stream in to your report suite, and then report them out on a live dashboard in your IT department or elsewhere. You can even have it send you a note when load time spikes for a “slow page load” group of values, along with the guilty page names. It’s a great way to know immediately if something might be wrong.
-
-There are dozens of other places where I might start to use page load time data to inform and enhance my user experience, but hopefully these few will get you started. If you have others that you have found successful, or that you want to try, please leave a comment!
-
-Send me mail at <a href="mailto:support@yourcompany.com">
-
-support@yourcompany.com</a>.
+	
 
 <P> This is a new paragraph!
 

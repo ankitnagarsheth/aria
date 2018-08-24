@@ -1317,15 +1317,26 @@
 
 </div>
 
-        <h2>Examples</h2>
+        <h2>Analytics</h2>
         <div>
 
   
   
 
+  Social Share component Example
+
   
-  
-  
+ Set an event when a user initiates a share on social platform by clicking on social share button, followed by a Direct Call Rule trigger, such as _satellite.track("socialShare"):
+digitalData = {
+                	page : {
+                       social : {
+                             			socialFollowPlatform : evt.data.service
+                            	 		socialFollowPage : s.pageName
+                       	        	}
+                		}
+         	}
+_satellite.track('socialShare');
+
 
   
   

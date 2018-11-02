@@ -342,6 +342,29 @@ $('#sharing-description .container').removeClass('container');
       (d.head || d.body).appendChild(s);
     })();
 </script>
+		
+		
+		<script type="text/javascript">
+    const trackingServer = 'greatwestlife.sc.omtrdc.net';
+    const heartbeatTrackingServer = 'greatwestlife.hb.omtrdc.net';
+    const mcorgId = '4B5D9DBF584AC15B0A495D2E@AdobeOrg';
+    const namespace = 'greatwestlife';
+    const channel = '';
+    const rsId = 'greatwestlifefreedom55financialstage';
+
+    function populateConfig(trackingServer, heartbeatTrackingServer, mcorgId, namespace, channel, rsId) {
+      window.Configuration = {
+        TRACKING_SERVER: trackingServer,
+        HEARTBEAT_TRACKING_SERVER: heartbeatTrackingServer,
+        MCID: mcorgId,
+        NAMESPACE: namespace,
+        CHANNEL: channel,
+        RSID: rsId
+      };
+    }
+
+    populateConfig(trackingServer, heartbeatTrackingServer, mcorgId, namespace, channel, rsId);
+  </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
 
         </div>

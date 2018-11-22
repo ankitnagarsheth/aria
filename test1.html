@@ -333,28 +333,17 @@ $('#sharing-description .container').removeClass('container');
     
     
   <script type="text/javascript">
-    const trackingServer = 'greatwestlife.sc.omtrdc.net';
-    const heartbeatTrackingServer = 'greatwestlife.hb.omtrdc.net';
-    const mcorgId = '4B5D9DBF584AC15B0A495D2E@AdobeOrg';
-    const namespace = 'greatwestlife';
-    const channel = '';
-    const rsId = 'greatwestlifefreedom55financialstage';
-
-    function populateConfig(trackingServer, heartbeatTrackingServer, mcorgId, namespace, channel, rsId) {
-      window.Configuration = {
-        TRACKING_SERVER: trackingServer,
-        HEARTBEAT_TRACKING_SERVER: heartbeatTrackingServer,
-        MCID: mcorgId,
-        NAMESPACE: namespace,
-        CHANNEL: channel,
-        RSID: rsId
-      };
-    }
-
-    populateConfig(trackingServer, heartbeatTrackingServer, mcorgId, namespace, channel, rsId);
+    window.Configuration = {
+      TRACKING_SERVER: 'greatwestlife.sc.omtrdc.net',
+      HEARTBEAT_TRACKING_SERVER: 'greatwestlife.hb.omtrdc.net',
+      MCID: '4B5D9DBF584AC15B0A495D2E@AdobeOrg',
+      NAMESPACE: 'greatwestlife',
+      CHANNEL: 'vidyard',
+      RSID: 'greatwestlifefreedom55financialstage'
+    };
   </script>
-  <script type="text/javascript" src = "//play.vidyard.com/v0/api.js"></script>
-  <script type="text/javascript" src = "//play.vidyard.com/v0/omniture.js"></script>
+  <script type="text/javascript" src="//play.vidyard.com/v0/api.js"></script>
+  <script type="text/javascript" src="//play.vidyard.com/v0/omniture.js"></script>
 
 
 

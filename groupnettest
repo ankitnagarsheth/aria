@@ -1,0 +1,540 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>EPMR (Extended Plan Members Relations)</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600" rel="stylesheet">
+    <link rel="stylesheet" href="/Content/Modal.css" />
+    <link rel="stylesheet" href="/Content/styles.min.css" />
+    <!--Scripts and Library-->
+    <script src="https://kit.fontawesome.com/844072acf4.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
+    <script src="https://assets.adobedtm.com/f996df4eaa06b0ee0cfdf15f32a9f8e1260bacd1/satelliteLib-dbdf25a867f5ac5fa73c446934e7afd03f86d335-staging.js"></script>
+    <script src="/Scripts/acc.analytics.js"></script>   
+   
+    <script type="text/javascript">
+
+        var digitalData = {
+            "page": {
+                "category": {
+                    "pageType": "quoterapp",
+                    "subCategory1": "quoterapp:apply",
+                    "primaryCategory": "quoterapp",
+                    "siteName": "groupnet",
+                    "pageLanguage": "en_ca"    //fr_ca or en_ca
+                }, "pageInfo": {
+                    "pageName": "en_ca:groupnet:quoterapp:apply:revieweligibility"
+                }
+            }
+        }
+        digitalData.user = {
+            profile: {
+                profileInfo: {
+                    profileID: "",//"cusENC_RklULVBSSS0yMDEzLjEwLjA5LjEwLjU3LjA0LjIwMjp4SFFWaEJvUCsrQWxKcGM0cDBGVmp3PT0",
+                    signIn: "SSO",
+                    planID: "168380",//"189505",
+                    userTest: "Walker A Snmmmmtestcasewa",//"Ashish",
+                    userRole: "member",//"member",
+                    profileLob: "",//"group",
+                    divisionNumber: "100",//"1",
+                    benefitClass: "1"//"1"
+                }
+            }
+        };
+        function trackNavigation(linkName, linkPosition) {
+            var digitalData = digitalData || window.digitalData;
+            digitalData.navInfo = null;
+
+            if (digitalData) {
+                var pageName = digitalData.page.pageInfo.pageName;
+                digitalData.navInfo = {
+                    linkPage: pageName,
+                    linkName: linkName,
+                    linkPosition: linkPosition
+                };
+                track('navClick');
+            }
+        };
+        function track(key) {
+            if (window._satellite) {
+                window._satellite.track(key);
+            }
+        };
+        _satellite.track("page");                
+        </script>
+
+</head>
+<body>
+    <div class="body-wrapper">
+        <header>
+            <div class="header-wrapper">
+                <div class="top-content">
+
+                    <div class="top-logo">
+                        <a href="">
+                            <img class="nav-logo-img brand-logo" src="/img/logo_rgb_en.svg" alt="Home - Great-West Life logo" aria-hidden="false" height="36" width="178">
+                        </a>
+                    </div>
+
+                            <div class="right-nav">
+                                <a href="">Help</a>
+                                <a href="/fr">FR</a>
+                            </div>
+                            <script>
+                                var lang = "en";
+                                var indexpage = "/EPMR/ReviewEligibility";  //Default Page when Session is Not Set
+                            </script>
+
+
+                </div>
+            </div>
+            <div class="link-wrapper">
+                <a href=""><span>‹</span> Back to GroupNet</a>
+            </div>
+        </header>
+
+        <div class="main-wrapper" role="main">
+
+            
+
+<!-- Header 1 Component BEGIN -->
+<h1>Additional insurance protection for you and those you love.</h1>
+<!-- Header 1 Component END -->
+<!-- Progress Bar BEGIN -->
+<div class="container-box progressbar">
+    <h2 class="h3">Step 1 of 5: Eligibility</h2>
+    <!-- set the number of steps in the data numsteps attribute -->
+    <div class="progress-bar-bg" data-numsteps="5" data-currstep="1" aria-hidden="true"><span class="progress"></span></div>
+</div>
+<!-- Progress Bar END -->
+<!-- Plan member card Component BEGIN -->
+<div class="container-box member-cards-wrapper">
+
+    <p>Let’s review your coverage options and get the required information about the people to be insured, below. <br><br>
+
+Have you had coverage under your group plan for less than 31 days? You may be eligible to apply for some coverage without having to submit medical evidence. For more information, contact your plan administrator.</p>
+
+    <div class="cards-wrapper">
+                    <!-- Plan Member Wrapper -->
+                    <div class="plan-member-wrapper">
+                        <div class="top-member-info">
+                                <div class="member-name">
+                                    <p id="membername" class="member-head-txt">Walker A Snmmmmtestcasewa</p>
+                                    <p class="type-plan">Plan Member </p>
+                                    <input type="hidden" value="123456" id="memberid" />
+                                    <input type="hidden" value="6" id="membertypecode" />
+                                    <input type="hidden" value="Walker A Snmmmmtestcasewa" id="sessionid" />
+                                    <input type="hidden" value="1955-05-26" id="memberdob" />
+                                </div>
+                        </div>
+
+                        <div class="mid-member-info">
+                            <p class="member-head-txt">Date of Birth</p>
+
+                            <!-- Birthdate dropdown component BEGIN -->
+                            <div class="dob-wrapper" id="date-of-birth-select">
+                                <fieldset class="dob-select-wrapper">
+                                    <div class="fieldset-wrapper">
+                                        <div class="fieldset">
+                                            <label class="text-label">
+                                                Month
+                                                <select class="select-options month-option" id="month">
+                                                    <option value="01">January</option>
+                                                    <option value="02">February</option>
+                                                    <option value="03">March</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">June</option>
+                                                    <option value="07">July </option>
+                                                    <option value="08">August</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="fieldset">
+                                            <label class="text-label">
+                                                Day
+                                                <input type="number" class="select-options day-option" id="day" value="0" maxlength="2" min="1" aria-required="true">
+                                            </label>
+                                        </div>
+                                        <div class="fieldset">
+                                            <label class="text-label">
+                                                Year
+                                                <input id="year" type="number" class="select-options year-option" value="0" min="1900" maxlength="4" aria-required="true">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <span class="single-error" id="dob-error"></span>
+                                </fieldset>
+                            </div>
+                            <!-- Birthdate dropdown component END -->
+                        </div>
+
+                        <div class="mid-member-info">
+                            <div class="plan-member-card-select">
+                                <label>
+                                    Biological sex at birth:
+                                    <select class="gender" id="abc">
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="U">Prefer not to disclose</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Sex Info Box Component BEGIN -->
+                        <div class="sex-info-box hide-box">
+                            <span role="button" class="sex-close-icon" aria-label="close"></span>
+                            <p>We understand that there are many gender identities outside of male and female. Insurance rates do rely on statistics relating to biological sex though, so please note that if you don’t choose male or female you will be quoted the highest rate within your age category.</p>
+                        </div>
+                        <!-- Sex Info Box Component END -->
+
+                            <div class="mid-member-info">
+                                <div class="plan-member-card-select smoker">
+                                    <label>
+                                        Smoker status<a href="#smokerstatus"><span class="info"></span></a>
+                                        <select class="smoking">
+                                            <!--<option value="">Input</option>-->
+                                            <option value="Y">Yes</option>
+                                            <option value="N" selected>No</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                        <div class="bottom-member-info">
+                            <p class="member-head-txt">Eligible for:</p>
+                            <ul>
+                                            <li class="first-div checkmark-icon">Optional life insurance</li>
+                                            <li class="first-div checkmark-icon">Optional critical illness insurance</li>
+                                            <li class="first-div checkmark-icon">Optional accidental death and dismemberment insurance (Family coverage)</li>
+                                            <li class="first-div checkmark-icon">Optional accidental death and dismemberment insurance (Single Coverage)</li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Plan Member Wrapper -->
+                    <div class="plan-member-wrapper">
+                        <div class="top-member-info">
+                                <div class="member-name dependent">
+                                    <p id="membername" class="member-head-txt">Wendy W Snmmmmtestcasebw</p>
+                                    <p class="type-plan">Spouse</p>
+                                    <input type="hidden" value="1969-02-23" id="memberdob" />
+                                    <input type="hidden" value="123456" id="memberid" />
+                                    <input type="hidden" value="1" id="membertypecode" />
+                                </div>
+                        </div>
+
+                        <div class="mid-member-info">
+                            <p class="member-head-txt">Date of Birth</p>
+
+                            <!-- Birthdate dropdown component BEGIN -->
+                            <div class="dob-wrapper" id="date-of-birth-select">
+                                <fieldset class="dob-select-wrapper">
+                                    <div class="fieldset-wrapper">
+                                        <div class="fieldset">
+                                            <label class="text-label">
+                                                Month
+                                                <select class="select-options month-option" id="month">
+                                                    <option value="01">January</option>
+                                                    <option value="02">February</option>
+                                                    <option value="03">March</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">June</option>
+                                                    <option value="07">July </option>
+                                                    <option value="08">August</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="fieldset">
+                                            <label class="text-label">
+                                                Day
+                                                <input type="number" class="select-options day-option" id="day" value="0" maxlength="2" min="1" aria-required="true">
+                                            </label>
+                                        </div>
+                                        <div class="fieldset">
+                                            <label class="text-label">
+                                                Year
+                                                <input id="year" type="number" class="select-options year-option" value="0" min="1900" maxlength="4" aria-required="true">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <span class="single-error" id="dob-error"></span>
+                                </fieldset>
+                            </div>
+                            <!-- Birthdate dropdown component END -->
+                        </div>
+
+                        <div class="mid-member-info">
+                            <div class="plan-member-card-select">
+                                <label>
+                                    Biological sex at birth:
+                                    <select class="gender" id="abc">
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="U">Prefer not to disclose</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Sex Info Box Component BEGIN -->
+                        <div class="sex-info-box hide-box">
+                            <span role="button" class="sex-close-icon" aria-label="close"></span>
+                            <p>We understand that there are many gender identities outside of male and female. Insurance rates do rely on statistics relating to biological sex though, so please note that if you don’t choose male or female you will be quoted the highest rate within your age category.</p>
+                        </div>
+                        <!-- Sex Info Box Component END -->
+
+                            <div class="mid-member-info">
+                                <div class="plan-member-card-select smoker">
+                                    <label>
+                                        Smoker status<a href="#smokerstatus"><span class="info"></span></a>
+                                        <select class="smoking">
+                                            <!--<option value="">Input</option>-->
+                                            <option value="Y">Yes</option>
+                                            <option value="N" selected>No</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                        <div class="bottom-member-info">
+                            <p class="member-head-txt">Eligible for:</p>
+                            <ul>
+                                            <li class="first-div checkmark-icon">Optional life insurance</li>
+                                            <li class="first-div checkmark-icon">Optional critical illness insurance</li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Plan Member Wrapper -->
+                    <div class="plan-member-wrapper">
+                        <div class="top-member-info">
+                                <div class="member-name dependent">
+                                    <p id="membername" class="member-head-txt">Patrick A Snmmmmtestcasepa</p>
+                                    <p class="type-plan">Dependent</p>
+                                    <input type="hidden" value="1979-01-01" id="memberdob" />
+                                    <input type="hidden" value="123456" id="memberid" />
+                                    <input type="hidden" value="2" id="membertypecode" />
+                                </div>
+                        </div>
+
+                        <div class="mid-member-info">
+                            <p class="member-head-txt">Date of Birth</p>
+
+                            <!-- Birthdate dropdown component BEGIN -->
+                            <div class="dob-wrapper" id="date-of-birth-select">
+                                <fieldset class="dob-select-wrapper">
+                                    <div class="fieldset-wrapper">
+                                        <div class="fieldset">
+                                            <label class="text-label">
+                                                Month
+                                                <select class="select-options month-option" id="month">
+                                                    <option value="01">January</option>
+                                                    <option value="02">February</option>
+                                                    <option value="03">March</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">June</option>
+                                                    <option value="07">July </option>
+                                                    <option value="08">August</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div class="fieldset">
+                                            <label class="text-label">
+                                                Day
+                                                <input type="number" class="select-options day-option" id="day" value="0" maxlength="2" min="1" aria-required="true">
+                                            </label>
+                                        </div>
+                                        <div class="fieldset">
+                                            <label class="text-label">
+                                                Year
+                                                <input id="year" type="number" class="select-options year-option" value="0" min="1900" maxlength="4" aria-required="true">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <span class="single-error" id="dob-error"></span>
+                                </fieldset>
+                            </div>
+                            <!-- Birthdate dropdown component END -->
+                        </div>
+
+                        <div class="mid-member-info">
+                            <div class="plan-member-card-select">
+                                <label>
+                                    Biological sex at birth:
+                                    <select class="gender" id="abc">
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                        <option value="U">Prefer not to disclose</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Sex Info Box Component BEGIN -->
+                        <div class="sex-info-box hide-box">
+                            <span role="button" class="sex-close-icon" aria-label="close"></span>
+                            <p>We understand that there are many gender identities outside of male and female. Insurance rates do rely on statistics relating to biological sex though, so please note that if you don’t choose male or female you will be quoted the highest rate within your age category.</p>
+                        </div>
+                        <!-- Sex Info Box Component END -->
+
+
+
+                        <div class="bottom-member-info">
+                            <p class="member-head-txt">Eligible for:</p>
+                            <ul>
+                                            <li class="first-div checkmark-icon">Optional life insurance</li>
+
+                            </ul>
+                        </div>
+                    </div>
+
+    </div>
+
+
+    <!-- Smoker Status Info Box Component BEGIN -->
+    <div class="smoker-status-info-box" id="smokerstatus">
+        <span class="info-icon"></span>
+        <h3>Smoker Status</h3>
+        <p>Who has smoked or used cigarettes, e-cigarettes, cigarillos, a pipe, cigars, a nicotine patch and/or gum, chewing tobacco,  hookah, tobacco or nicotine in any other form in the past 12 months? Please check all that apply.</p>
+    </div>
+    <!-- Smoker Status Info Box Component END -->
+    <!-- Info Text Component BEGIN -->
+    <div class="info-text-wrapper">
+        <div class="paragraph-wrapper">
+            <p>
+                You can make changes to your dependents or personal information by contacting your plan administrator.
+                <!--<strong>1-888-495-5525</strong>-->
+            </p>
+        </div>
+    </div>
+    <!-- Info Text Component END -->
+
+</div>
+
+<div class="btn-wrapper">
+    <button class="btn primary-btn right" type="submit" name="get started" onclick="SaveEligibleFor()">Next <span class="chevron right" aria-hidden="true"></span></button>
+    <!--<button class="btn secondary-btn left" type="submit" name="call">Back</button>-->
+</div>
+
+<p><strong> </strong></p>
+
+            <div id="SessionAlert" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Sorry! Your Session has Expired. <br /> Please Start Again</p>
+                </div>
+            </div>
+
+            
+
+            <div id="BackAlert" class="modal">
+                Modal content
+                <div class="modal-content">
+                    <span class="close" role="button" aria-label="close"></span>
+                    <h3 class="modal-title">Are you sure you want to go back?</h3>
+                    <p>If you do, you’ll lose the information you already provided and have to start over.</p>
+                    <div class="btn-wrapper">
+                        <button class="btn secondary-btn cancel" type="button">Cancel</button>
+                        <button class="btn primary-btn back" type="button" onclick="goBack()">Go back</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <footer class="footer">
+            <div class="footer__wrapper container-full container">
+
+                <div class="footer__company-wrapper">
+                    <a href="/MyLogin">
+                        <span id="loginPage:j_id117:j_id118:j_id121">
+                            <img src="/img/gwl-en-w.svg" alt="The Great-West Life Assurance Company" class="logo">
+                        </span>
+                    </a>
+                    <p class="footer__copyright">© Great-West Life Inc. 2009 - <span id="currentYear">2019</span></p>
+                </div>
+
+                <ul class="footer__legal-links">
+                    <li>
+                        <a class="footer__legal-link  new-window-icon" href="https://www.greatwestlife.com/common/privacy.html" onclick="navClick('privacy', 'footer');" target="_blank">
+                            Privacy <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only">– opens in new tab</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer__legal-link new-window-icon" href="https://www.greatwestlife.com/common/legal.html" onclick="navClick('legal', 'footer');" target="_blank">
+                            Legal <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only">– opens in new tab</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer__legal-link new-window-icon" href="https://www.greatwestlife.com/common/internet-security.html" onclick="navClick('security', 'footer');" target="_blank">
+                            Security <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only">– opens in new tab</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="footer__legal-link new-window-icon" href="https://www.greatwestlife.com/common/accessibility.html" onclick="navClick('accessibility', 'footer');" target="_blank">
+                            Accessibility <i class="fas fa-external-link-alt" aria-hidden="true"></i><span class="sr-only">– opens in new tab</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="footer__social-links">
+                    <li>
+                        <a href="https://www.facebook.com/GreatWestLife" id="footer_nav_social_facebook" onclick="socialFollow('Facebook');" target="_blank">
+                            <span aria-hidden="true" class="icon icon-facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></span>
+                            <span class="sr-only">Facebook</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://twitter.com/greatwestlifeca" id="footer_nav_social_twitter" onclick="socialFollow('Twitter');" target="_blank">
+                            <span aria-hidden="true" class="icon icon-twitter"><i class="fab fa-twitter" aria-hidden="true"></i></span>
+                            <span class="sr-only">Twitter</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="https://www.linkedin.com/company/great-west-life_2/" id="footer_nav_social_linked" onclick="socialFollow('LinkedIn');" target="_blank">
+                            <span aria-hidden="true" class="icon icon-linkedin"><i class="fab fa-linkedin-in" aria-hidden="true"></i></span>
+                            <span class="sr-only">LinkedIn</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a aria-label="YouTube" href=" https://www.youtube.com/channel/UCHepU86SgVKvarMoZkWPwcw" id="footer_nav_social_youtube" onclick="socialFollow('YouTube');" target="_blank">
+                            <span aria-hidden="true" class="icon icon-youtube"><i class="fab fa-youtube" aria-hidden="true"></i></span>
+                            <span class="sr-only">Youtube</span>
+                        </a>
+                    </li>
+                </ul>
+                    <a href="https://gwl.greatwestlife.com/MyLogin?lang=fr_CA" class="footer__language-toggle" data-language-toggle="true" aria-label="Français" style="display: block;">FR</a>
+            </div>
+        </footer>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/Scripts/Main.js"></script>
+    <script src="/Scripts/Session.js"></script>
+    <script src="/Scripts/EPMR.js"></script>  
+</body>
+</html>

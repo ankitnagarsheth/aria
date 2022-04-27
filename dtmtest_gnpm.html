@@ -22,43 +22,31 @@
 
 <body>
   
-  ;(function(win, doc, style, timeout) {
-  var STYLE_ID = 'at-body-style';
+  <style id="at-body-style">
+    .target-hide { opacity: 0 !important; }
+</style>
 
-  function getParent() {
-    return doc.getElementsByTagName('head')[0];
+
+<style data-at-fallback-delay="2000">
+  .target-fade {
+    transition: opacity 1s;
   }
+</style>
 
-  function addStyle(parent, id, def) {
-    if (!parent) {
-      return;
+
+
+<script>
+    function atFallbackDelay() {
+        const atPropsElem = document.querySelector('[data-at-fallback-delay]')
+        return atPropsElem ? parseInt(atPropsElem.getAttribute('data-at-fallback-delay')) : 3000;
     }
 
-    var style = doc.createElement('style');
-    style.id = id;
-    style.innerHTML = def;
-    parent.appendChild(style);
-  }
+    setTimeout(function(){
 
-  function removeStyle(parent, id) {
-    if (!parent) {
-      return;
-    }
-
-    var style = doc.getElementById(id);
-
-    if (!style) {
-      return;
-    }
-
-    parent.removeChild(style);
-  }
-
-  addStyle(getParent(), STYLE_ID, style);
-  setTimeout(function() {
-    removeStyle(getParent(), STYLE_ID);
-  }, timeout);
-}(window, document, "body {opacity: 0 !important}", 3000));
+        const targetStyle = document.getElementById('at-body-style');
+        if ( targetStyle) targetStyle.remove();
+    }, atFallbackDelay())
+</script>
 
     <a class="skip-link screen-reader-text" href="#content">Skip to content</a>
 

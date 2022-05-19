@@ -1,0 +1,4 @@
+_satellite.each(_satellite.configurationSettings.pageLoadRules,function(i){(i.event=='pagetop')?_satellite.notify(i.event+': '+i.name,1):false})
+_satellite.each(_satellite.configurationSettings.pageLoadRules,function(i){(i.event=='pagebottom')?_satellite.notify(i.event+': '+i.name,1):false})
+_satellite.each(_satellite.configurationSettings.pageLoadRules,function(i){(i.event=='domready')?_satellite.notify(i.event+': '+i.name,1):false})
+_satellite.each(_satellite.configurationSettings.pageLoadRules,function(i){(i.event=='windowload')?_satellite.notify(i.event+': '+i.name,1):false})

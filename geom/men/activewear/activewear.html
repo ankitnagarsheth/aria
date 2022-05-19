@@ -14,21 +14,17 @@
         var digitalData = digitalData || {};
         digitalData = {
             page: {
-                pageName: "Home Page",
-                siteSection: "",
-                siteSubsection: "",
-                server: ""
-            },
-            customer: {
-                loginStatus: "",
+                pageName: "Men:Activewear",
+                siteSection: "Men",
+                siteSubsection: "Activewear",
+                server: "Geometrixx Clothiers Site"
             },
         };
     </script>
 
-    <title>Geometrixx Clothiers</title>
+    <title>Geometrixx|Men|Activewear</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="robots" content="noindex, nofollow">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type="text/javascript" src="http://ats.adobe.com/jjsite/include/scripts/menu.js"></script>
     <script type="text/javascript" src="http://ats.adobe.com/jjsite/include/scripts/searchfield.js"></script>
     <script type="text/javascript" src="http://ats.adobe.com/jjsite/include/scripts/simpleCart.js"></script>
@@ -44,14 +40,12 @@
     <style type="text/css">
         @import url(http://ats.adobe.com/jjsite/include/css/jje.css);
         @import url(http://ats.adobe.com/jjsite/include/css/menu.css);
+        @import url(http://ats.adobe.com/jjsite/include/css/searchfield.css);
     </style>
     <link rel="shortcut icon" href="http://ats.adobe.com/jjsite/include/images/jj1.ico">
-
-
 </head>
 
 <body>
-
 
 
     <div id="superwrap">
@@ -59,39 +53,33 @@
             <!--start logo and head-->
 
             <div class="head_logo">
-                <a href="index.html" onmouseover="document.jj.src='http://ats.adobe.com/jjsite/include/images/jj_logo_green.png'" onmouseout="document.jj.src='http://ats.adobe.com/jjsite/include/images/jj_logo_black.png'">
+                <a href="../../index.html" onmouseover="document.jj.src='http://ats.adobe.com/jjsite/include/images/jj_logo_green.png'" onmouseout="document.jj.src='http://ats.adobe.com/jjsite/include/images/jj_logo_black.png'">
                     <img src="http://ats.adobe.com/jjsite/include/images/jj_logo_black.png" border="0" name="jj" />
                 </a>
                 <br />
             </div>
 
+
             <!--start search box-->
 
             <div class="rightheader">
 
-                <span class="search_box">
+                <div class="search_box">
 
-			<form action="search/searchresults.html">
-			<input type="text" id="searchfield" name="q" />
-			<input type="submit" Value="Go" class="button">
+                    <form action="../../search/searchresults.html">
+                        <input type="text" id="searchfield" name="q" />
+                        <input type="submit" Value="Go" class="button">
+                    </form>
+                </div>
 
-		<!--	<form id="searchform" action="" method="post" name="cf">
-			<input type="text" id="searchfield" name="searchfield" value="" />
-			<input type="button" Value="Go"  onClick="putCookie();parent.location='search/redirect.html'">
-
--->
-
-			</form> 
-		</span>
-
-                <div class="checkout"><a href="checkout/shoppingcart.html">shopping cart</a>
-                    <a href="checkout/shipping1.html">checkout</a>
+                <div class="checkout"><a href="../../checkout/shoppingcart.html">shopping cart</a>
+                    <a href="../../checkout/shipping1.html">checkout</a>
                 </div>
             </div>
-
             <!--end search box-->
 
             <!--end logo and head-->
+
 
 
             <!--start top nav-->
@@ -103,19 +91,19 @@
                             <!--Menu Start-->
                             <ul id="sddm">
 
-                                <li><a href="women/women.html" onmouseover="mopen('m2')" onmouseout="mclosetime()">WOMEN</a>
+                                <li><a href="../../women/women.html" onmouseover="mopen('m2')" onmouseout="mclosetime()">WOMEN</a>
                                     <div id="m2" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-                                        <a href="women/activewear/activewear.html">Activewear</a>
-                                        <a href="women/fineapparel/fineapparel.html">Fine Apparel</a>
+                                        <a href="../../women/activewear/activewear.html">Activewear</a>
+                                        <a href="../../women/fineapparel/fineapparel.html">Fine Apparel</a>
                                         <a href="#">Footwear</a>
                                         <a href="#">Handbags</a>
                                     </div>
                                 </li>
                                 <li>
-                                    <a href="men/men.html" onmouseover="mopen('m3')" onmouseout="mclosetime()">MEN</a>
+                                    <a href="../../men/men.html" onmouseover="mopen('m3')" onmouseout="mclosetime()">MEN</a>
                                     <div id="m3" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-                                        <a href="men/activewear/activewear.html">Activewear</a>
-                                        <a href="men/fineapparel/fineapparel.html">Fine Apparel</a>
+                                        <a href="../../men/activewear/activewear.html">Activewear</a>
+                                        <a href="../../men/fineapparel/fineapparel.html">Fine Apparel</a>
                                         <a href="#">Footwear</a>
                                         <a href="#">Accessories</a>
                                     </div>
@@ -166,21 +154,19 @@
                                         <a href="#">TV & Video</a>
                                     </div>
                                     <li>
-                                        <a href="company/company.html" onmouseover="mopen('m8')" onmouseout="mclosetime()">COMPANY</a>
+                                        <a href="../../company/company.html" onmouseover="mopen('m8')" onmouseout="mclosetime()">COMPANY</a>
                                         <div id="m8" onmouseover="mcancelclosetime()" onmouseout="mclosetime()">
-                                            <a href="company/chargecard_application1.html">Geo Charge Card</a>
-                                            <a href="company/travel1.html">Geo Travel</a>
-                                            <a href="company/newsletter1.html">Geo Newsletter</a>
-                                            <a href="company/activation_dtm.html">Activation (DTM)</a>
-                                            <a href="company/whitepapers.html">White Papers</a>
+                                            <a href="../../company/chargecard_application1.html">Geo Charge Card</a>
+                                            <a href="../../company/travel1.html">Geo Travel</a>
+                                            <a href="../../company/newsletter1.html">Geo Newsletter</a>
+                                            <a href="../../company/activation_dtm.html">Activation (DTM)</a>
+                                            <a href="../../company/whitepapers.html">White Papers</a>
                                         </div>
                                     </li>
                                 </li>
                             </ul>
 
                             <!--Menu End-->
-
-
                         </div>
                     </div>
                     <br clear="all">
@@ -188,44 +174,127 @@
             </table>
             <!--end top nav-->
 
-
-
             <!---------------------->
             <!--start page content-->
             <!---------------------->
-            <div style="margin:6px 0px 0px -3px;">
-                <table border="0">
-                    <td>
-                        <img src="http://ats.adobe.com/jjsite/include/images/jjhomegraphic.jpg" width="812" height="507" usemap="#jjmap" border="0" />
-                        <map name="jjmap">
-                            <area shape="rect" coords="0,0,337,507" href="men/fineapparel/fineapparel.html?intcmp=hp-men_fineapparel" />
-                            <area shape="rect" coords="337,0,571,376" href="women/fineapparel/fineapparel.html?intcmp=hp-dress_sale" />
-                            <area shape="rect" coords="572,0,812,376" href="women/activewear/activewear.html?intcmp=hp-women_activewear" />
-                            <area shape="rect" coords="338,377,812,507" href="company/chargecard_application1.html?intcmp=homepage-cc-advert" />
-                        </map>
+
+            <br />
+            <span class="category">Men's Activewear</span>
+            <table border="0">
+                <tr>
+                    <div class="categorypage">
+                        <td valign="top">
+
+                            <div style="width:195px;margin-right:5px;">
+                                <a href="corduroy_blazer.html"><img src="http://ats.adobe.com/jjsite/include/images/man-active3.jpg" class="photo" width="190" border="0" />
+                                </a>
+                                <br />
+
+                                <div class="search_title"><a href="corduroy_blazer.html">Corduroy Blazer</a>
+                                </div>
+                                By Sundance Casual
+                                <br /> Price: $709.99
+                                <br /> sku: 200240
+                                <br />
+
+                            </div>
+                    </div>
+
                     </td>
-                </table>
-                <br />
+
+                    <td valign="top">
+                        <div style="width:195px;margin-right:5px;">
+                            <div class="search_content">
+                                <div class="search_content_inner">
+
+                                    <a href="military_jacket.html"><img src="http://ats.adobe.com/jjsite/include/images/active_men.jpg" class="photo" width="190" border="0" />
+                                    </a>
+                                    <br />
+
+                                    <div class="search_title"><a href="military_jacket.html">Military Jacket</a>
+                                    </div>
+
+                                    By Uintah Modern
+                                    <br /> Price: $750.00
+                                    <br /> sku: 200241
+                                    <br />
+
+                                </div>
+                            </div>
+                    </td>
+
+
+                    <td valign="top">
+
+                        <div style="width:195px;margin-right:5px;">
+
+                            <div class="search_content">
+                                <div class="search_content_inner">
+
+                                    <a href="sport_jacket.html"><img src="http://ats.adobe.com/jjsite/include/images/man-active4.jpg" class="photo" width="190" border="0" />
+                                    </a>
+                                    <br />
+
+
+                                    <div class="search_title"><a href="sport_jacket.html">Sport Jacket</a>
+                                    </div>
+
+                                    By Wasatch Sport
+                                    <br /> Price: $240.00
+                                    <br /> sku: 200244
+                                    <br />
+
+                                </div>
+                            </div>
+
+                    </td>
+
+
+                    <td valign="top">
+
+                        <div style="width:195px;margin-right:5px;">
+                            <div class="search_content">
+                                <div class="search_content_inner">
+                                    <a href="hooded_sweater.html"><img src="http://ats.adobe.com/jjsite/include/images/man-active2.jpg" class="photo" width="190" border="0" />
+                                    </a>
+                                    <br />
+
+                                    <div class="search_title"> <a href="hooded_sweater.html">Hooded Sweater</a>
+                                    </div>
+                                    By Sith Lord Clothiers
+                                    <br /> Price: $450.00
+                                    <br /> sku: 200233
+                                    <br />
+
+                                </div>
+                            </div>
+
+
+                    </td>
+                    </div>
+                </tr>
+            </table>
+
+
             </div>
-        </div>
 
-        <!--start footer-->
-        <span class="footer">
+
+            <!--start footer-->
+            <span class="footer">
 Copyright &#169 1996-2015 Adobe Training Services. All Rights Reserved.
-<span style="float: right"> <a href="sitemap.html">Site Map</a>
+<span style="float: right"> <a href="../../sitemap.html">Site Map</a>
 </span>
-        </span>
-        <!--end footer-->
+            </span>
+            </div>
+            <!--End footer-->
 
-    </div>
+            <!--Place DTM footer below this-->
 
-    <!--Place DTM footer below this-->
+            <script type="text/javascript">
+                _satellite.pageBottom();
+            </script>
 
-    <script type="text/javascript">
-        _satellite.pageBottom();
-    </script>
-
-    <!--Place DTM footer above this-->
+            <!--Place DTM footer above this-->
 
 </body>
 

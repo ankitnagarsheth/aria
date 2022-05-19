@@ -1,0 +1,1 @@
+alert("You're using Chrome! DTM can be used to fire tag after a visitor meets the conditions of complex segments. You can fire off more sophisticated scripts such as serving up a survey or chat window after a visitor views a specific page, has been browsing for more than 3 mintues, or is using a tablet such as an iPad.");

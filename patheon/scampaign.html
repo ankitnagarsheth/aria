@@ -1,0 +1,28 @@
+ 
+/* set s.campaign */
+      if(!s.campaign){
+        _utm_campaign=s.getQueryParam('utm_campaign');
+        _utm_campaignchild=s.getQueryParam('utm_campaignchild');
+        _utm_specialty=s.getQueryParam('utm_specialty');
+        _utm_campaignregion=s.getQueryParam('utm_campaignregion');
+        _utm_campaigncountry=s.getQueryParam('utm_campaigncountry');
+        _utm_campaignassettype=s.getQueryParam('utm_campaignassettype');
+        _utm_source=s.getQueryParam('utm_source');
+        _utm_medium=s.getQueryParam('utm_medium');
+        _utm_term=s.getQueryParam('utm_term');
+        _utm_content=s.getQueryParam('utm_content');
+        s.campaign=_utm_campaign + "|" + _utm_source + "|" + _utm_medium + "|" + _utm_content + "|" + _utm_campaignchild + "|" + _utm_specialty + "|" + _utm_campaignregion + "|" + _utm_campaigncountry + 
+        "|" + _utm_campaignassettype + "|" + _utm_term;
+        if(s.campaign === "|||||||||"){s.campaign = ""}
+    }
+  
+   if(!s.campaign){
+    s.cpcsource=s.getQueryParam('cpcsource');
+    s.cpcmedium=s.getQueryParam('cpcmedium');
+    s.cpccampaign=s.getQueryParam('cpccampaign');
+    s.glcid=s.getQueryParam('glcid');
+    s.campaign=s.cpcsource + "|" + s.cpcmedium + "|" + s.cpccampaign + "|" + s.glcid;
+      if(s.campaign === "|||"){s.campaign = ""}
+    }
+  
+}

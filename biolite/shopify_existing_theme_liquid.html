@@ -1,0 +1,1345 @@
+<!doctype html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> 
+
+{% include 'store-language' %}
+  <!--<![endif]-->
+<head>
+  
+
+
+  
+ {% include 'SEOMetaManager' %}
+
+ <!-- Basic page needs ================================================== -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- social meta ================================================== -->
+<meta name="msvalidate.01" content="7035C4CfC0E2B765305885491D09E9646" />
+  <!-- favicon ================================================== -->
+  <link rel="shortcut icon" type="image/png" href="{{ 'favicon.png' | asset_url }}"/>
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <!-- Title and description ================================================== -->
+  
+  	  <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+  <meta itemprop="priceFormat" content="{{ shop.money_format }}" />
+
+
+  <!-- CSS ================================================== -->
+
+  {{ 'all.css' | asset_url | stylesheet_tag }}
+  {{ 'biolite.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'store.css' | asset_url | stylesheet_tag }}
+  {{ 'nav2017.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'https://d1azc1qln24ryf.cloudfront.net/53820/Biolite/style-cf.css?cgxv6x' | stylesheet_tag }}
+
+
+  <!--LOCATION SWITCHER CSS-->
+  {{ 'location-switcher-vendor-featherlight.css' | asset_url | stylesheet_tag }}
+  {{ 'location-switcher.scss.css' | asset_url | stylesheet_tag }}
+
+
+<!-- Header Javascript ================================================== -->
+
+{{ 'option_selection.js' | shopify_asset_url | script_tag }}
+
+<!-- Facebook ================================================== -->
+
+
+{% if product.metafields.facebook.title %}
+<meta property="og:title" content="{{ product.metafields.facebook.title}}" />
+<meta property="og:description" content="{{ product.metafields.facebook.description}}" />
+<meta property="og:image" content="{{ product.metafields.facebook.image}}"/>
+<meta property="og:url" content="{{ product.metafields.facebook.url}}" />
+{% endif %}
+
+{% if page.metafields.facebook.title %}
+<meta property="og:title" content="{{ page.metafields.facebook.title}}" />
+<meta property="og:description" content="{{ page.metafields.facebook.description}}" />
+<meta property="og:image" content="{{ page.metafields.facebook.image}}"/>
+<meta property="og:url" content="{{ page.metafields.facebook.url}}" />
+{% endif %}
+
+{% if article.metafields.facebook.title %}
+<meta property="og:title" content="{{ article.metafields.facebook.title}}" />
+<meta property="og:description" content="{{ article.metafields.facebook.description}}" />
+<meta property="og:image" content="{{ article.metafields.facebook.image}}"/>
+<meta property="og:url" content="{{ article.metafields.facebook.url}}" />
+{% endif %}
+
+
+  <!--GEOIP DEPENDENCY-->
+  <script src="//js.maxmind.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
+  
+   {% include 'gointerpay' %}
+  {% include 'hitsanalytics' %}
+  {% include 'klaviyo' %}
+  {% include 'hotjar' %}
+ 
+  {{ 'https://www.youtube.com/iframe_api' | script_tag }}
+
+  <script src="https://www.youtube.com/iframe_api" defer></script>
+
+  {{ 'routing-and-redirects.js' | asset_url | script_tag }}
+  <script type="text/javascript">RoutingAndRedirects.init();</script>
+  {% comment %}
+    account area specific js
+  {% endcomment %}
+  {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+    {{ 'customer_area.js'  | shopify_asset_url | script_tag }}
+  {% endif %}
+  {% comment %}
+    Theme dependent JS is loaded at the very bottom of this file for performance reasons.
+    However, jQuery is included here so that it can be used inside the templates, e.g. in product.liquid.
+  {% endcomment %}
+  {{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
+ 
+  {% if theme.role == "unpublished" %}
+    {{ 'mockjax.min.js' | asset_url | script_tag }}
+  {% endif %}
+  {{ "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" | script_tag }}
+  {{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+  {{ 'modernizr.min.js' | asset_url | script_tag }}
+  {{ 'lazysizes.min.js' | asset_url | script_tag }}
+  {{ 'ls.bgset.min.js' | asset_url | script_tag }}
+
+  
+  {{ content_for_header }}
+
+
+ <!-- Hits Analytics tracking code -->
+{% if shop.customer_accounts_enabled %}
+  {% if customer %}
+    <script type="text/javascript">
+        function hitsReady() {
+            if (typeof hits != 'undefined')
+                hits('user','identify', {'id' : '{{ customer.id }}'});
+            else
+                setTimeout(hitsReady,500);
+        }
+        window.attachEvent ? window.attachEvent('onload', hitsReady) : window.addEventListener('load', hitsReady, false);
+    </script>
+  {% endif %}
+{% endif %}
+<!-- end of Hits Analytics code -->
+
+{% include 'magic360.headers' %}
+  {% include 'taboola' %}
+
+   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+  
+
+function ValidateEmail(inputText)
+{
+	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,14})+$/;
+	if(inputText.value.match(mailformat))
+	{
+		document.getElementById('email-error').innerHTML = '';
+      	document.ContactUs.email.focus();
+      	return true;
+	}
+	else
+	{
+		document.getElementById('email-error').innerHTML = '<span style="color:red;">You have entered an invalid email address!</span>';
+      	document.ContactUs.email.focus();
+		return false;
+	}
+}
+
+function submitUserForm() {
+    var response = grecaptcha.getResponse();
+    if(response.length == 0) {
+        document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">Please complete the reCAPTCHA challenge!</span>';
+        return false;
+    }
+    return true;
+}
+ 
+function verifyCaptcha() {
+    document.getElementById('g-recaptcha-error').innerHTML = '';
+}
+  
+</script>
+<!-- Start SeeMaxScripts & CSS   -->
+	<!-- Slick Slider CDN -->
+ 	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<!-- GreenSock Basic CDN -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
+  	<!-- GSAP ScrollTrigger JS -->
+    {{ 'ScrollTrigger.js' | asset_url | script_tag }}
+	<!-- SeeMax Custom CSS -->
+    {{ 'seemax-mission.css' | asset_url | stylesheet_tag }}
+	<!-- SeeMax Custom JS -->
+    {{ 'seemax-mission.js' | asset_url | script_tag }}
+	<!-- Youtube Player JS APi Initaliazation -->
+  <script>
+    // CALL ASYNC YOUTUBE API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // LOAD BLANK PLAYER TO INTIALIZE YOUTUBE API
+    var player;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('biolitetv', {
+        height: '100%',
+        width: '100%',
+        videoId: '0',
+
+        events: {
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
+        }
+      });
+    }
+
+    // BLANK ONCE THE PLAYER IS READY CALL
+    function onPlayerReady(event) {
+
+    }
+
+    // BLANK GLOBAL STATE CHANGE FOR YT API
+    function onPlayerStateChange(event) {
+      // JUST LOAD IT UP
+    }
+  </script>
+  <!-- END SeeMaxScripts & CSS   -->
+
+
+
+
+  {% render 'shogun-head' %}
+</head>
+
+
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} show--alert_bar">
+  
+    <div class="remodal" data-remodal-id="bioliteVIP" role="dialog" aria-labelledby="modalAll">
+  <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+  <div class="grid__item remodal-bg-VIP">
+            <div class="grid__item large--one-whole text-center">
+              <img src="https://cdn.shopify.com/s/files/1/0666/9741/files/footerIcons-02.png?v=1636492197" class="VIP-icon">
+    <h2 class="dark-grey bold">Welcome BioLite VIP</h2>
+    <span class="holy-fit-desc dark-grey">As a reward for being a valued member of our community, we're opening up our deals early for you. <br><br>
+
+      Use code: <strong>VIPACCESS</strong> at checkout to get 25% off sitewide.<br><br>  </span>
+       Code expires 11:59 PST TONIGHT.       
+    </div>
+
+                  </div>
+</div>
+   
+    <ul class="skip">
+      <li><a title="Skip To Main Nav" href="#nav">skip to Main Navigation</a></li>
+      <li><a title="Skip To Content" href="#content">skip to Main Content</a></li>
+      <li><a title="Skip To Footer" href="#footer">Skip to Footer</a></li>
+    </ul>
+
+
+  {% include 'sidebar' %}
+  <div class="mobile-menu-content-wrap">
+     <div id="mobile-menu">
+    <div class="mobile-wrap">
+      <div class="close-btn-container">
+
+
+        <div class="super-nav interstitialSection">
+      <div class="grid--full">
+        <div class="grid__item large--five-twelfths small--four-twelfths medium--four-twelfths super-nav-left"><span class="left-msg">Free Shipping Over {{ 'general.header.promo' | t }}</span><span class="left-msg-dial webder"></span> </div>
+
+          </div>
+
+        </div>
+
+<div class="grid--full">
+          <div class="grid__item large--hide small--two-twelfths medium--two-twelfths header-close">
+            <a href="#" class="close-btn toggle-mobile-menu-btn">x</a>
+          </div>
+
+          <div class="grid__item large--seven-twelfths small--eight-twelfths medium--eight-twelfths header-left">
+            <a href="/">
+              <img src="https://cdn.shopify.com/s/files/1/0666/9741/files/BioLite_logo-01.svg?v=1605215636" alt="Biolite" class="center logo">
+            </a>
+          </div>
+
+          <div class="grid__item large--one-half text-right small--two-twelfths medium--two-twelfths large--text-right header-right">
+            <ul id="menu-cart" class="menu-cart">
+                <li>
+                  <a href="javascript:;" class="toggle__sidebar">
+                    <span class="badge-wrap">
+                      <span id="cart-item-badge" class="badge" style="display:none;">
+                        <span class="cart-item-count"></span>
+                      </span>
+                      <i class="shoppingCart"><img src="{{ 'cart-icon-mobile.svg' | asset_url }}" alt="Support" /></i>
+                      <span class="cart-text">Cart</span>
+                    </span>
+
+                  </a>
+                </li>
+              </ul>
+          </div>
+
+        </div>
+      </div>
+      
+      <ul class="primary-menu">
+        <li class="nav-title" ><a href="/products">Explore The Shop</a></li>
+        <li><a aria-expanded="false" aria-label="Expand Stoves Submenu" href="#mobile-cook" class="collapsable-link off">Stoves <span role="button" aria-expanded="false" aria-label="Expand Stoves Submenu" class="plus-minus"></span></a></li>
+
+      <div class="sub-nav off" id="mobile-cook">
+
+              <ul class="sub">
+                <li><h4>Cooking Bundles</h4></li>
+                <li><a href="/products/campstove-complete-cook-kit">CampStove Complete Cook Kit</a></li>
+
+              </ul>
+
+
+        <div class="left-nav-sep"></div>
+
+        <ul class="sub">
+          <li><h4>Portable Stoves</h4></li>
+          <li><a data-class="CampStove 2" href="/products/campstove-2-plus">CampStove 2+</a></li>
+
+        </ul>
+
+        <ul class="sub-list">
+          <li><h5>Accessories</h5></li>
+          <li><a data-class="PortableGrill" href="/products/portable-grill">CampStove Portable Grill</a></li>
+          <li><a data-class="KettlePot" href="/products/campstove-kettlepot-coffee-set">CampStove KettlePot &amp; Coffee Set<img data-src="https://cdn.shopify.com/s/files/1/0666/9741/files/newLabel-2021.svg?v=1612817318" alt="New" class="nav-new-mobile lazyload"/></a></li>
+          <li><a data-class="BioFuel Pellets" href="/products/biofuel-pellets">Wood Pellets</a></li>
+        </ul>
+
+        
+           <div class="left-nav-sep"></div>
+
+        <ul class="sub">
+          <li><h4>Campfire Evolved</h4></li>
+          <li><a data-class="FirePit" href="/products/firepit-plus">FirePit+</a></li>
+
+        </ul>
+        <ul class="sub-list">
+          <li><h5>Accessories</h5></li>
+             <li><a data-class="Solar Carry Cover" href="/products/firepit-grill-lid">FirePit Grill Lid</a></li>
+          <li><a data-class="FirePoker" href="/products/firepit-griddle">FirePit Griddle</a></li>
+          <li><a data-class="FireMat" href="/products/prep-grill-toolkit">Prep &amp; Grill Toolkit</a></li>
+          
+          <li><a data-class="FirePit Carry Bag" href="/products/firepit-carry-bag">FirePit Carry Bag</a></li>
+          <li><a data-class="FirePoker" href="/products/firepoker">FirePit FirePoker</a></li>
+          <li><a data-class="FireMat" href="/products/firemat">FirePit FireMat</a></li>
+        </ul>
+        
+        
+         <ul class="sub-list">
+           <li><a data-class="Shop All" href="/products#cooking"><strong>Shop All Stoves →</strong></a></li>
+        </ul>
+
+      </div>
+
+
+    <li><a aria-expanded="false" aria-label="Expand Power Submenu" href="#mobile-charge" class="collapsable-link off">Power <span role="button" aria-expanded="false" aria-label="Expand Power Submenu" class="plus-minus"></span></a></li>
+
+      <div class="sub-nav off" id="mobile-charge">
+
+        <div class="left-nav-sep"></div>
+
+          <ul class="sub">
+          <li><h4>Power Stations</h4></li>
+          <li><a data-class="BaseCharge 600" href="/products/basecharge-600">BaseCharge 600<img data-src="https://cdn.shopify.com/s/files/1/0666/9741/files/newLabel-2021.svg?v=1612817318" alt="New" class="nav-new-mobile lazyload"/></a></li>
+          <li><a data-class="BaseCharge 1500" href="/products/basecharge-1500">BaseCharge 1500<img data-src="https://cdn.shopify.com/s/files/1/0666/9741/files/newLabel-2021.svg?v=1612817318" alt="New" class="nav-new-mobile lazyload"/></a></li>
+
+
+        </ul>
+        
+        <ul class="sub">
+          <li><h4>Solar</h4></li>
+          <li><a data-class="SolarPanel 5 Plus" href="/products/solarpanel-5-plus">SolarPanel 5+</a></li>
+          <li><a data-class="SolarPanel 10 Plus" href="/products/solarpanel-10-plus">SolarPanel 10+</a></li>
+                    <li><a data-class="SolarPanel 100" href="/products/solarpanel-100">SolarPanel 100<img data-src="https://cdn.shopify.com/s/files/1/0666/9741/files/newLabel-2021.svg?v=1612817318" alt="New" class="nav-new-mobile lazyload"/></a></li>
+
+
+        </ul>
+
+         <div class="left-nav-sep"></div>
+  <ul class="sub">
+          <li><h4>Battery Banks</h4></li>
+          <li><a data-class="Charge 20 PD" href="/products/charge-20-PD">Charge 20 PD</a></li>
+          <li><a data-class="Charge 40 PD" href="/products/charge-40-PD">Charge 40 PD</a></li>
+          <li><a data-class="Charge 80 PD" href="/products/charge-80-PD">Charge 80 PD</a></li>
+
+
+        </ul>
+
+
+      </div>
+
+    <li><a aria-expanded="false" aria-label="Expand Lighting Submenu" href="#mobile-light" class="collapsable-link off">Lighting <span role="button" aria-expanded="false" aria-label="Expand Lighting Submenu" class="plus-minus"></span></a></li>
+      <div class="sub-nav off" id="mobile-light">
+
+
+        <ul class="sub">
+          <li><h4>HeadLamps</h4></li>
+          <li><a data-class="HeadLamp 750" href="/products/headlamp-750">HeadLamp 750</a></li>
+          <li><a data-class="HeadLamp" href="/products/headlamp-330">HeadLamp 330</a></li>
+         <li><a data-class="HeadLamp 200" href="/products/headlamp-200">HeadLamp 200</a></li>
+
+
+        </ul>
+        
+         <ul class="sub-list">
+          <li><h5>Accessories</h5></li>
+          <li><a data-class="Light Diffusing Stuffsack" href="/products/light-diffusing-stuffsack">Light Diffusing Stuffsack</a></li>
+        
+
+        </ul>
+        
+           <div class="left-nav-sep"></div>
+
+        <ul class="sub">
+          <li><h4>Solar Lighting</h4></li>
+          <li><a data-class="SunLight" href="/products/sunlight">SunLight 100</a></li>
+          <li><a data-class="SunLight" href="/products/sunlight?variant=1148568829966">SunLight 4-Pack</a></li>
+          <li><a data-class="SolarHome 620+" href="/products/solarhome-620-plus">SolarHome 620+</a></li>
+
+        </ul>
+
+         <div class="left-nav-sep"></div>
+        
+              <ul class="sub">
+          <li><h4>Lanterns</h4></li>
+            <li><a data-class="AlpenGlow 250" href="/products/alpenglow-250">AlpenGlow 250
+</a></li>
+                <li><a data-class="AlpenGlow 500" href="/products/alpenglow-500">AlpenGlow 500
+</a></li>
+
+          <li><a data-class="PowerLight Mini" href="/products/travelight-135">TraveLight 135</a></li>
+                 <li><a data-class="PowerLight Mini" href="/products/flexlight-100">FlexLight 100</a></li>
+        </ul>
+
+         <div class="left-nav-sep"></div>
+
+        <ul class="sub">
+          <li><h4>String Lights</h4></li>
+          <li><a data-class="SiteLight Mini" href="/products/sitelight-string">SiteLight String</a></li>
+          <li><a data-class="SiteLight" href="/products/sitelight-duo">SiteLight Duo</a></li>
+          <li><a data-class="SiteLight XL" href="/products/sitelight-lantern">SiteLight Lantern</a></li>
+          
+        </ul>
+        
+         <div class="left-nav-sep"></div>
+
+        
+          <ul class="sub-list">
+            <li><a data-class="Shop All" href="/products#lighting"><strong>Shop All Lighting →</strong></a></li>
+        </ul>
+        
+        
+      </div>
+
+      <li>
+        <a aria-expanded="false" aria-label="Expand Gear Kits Submenu" href="#mobile-gearkits" class="collapsable-link off">Gear Kits
+        <span role="button" aria-expanded="false" aria-label="Expand Gear Kits Submenu" class="plus-minus"></span></a>
+      </li>
+      <div class="sub-nav off" id="mobile-gearkits">
+
+
+
+        
+          <div class="left-nav-sep"></div>
+
+        <ul class="sub">
+          <li><h4>Customer Favorites</h4></li>
+          <li><a data-class="CampStove 2 Bundle" href="/products/alpenglow-multipack">AlpenGlow Multipack</a></li>
+          <li><a data-class="CampStove 2 Bundle" href="/products/campstove-2-bundle">CampStove Complete Cook Kit</a></li>
+          <li><a data-class="CampStove 2 Bundle" href="/products/firepit-cooking-kit">FirePit Cooking Kit</a></li>
+          <li><a data-class="Shop All" href="/products#systems">Shop All Gear Kits →</a></li>
+
+
+        </ul>
+        
+        
+      </div>
+        
+
+
+
+
+    <li><a href="/products" class="primary" style="color:#008fa1 !important;">Shop All Gear</a></li>
+
+
+      </ul>
+
+ <div class="clearfix"></div>
+
+       <ul class="secondary-menu mobile-about">
+
+        <li class="nav-title" ><a href="/products">About Us</a></li>
+
+        <li class="mobile-about-item"><a data-class="Mission" href="/pages/mission" ><img alt="Our Mission" data-src="{{ 'OneMillionMark_icon-01.svg' | asset_url }}" class="lazyload"/> Mission</a></li>
+        <li class="mobile-about-item"><a data-class="Our Story" href="/pages/our-story" ><img alt="Our Story" data-src="{{ 'our-story-icon.svg' | asset_url }}" class="lazyload"/> Our Story</a></li>
+
+
+
+      </ul>
+
+      <div class="clearfix"></div>
+
+      <!--LOCATION-SWITCHER-TRIGGER-MOBILE-->
+      <ul class="secondary-menu secondary-menu-last-border location-switcher-trigger-wrapper">
+        <li class="nav-title"><a href="#">Your Region</a></li>
+        <li>{% include 'location-switcher-trigger' %}</li>
+      </ul>
+      <!--/LOCATION-SWITCHER-TRIGGER-MOBILE-->
+
+      <div class="clearfix"></div>
+
+      <ul class="secondary-menu">
+
+        <li class="nav-title" ><a href="/pages/contact">Support</a></li>
+
+    <li><a href="/pages/contact">Contact Us</a></li>
+    <li><a href="/pages/faq">FAQ</a></li>
+    <li><a href="/pages/product-manuals">Product Manuals</a></li>
+    <li><a href="/pages/warranty">Warranty Info &amp; Registration</a></li>
+      </ul>
+
+
+
+ <div class="clearfix"></div>
+      <ul class="footer-menu">
+        <li>
+
+    <div class="off" id="mobile-search" role="search">
+      <div class="mobile-search-holder">
+        <label for="mobile-search-input" class="visuallyhidden">Search</label>
+        <input name="mobile-search-input" class="mobile-search-input" id="mobile-search-input" onkeypress="if(event.keyCode == 13) { document.location='/search?q='+ this.value }" placeholder="What are you looking for..." ><span class="btn btn-primary mobile-search-go" onclick="document.location='/search?q='+document.getElementById('mobile-search-input').value"><img src="{{ 'mobile-search.png' | asset_url }}" alt="Search" /></button>
+      </div>
+    </div>
+
+    </li>
+
+
+    <li><a href="/account/login"><i class="icomoon icon-user"></i>Login To My Account</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="wrap">
+    
+
+<div id="alert-bar" class="alert-bar">
+    <div class="alert-bar__inner">
+     <span style="color:#fff;"><a href="/products/basecharge-1500" ><span style="font-weight:700;color:#fff;padding:0 5px 0 0">NEW</span><span style="color:#fff;font-weight:300;">Sign Up For Early Access To The Portable Power Series <span style="font-weight:700;text-decoration:underline;color:#fff;padding:0 0 0 5px"">I WANT IN</span> </strong></a></span>
+
+    </div>
+      </div>
+
+
+<div class="nav-wrap">
+
+     <div class="super-nav">
+      <div class="grid--full">
+           <div class="grid__item large--five-twelfths small--four-twelfths medium--four-twelfths super-nav-left">
+          <span class="left-msg">
+            <img src="{{ 'freeshipping-icon-blue.svg' | asset_url }}" class="left-msg-icon" alt="Free Shipping" /><a href="#shipping" style="color:#262729;">Free Shipping Over {{ 'general.header.promo' | t }}</a></span>
+         
+           </div>
+        
+ 
+        
+             <div class="remodal" data-remodal-id="shipping" role="dialog" aria-labelledby="modalAll" data-remodal-options="closeOnOutsideClick: true">
+  <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+    <div class="grid__item remodal-background-content wide-modal text-center">
+      
+      <h4 class="shippingMsgTitle primary mb0">Free Shipping Over {{ 'general.header.promo' | t }}</h4>
+
+      <p class="bold">  {% include 'free-shipping-msg' %}</p>
+      
+       
+      
+          </div>
+</div>
+      
+        
+
+        
+        
+
+        <div class="grid__item large--seven-twelfths small--eight-twelfths medium--eight-twelfths super-nav-right">
+
+            <span class="super-nav-account"><a href="/account/login"><img data-src="{{ 'account-icon-small.svg' | asset_url }}" class="lazyload" alt="My Account" />My Account</a></span>
+
+
+
+             <div id="hero-video" class="modal">
+
+     <header class="modal__header">
+
+    </header>
+
+    <div id="hero-video--support" class="modal">
+   <header class="modal__header">
+
+     <div class="modal--close">
+       <i class="fa fa-circle-border fa-circle-border--medium fa-times"></i>
+     </div>
+   </header>
+   <div class="modal__content modal__content--video text-center">
+
+     <div class="grid__item large--one-whole text-center mt30 pr30 pl30" style="border-right:1px solid #f3f3f3;">
+          <h3 class="primary mt60 mb0">BioLite Support Is Here To Help</h3>
+          <p class="light mb20">Fill out our quick form so we can track your inquiry and make sure you get the info you need. A member of the BioLite Team will respond
+       as soon as possible.</p>
+ <a href="/pages/contact" class="btn btn-primary" title="Contact Us"> <span>Fill Out Form</span> </a>
+</div>
+
+         <!-- <div class="grid__item large--one-half mt30 pr30 pl30">
+          <h3 class="primary mt60 mb0">Give Us A Call</h3>
+          <p class="light mb20">Customer service is standing by from 9am - 6pm EST (excluding holidays)</p>
+ <a href="#" class="btn btn-outline-primary" title="Call 844-424-6548"> <span>Call 844-424-6548</span> </a>
+</div>-->
+
+      </div>
+  </div>
+  </div>
+
+            <!--LOCATION-SWITCHER-TRIGGER-DESKTOP-->
+            <span class="super-nav-account super-nav-account--reset-img location-switcher-trigger-wrapper location-switcher-trigger-wrapper--mini">
+              {% include 'location-switcher-trigger' %}
+            </span>
+            <!--/LOCATION-SWITCHER-TRIGGER-DESKTOP-->
+
+            <ul id="menu-cart" class="menu-cart">
+                <li>
+                  <a href="javascript:;" class="toggle__sidebar" aria-expanded="false" aria-controls="#sidebar">
+                    <span class="badge-wrap">
+                      <span id="cart-item-badge" class="badge" style="display:none;">
+                        <span class="cart-item-count"></span>
+                      </span>
+                      <i class="shoppingCart"><img src="{{ 'cart-icon-small.svg' | asset_url }}" style="margin: 0 0 0 0 !important;top:1px !important;" alt="Support" /></i>
+                      <span class="cart-text">Cart</span>
+                    </span>
+
+                  </a>
+                </li>
+              </ul>
+
+          </div>
+
+        <div class="clearfix"></div>
+      </div>
+  </div>
+
+    <a name="nav"></a>
+    <header id="header" class="" role="banner">
+      <div class="header-inner">
+        <div class="grid--full">
+
+
+          <div aria-expanded="false" title="Open Main Menu" role="button" tabIndex="0" id="hamburger-icon" class="toggle-mobile-menu-btn grid__item large--hide small--two-twelfths medium--two-twelfths">
+
+            <div id="nav-icon">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+          </div>
+
+
+
+          
+          <div class="grid__item large--one-half small--eight-twelfths medium--eight-twelfths header-left">
+            
+            <a title="Home Page" aria-label="Home Page" href="/">
+              <img src="https://cdn.shopify.com/s/files/1/0666/9741/files/BioLite_logo-01.svg?v=1605215636" alt="Biolite" class="center logo">
+            </a>
+
+
+            <nav id="nav-main" class="header-nav">
+                <ul id="menu-main" class="menu-main">
+
+                    <li class="stoves hasDropdown">
+                      <button aria-expanded="false" aria-controls="stovesdropdown" aria-label="expand stove products submenu"></button>
+                      <a class="update" href="/products#cooking" aria-expanded="false" aria-controls="stovesdropdown" aria-label="click to visit stove products page">Stoves</a>
+                    </li>
+
+                    <li class="power hasDropdown">
+                        <button aria-expanded="false" aria-controls="topdropdown" aria-label="expand power products submenu"></button>
+                        <a class="update" href="/products#power" aria-expanded="false" aria-controls="topdropdown" aria-label="click to visit power products page">Power</a>
+                        </li>
+
+
+                        <li class="lighting hasDropdown">
+                            <button aria-expanded="false" aria-controls="lightingdropdown" aria-label="expand lighting products submenu"></button>
+                        <a class="update" href="/products#lighting" aria-expanded="false" aria-controls="lightingdropdown" aria-label="click to visit lighting products page">Lighting</a>
+                        </li>
+
+                         <li class="gearkits hasDropdown">
+                         <button aria-expanded="false" aria-controls="gearkitsdropdown" aria-label="expand gear kits submenu"></button>
+                        <a class="update" href="/products#systems"  aria-expanded="false" aria-controls="gearkitsdropdown" aria-label="click to visit gear kits page">Gear Kits</a>
+                        </li>
+
+
+                        <li class="all-products">
+                          <a class="update" href="/products"><span class="bold">SHOP ALL</span></a>
+                        </li>
+                  
+                     
+                  
+                 
+             
+
+          </ul>
+
+            </nav>
+          </div>
+
+          <div class="grid__item large--one-half text-right small--two-twelfths medium--two-twelfths large--text-right header-right">
+
+            <nav id="nav-mission" class="header-nav">
+                <ul id="menu-misson" class="menu-main">
+
+                        <li class="">
+                        <a href="/pages/mission"><img alt="Our Mission" class="mission-navigation" src="https://cdn.shopify.com/s/files/1/0666/9741/files/OneMillionMark_icon_black-01.svg?v=1605217648">Mission</a>
+                        </li>
+
+          </ul>
+
+            </nav>
+
+            <ul id="menu-cart" class="menu-cart">
+                <li>
+                  <a href="javascript:;" class="toggle__sidebar">
+                    <span class="badge-wrap">
+                      <span id="cart-item-badge" class="badge" style="display:none;">
+                        <span class="cart-item-count"></span>
+                      </span>
+                      <i class="shoppingCart"><img class="mobile" src="{{ 'cart-icon-mobile_black-01.svg' | asset_url }}" alt="Support" /></i>
+                      <span class="cart-text">Cart</span>
+                    </span>
+
+                  </a>
+                </li>
+              </ul>
+
+
+          </div>
+
+
+        </div>
+
+    <div id="stovesdropdown" class="stoves-dropdown isNavDropdown">
+      <div class="nav-featured-area">
+
+              <h4>Cooking Bundles</h4>
+
+              <ul class="bundles">
+                <li><a class="campstovebundle" href="/products/campstove-complete-cook-kit">CampStove Complete Cook Kit</a></li>
+                 <li><a class="firepitcocookingkit" href="/products/firepit-cooking-kit">FirePit Cooking Kit</a></li>
+                <li><a class="firepitcocookaccessoryset" href="/products/firepit-cook-accessory-set">FirePit Cook Accessory Kit</a></li>
+              </ul>
+
+      
+        <div class="clearfix"></div>
+
+      </div>
+
+
+
+      <div class="left-nav-holder" style="border-right:1px solid #f3f3f3;">
+
+        <h4>Portable Stoves</h4>
+
+        <ul class="left-nav main-category-nav">
+
+           <li><a data-class="CampStove" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/CampStove-2_nav.png?v=1582147755" href="/products/campstove-2-plus">CampStove 2+</a></li>
+
+        </ul>
+
+        <h5>Accessories</h5>
+
+        <ul class="left-nav accessory-nav">
+
+          <li><a data-class="PortableGrill" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/PortableGrill_nav.png?v=1582148254" href="/products/campstove-portable-grill">Portable Grill</a></li>
+          <li><a data-class="KettlePot" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/KettlePotCoffeeSet_nav-45.png?v=1645040691" href="/products/campstove-kettlepot-coffee-set">KettlePot &amp; Coffee Set<img data-src="https://cdn.shopify.com/s/files/1/0666/9741/files/newLabel-2021.svg?v=1612817318" alt="New" class="nav-new-mobile-ag250 lazyload"/></a></li>
+          <li><a data-class="Wood Pellets" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/Pellets_nav.png?v=1582148254" href="/products/biofuel-pellets">Biofuel Pellets</a></li>
+                    <li>&nbsp;</li>
+
+
+        </ul>
+
+      </div>
+    <div class="left-nav-holder" >
+
+        <h4>Campfire Evolved</h4>
+
+        <ul class="left-nav main-category-nav">
+
+          <li><a data-class="FirePit" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/firepit.png?v=1582147990" href="/products/firepit-plus">FirePit+</a></li>
+        </ul>
+
+        <h5>Accessories</h5>
+
+           <ul class="left-nav accessory-nav">
+
+          <li><a data-class="FirePit Grill Lid" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/grillLid_nav.png?v=1602861841" href="/products/firepit-grill-lid">FirePit Grill Lid</a></li>
+          <li><a data-class="FirePit Griddle" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/griddle_nav.png?v=1602861841" href="/products/firepit-griddle">FirePit Griddle</a></li>
+          <li><a data-class="Prep Grill Toolkit" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/toolkit_nav.png?v=1602861841" href="/products/prep-grill-toolkit">Prep &amp; Grill Toolkit</a></li>
+
+        </ul>
+      
+
+      </div>
+      
+        <div class="left-nav-holder left-nav-holder-col2" >
+
+
+        <ul class="left-nav main-category-nav">
+
+        </ul>
+
+
+           <ul class="left-nav accessory-nav">
+
+          <li><a data-class="Solar Carry Cover" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/FirePitCarryBag-nav.png?v=1612752494" href="/products/firepit-carry-bag">FirePit Carry Bag</a></li>
+          <li><a data-class="FirePoker" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/firepoker_nav.png?v=1582148253" href="/products/firepoker">FirePoker</a></li>
+          <li><a data-class="FireMat" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/firemat_nav.png?v=1582148254" href="/products/firemat">FireMat</a></li>
+
+        </ul>
+      
+       
+
+      </div>
+      
+      
+   
+
+
+  
+
+
+      <div class="clearfix"></div>
+    </div>
+
+
+    <div id="topdropdown" class="maindrop power-dropdown isNavDropdown">
+
+    <div class="left-nav-holder main-additional">
+
+        <h4>Power Stations</h4>
+
+        <ul class="left-nav main-category-nav">
+       <li><a data-class="BaseCharge 600" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/BaseCharge600_nav.png?v=1659043470" href="/products/basecharge-600">BaseCharge 600<img data-src="https://cdn.shopify.com/s/files/1/0666/9741/files/comingSoon_lable-01.svg?v=1659043782" alt="New" class="nav-new-mobile-bc600 lazyload"/></a></li>
+      <li><a data-class="BaseCharge 1500" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/BaseCharge1500_nav.png?v=1659043470" href="/products/basecharge-1500">BaseCharge 1500<img data-src="https://cdn.shopify.com/s/files/1/0666/9741/files/comingSoon_lable-01.svg?v=1659043782" alt="New" class="nav-new-mobile-bc1500 lazyload"/></a></li>
+
+        </ul>
+
+
+      </div>
+  
+      
+         <div class="left-nav-holder main-additional">
+
+        <h4>Battery Banks</h4>
+
+        <ul class="left-nav main-category-nav">
+       <li><a data-class="Charge 20 PD" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/Charge-20PD-nav.png?v=1612753050" href="/products/charge-20-pd">Charge 20 PD</a></li>
+      <li><a data-class="Charge 40 PD" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/Charge-40PD-nav.png?v=1612753050" href="/products/charge-40-pd">Charge 40 PD</a></li>
+<li><a data-class="Charge 80 PD" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/Charge-80PD-nav.png?v=1612753050" href="/products/charge-80-pd">Charge 80 PD</a></li>
+
+        </ul>
+
+
+      </div>
+
+
+      <div class="left-nav-holder main-additional">
+
+        <h4>Solar</h4>
+
+        <ul class="left-nav main-category-nav">
+       <li><a data-class="SolarPanel 5 Plus" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/SolarPanel5Plus_nav.png?v=1582148254" href="/products/solarpanel-5-plus">SolarPanel 5+</a></li>
+          <li><a data-class="SolarPanel 10 Plus" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/SolarPanel10Plus_nav.png?v=1582148254" href="/products/solarpanel-10-plus">SolarPanel 10+</a></li>
+          <li><a data-class="SolarPanel 100" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/SolarPanel100_nav.png?v=1659043470" href="/products/solarpanel-100">SolarPanel 100<img data-src="https://cdn.shopify.com/s/files/1/0666/9741/files/comingSoon_lable-01.svg?v=1659043782" alt="New" class="nav-new-mobile-sp100 lazyload"/></a></li>
+          <li>&nbsp;</li>
+
+
+        </ul>
+
+
+      </div>
+
+
+      
+          <div class="left-nav-holder main-additional">
+
+        <h4>Off Grid Home</h4>
+
+        <ul class="left-nav main-category-nav">
+
+          <li><a data-class="SolarHome 620+" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/shs620_95fa83bb-cb97-4d84-a362-64d2cfaee7fb.png?v=1582148549" href="/products/solarhome-620-plus">SolarHome 620+</a></li>
+
+        </ul>
+
+      </div>
+
+
+
+    </div>
+
+
+
+    <div id="lightingdropdown" class="lighting-dropdown isNavDropdown">
+
+
+  
+      
+         <div class="left-nav-holder main-additional">
+
+        <h4>HeadLamps</h4>
+
+        <ul class="left-nav main-category-nav">
+           <li><a data-class="HeadLamp 750" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/healamp750_nav.png?v=1600094536" href="/products/headlamp-750">HeadLamp 750</a></li>
+          <li><a data-class="HeadLamp" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/headlamp_nav.png?v=1582148253" href="/products/headlamp-330">HeadLamp 330</a></li>
+          <li><a data-class="HeadLamp 200" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/headlamp200_nav.png?v=1582148254" href="/products/headlamp-200">HeadLamp 200</a></li>
+
+
+
+        </ul>
+           
+             <h5>Accessories</h5>
+
+        <ul class="left-nav accessory-nav">
+
+          <li><a data-class="Light Diffusing Stuffsack" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/lightdiffusingstuffsac_nav.png?v=1582148254" href="/products/light-diffusing-stuffsack">Stuffsack</a></li>
+           <li>&nbsp;</li>
+
+        </ul>
+
+
+      </div>
+
+      <div class="left-nav-holder main-additional">
+
+        <h4>Solar Lighting</h4>
+
+        <ul class="left-nav main-category-nav">
+          <li><a data-class="SunLight" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/SunLight_nav.png?v=1582148254" href="/products/sunlight-100">SunLight 100</a></li>
+           <li><a data-class="SolarHome 620+" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/shs620_95fa83bb-cb97-4d84-a362-64d2cfaee7fb.png?v=1582148549" href="/products/solarhome-620-plus">SolarHome 620+</a></li>
+          <li>&nbsp;</li>
+          <li>&nbsp;</li>
+           <li>&nbsp;</li>
+                     <li>&nbsp;</li>
+
+
+
+        </ul>
+
+
+      </div>
+
+      <div class="left-nav-holder main-additional">
+
+        <h4>USB Lanterns</h4>
+
+        <ul class="left-nav main-category-nav">
+           <li><a data-class="AlpenGlow 250" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/AlpenGlow-250_nav.png?v=1626206834" href="/products/alpenglow-250">AlpenGlow 250</a></li>
+           <li><a data-class="AlpenGlow 500" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/AlpenGlow-500nav.png?v=1626206834" href="/products/alpenglow-500">AlpenGlow 500</a></li>
+
+           <li><a data-class="PowerLight Mini" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/PowerLightMini_nav.png?v=1582148253" href="/products/travelight-135">TraveLight 135</a></li>
+          <li><a data-class="FlexLight" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/flexlight100-nav.png?v=1612753050" href="/products/flexlight-100">FlexLight 100</a></li>
+
+        </ul>
+
+      </div>
+      
+      
+      <div class="left-nav-holder main-additional">
+
+          <h4>String Lights</h4>
+
+        <ul class="left-nav main-category-nav">
+
+           <li><a data-class="SiteLight Mini" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/SiteLightMini_nav.png?v=1582148254" href="/products/sitelight-string">SiteLight String</a></li>
+          <li><a data-class="SiteLight" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/SiteLight_nav.png?v=1582148254" href="/products/sitelight-duo">SiteLight Duo</a></li>
+           <li><a data-class="SiteLight XL" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/SiteLightXL_nav.png?v=1582148254" href="/products/sitelight-lantern">SiteLight Lantern</a></li>
+
+        </ul>
+
+      </div>
+
+
+    </div>
+
+       <div id="gearkitsdropdown" class="maindrop gearkits-dropdown isNavDropdown">
+         
+   <!--<div class="left-nav-holder-kits main-additional">
+        <h4>Best Value</h4>
+        <ul class="left-nav main-category-nav-kits">
+          <li><a data-class="Energy Bundle Plus" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/kits-energy-bundle-plus.svg?17537" data-sizes="auto" href="/products/biolite-energy-bundle-plus">Energy Bundle+ 
+			  <span class="kits-desc">The ultimate starter pack for any experience level</span></a>
+          </li>
+        </ul>
+      </div>-->
+         
+         
+        <div class="left-nav-holder-kits main-additional">
+        <h4>New To The Shop</h4>
+        <ul class="left-nav main-category-nav-kits">
+          <li><a data-class="AlpenGlow Multipack" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/kits-alpenGlow_multipack-01.svg?v=1626458324" data-sizes="auto" href="/products/alpenglow-multipack">AlpenGlow Multipack  
+			  <span class="kits-desc">4 piece USB lantern set for offgrid and backyard</span></a>
+          </li>
+        </ul>
+      </div>
+         
+         <div class="left-nav-holder-kits main-additional">
+        <h4>Perfect Starter Kit</h4>
+        <ul class="left-nav main-category-nav-kits">
+          <li><a data-class="CampStove 2 Bundle" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/kits-campstove2-bundle-01.svg?17530" data-sizes="auto" href="/products/campstove-complete-cook-kit">CampStove Complete Cook Kit   
+			  <span class="kits-desc">Your camp kitchen to go - grill, cook, boil &amp; charge</span></a>
+          </li>
+        </ul>
+      </div>
+
+         
+             <div class="left-nav-holder-kits main-additional">
+        <h4>Customer Favorite</h4>
+        <ul class="left-nav main-category-nav-kits">
+          <li><a data-class="FirePit Cooking Kit" class="lazyload" data-bgset="https://cdn.shopify.com/s/files/1/0666/9741/files/kits-firepitCookKit-01.svg?v=1603735682" data-sizes="auto" href="/products/firepit-cooking-kit">FirePit Cooking Kit 
+			  <span class="kits-desc">FirePit + cooking accessories</span></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="left-nav-holder-kits main-additional">
+
+
+        <ul class="left-nav main-category-nav-kits">
+          <li><a data-class="Shop All" href="/products/#systems">Shop All Kits</a>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+         
+
+   </div>      
+    </header>
+    </div>
+    <a name="content"></a>
+    {{ content_for_layout }}
+
+    {% include 'footer' %}
+
+  </div><!-- #wrap -->
+  </div>
+
+
+  <div id="modals"></div>
+
+  <input type="hidden" name="_pc_params" value="{{ shop.permanent_domain }}:{{ customer.id }}" />
+
+  <!-- Footer Javascript ================================================== -->
+  {% comment %}
+    change the prices to the location variant prices
+  {% endcomment %}
+  <script type="text/javascript">
+    // jQuery(function(){
+    //   if( BioliteLocale.current_currency != BioliteLocale.default_currency && BioliteLocale.show_intnl_prices ){
+    //     BioliteLocale.setLocationVariantPrices(BioliteLocale.current_currency, BioliteLocale.current_locale);
+    //   }
+    // });
+
+
+$( "a.campstovebundle" ).on({
+      mouseenter: function () {
+          $("a[data-class='CampStove']").addClass('active-bundle');
+          $("a[data-class='PortableGrill']").addClass('active-bundle');
+          $("a[data-class='KettlePot']").addClass('active-bundle');
+        $("a[data-class='CoffeePress']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+         $("a[data-class='CampStove']").removeClass('active-bundle');
+          $("a[data-class='PortableGrill']").removeClass('active-bundle');
+          $("a[data-class='KettlePot']").removeClass('active-bundle');
+        $("a[data-class='CoffeePress']").removeClass('active-bundle');
+      }
+});
+
+
+
+$( "a.pizzadomebundle" ).on({
+      mouseenter: function () {
+          $("a[data-class='BaseCamp']").addClass('active-bundle');
+          $("a[data-class='PizzaDome']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+         $("a[data-class='BaseCamp']").removeClass('active-bundle');
+          $("a[data-class='PizzaDome']").removeClass('active-bundle');
+      }
+});
+
+    $( "a.firepitcompletekit" ).on({
+      mouseenter: function () {
+          $("a[data-class='FirePit']").addClass('active-bundle');
+          $("a[data-class='Solar Carry Cover']").addClass('active-bundle');
+          $("a[data-class='FirePoker']").addClass('active-bundle');
+          $("a[data-class='FireMat']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+         $("a[data-class='FirePit']").removeClass('active-bundle');
+          $("a[data-class='Solar Carry Cover']").removeClass('active-bundle');
+        $("a[data-class='FirePoker']").removeClass('active-bundle');
+          $("a[data-class='FireMat']").removeClass('active-bundle');
+      }
+});
+    
+        $( "a.firepitcocookaccessoryset" ).on({
+      mouseenter: function () {
+          $("a[data-class='FirePit Griddle']").addClass('active-bundle');
+          $("a[data-class='FirePit Grill Lid']").addClass('active-bundle');
+          $("a[data-class='Prep Grill Toolkit']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+         $("a[data-class='FirePit Griddle']").removeClass('active-bundle');
+          $("a[data-class='FirePit Grill Lid']").removeClass('active-bundle');
+        $("a[data-class='Prep Grill Toolkit']").removeClass('active-bundle');
+      }
+});
+    
+            $( "a.firepitcocookingkit" ).on({
+      mouseenter: function () {
+         $("a[data-class='FirePit']").addClass('active-bundle');  
+        $("a[data-class='FirePit Griddle']").addClass('active-bundle');
+          $("a[data-class='FirePit Grill Lid']").addClass('active-bundle');
+          $("a[data-class='Prep Grill Toolkit']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+           $("a[data-class='FirePit']").removeClass('active-bundle');
+        $("a[data-class='FirePit Griddle']").removeClass('active-bundle');
+          $("a[data-class='FirePit Grill Lid']").removeClass('active-bundle');
+        $("a[data-class='Prep Grill Toolkit']").removeClass('active-bundle');
+      }
+});
+
+
+
+
+    $( "a.powerlightbundle" ).on({
+      mouseenter: function () {
+          $("a[data-class='PowerLight']").addClass('active-bundle');
+          $("a[data-class='SiteLight']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+         $("a[data-class='PowerLight']").removeClass('active-bundle');
+          $("a[data-class='SiteLight']").removeClass('active-bundle');
+      }
+});
+    
+        $( "a.bikecommuterkit" ).on({
+      mouseenter: function () {
+          $("a[data-class='HeadLamp']").addClass('active-bundle');
+          $("a[data-class='PowerLight Mini']").addClass('active-bundle');
+        $("a[data-class='Light Diffusing Stuffsack']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+         $("a[data-class='HeadLamp']").removeClass('active-bundle');
+          $("a[data-class='PowerLight Mini']").removeClass('active-bundle');
+        $("a[data-class='Light Diffusing Stuffsack']").removeClass('active-bundle');
+      }
+});
+
+        $( "a.sitelightvarietypack" ).on({
+      mouseenter: function () {
+          $("a[data-class='SiteLight Mini']").addClass('active-bundle');
+          $("a[data-class='SiteLight']").addClass('active-bundle');
+          $("a[data-class='SiteLight XL']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+         $("a[data-class='SiteLight Mini']").removeClass('active-bundle');
+         $("a[data-class='SiteLight']").removeClass('active-bundle');
+         $("a[data-class='SiteLight XL']").removeClass('active-bundle');
+
+      }
+});
+
+        $( "a.nanogridlightkit" ).on({
+      mouseenter: function () {
+          $("a[data-class='SiteLight Mini']").addClass('active-bundle');
+          $("a[data-class='SiteLight']").addClass('active-bundle');
+          $("a[data-class='SiteLight XL']").addClass('active-bundle');
+        $("a[data-class='BaseLantern']").addClass('active-bundle');
+          $("a[data-class='PowerLight']").addClass('active-bundle');
+          $("a[data-class='PowerLight Mini']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+         $("a[data-class='SiteLight Mini']").removeClass('active-bundle');
+         $("a[data-class='SiteLight']").removeClass('active-bundle');
+         $("a[data-class='SiteLight XL']").removeClass('active-bundle');
+        $("a[data-class='PowerLight Mini']").removeClass('active-bundle');
+         $("a[data-class='PowerLight']").removeClass('active-bundle');
+         $("a[data-class='BaseLantern']").removeClass('active-bundle');
+
+      }
+});
+    
+	         $( "a.plmini4pack" ).on({
+      mouseenter: function () {
+          $("a[data-class='PowerLight Mini']").addClass('active-bundle');
+      },
+      mouseleave: function () {
+         $("a[data-class='PowerLight Mini']").removeClass('active-bundle');
+
+      }
+});
+
+
+
+    $( ".stoves-dropdown" ).each(function() {
+
+    var navHeight = $(this).outerHeight(true) - 2;
+
+    $(this).find(".nav-featured-area").css("height", navHeight);
+
+
+  })
+
+
+  $( ".maindrop" ).each(function() {
+
+    var navHeight = $(this).outerHeight(true);
+
+    $(this).find(".nav-featured-area-link").css("height", navHeight);
+    $(this).find(".nav-featured-area-link img").css("height", navHeight);
+    $(this).find(".main-feature-hover").css("height", navHeight);
+
+  });
+
+
+
+
+  </script>
+  {% comment %}
+    ajax templates, etc
+  {% endcomment %}
+  {{ 'handlebars.min.js' | asset_url | script_tag }}
+  {% include 'ajax-templates' %}
+  {% comment %}
+    misc local javascripts
+  {% endcomment %}
+  {{ 'all.min.js' | asset_url | script_tag }}
+  {{ 'plugins.min.js' | asset_url | script_tag }}
+  {{ 'app.js' | asset_url | script_tag }}
+  {{ 'beaccessible.js' | asset_url | script_tag }}
+  {{ 'new.js' | asset_url | script_tag }}
+  {{ 'remodal.js' | asset_url | script_tag }}
+  {{ 'jquery.event.move.js' | asset_url | script_tag }}
+  {{ 'ajaxinate.min.js' | asset_url | script_tag }}
+  {{ 'ls.unveilhooks.min.js' | asset_url | script_tag }}
+
+
+
+  <!--LOCATION SWITCHER-->
+  {% section 'location-switcher' %}
+  {% include 'geoip' %}
+
+  <!-- Analytics, etc ================================================== -->
+
+  <script>
+    var _gaq = _gaq || [];
+  </script>
+
+
+
+  {% unless settings.limit == 'No limit' %}
+    {{ 'jquery.limit.min.js' | asset_url | script_tag }}
+    <script type="text/javascript" charset="utf-8">
+    //<![CDATA[
+    Shopify.Cart.setProductHandle('{{ product.handle }}');
+    Shopify.Cart.limit( {
+        limitPer: '{{ settings.limit_per }}',
+        limitQuantity: {{ settings.limit_quantity }}{% if settings.limit == 'Enabled for products listed' %},
+        limitProductHandles: jQuery.trim("{{ settings.limit_product_handles }}").split(/[\s,;]+/){% endif %}{% if settings.limit_per == 'cart' and settings.limit_quantity == '1' %},
+        limitSkipCartPage: {% if settings.limit_skip_cart_page %}true{% else %}false{% endif %}{% endif %}
+        } );
+    //]]>
+    </script>
+  {% endunless %}
+
+
+    <script>
+    window.addEventListener('load',function(){
+      jQuery('[data-unique-modal-name="footer-subscribe"]').submit(function(){
+        ga('send','event','form','submit','Sign up now');
+      });
+    });
+  </script>
+  <script src="https://js.b1js.com/tagcontainer.js?id=1b591323089a4883ab51aa13c040ec81&type=1"></script>
+  
+  {% include 'ga-tracking' %}
+  
+  <!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+--------------------------------------------------->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 990942709;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/990942709/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+  
+<!-- AvantLink Global -->
+<script type="text/javascript">
+(function() {
+var avm = document.createElement('script'); avm.type = 'text/javascript'; avm.async = true;
+avm.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.avmws.com/1013526/';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(avm, s);
+})();
+</script>
+    
+  
+  
+ {% if template == 'page.contact' %}
+
+
+  
+
+{% include 'zendesk' %}
+    <script type="text/javascript">
+  zE('webWidget', 'hide');
+</script>
+
+  
+  
+  {% endif %}
+
+
+  
+{% comment %} surefoot test - bio-4: disappearing category page [Collections redirect to sorted All Products]   {% endcomment %}
+{% if settings.bio_4_enabled %}
+  {% include 'surefoot-bio-4' %}
+{% endif %}
+
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+onclick="dataLayer.push({ 'ecommerce': null });dataLayer.push({
+'event': 'add_to_cart',
+'ecommerce': {
+		'items': [{
+		'item_id': '{{ product.id }}',
+		'item_name': '{{ product.title | remove: "'" | remove: '"' }}',
+		'item_brand': '{{ product.vendor | remove: "'" | remove: '"' }}',
+		'item_category': '{{ product.collections[0].title | remove: "'" | remove: '"' }}',
+		'item_variant': '{{ product.selected_variant.sku }}',
+		'currency': '{{ shop.currency }}',
+		'price': '{{ product.price  | times: 0.01}}'
+		}]
+	}
+});"

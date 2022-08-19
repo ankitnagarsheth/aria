@@ -1,0 +1,988 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="{{ locale }}" class="{{ checkout_html_classes }}">
+ <head>
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+
+   <title>{{ page_title }}</title>
+
+   <!-- CSS ================================================== -->
+   {{ 'font-awesome.min.css' | asset_url | stylesheet_tag }}
+  <style>
+    /**
+ * BIOLITE CHECKOUT CUSTOM STYLES
+ */
+
+
+body {
+  background: #f5f5f5 !important;
+}
+@font-face {
+  font-family: reader-regular;
+  src: url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-bold.eot");
+  /* IE9 Compat Modes */
+  src: url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-bold.eot?#iefix") format("embedded-opentype"), url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-bold.woff") format("woff"), url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-bold.ttf") format("truetype"), url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-bold.svg#reader-regular") format("svg");
+  /* Legacy iOS */
+  font-style: normal;
+  font-weight: 600;
+}
+@font-face {
+  font-family: reader-regular;
+  src: url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-regular.eot");
+  /* IE9 Compat Modes */
+  src: url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-regular.eot?#iefix") format("embedded-opentype"), url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-regular.woff") format("woff"), url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-regular.ttf") format("truetype"), url("https://biolitemisc.s3-us-west-2.amazonaws.com/fonts/reader-regular.svg#reader-regular") format("svg");
+  /* Legacy iOS */
+  font-style: normal;
+  font-weight: 300;
+}
+
+
+
+/**
+ * HEADER
+ */
+.banner {padding:0; display:block;}
+.header {
+  height: 80px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.15);
+  background-color: rgba(37, 39, 41, 1);
+}
+
+.header .wrap {
+  max-width: 100%;
+  width:100%;
+  padding:0;
+  height:82px;
+  // padding: 0 25px;
+}
+.checkout-logo {
+ display:block;
+  width:200px;
+  margin: 0 0 24px 0;
+}
+
+
+#logo {
+  width: 100%;
+  min-height: 150px;
+  background-image: url({{ 'logo-header.png' | asset_url }});
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: auto;
+}
+
+.header .icon--lock {
+  display:none;
+  top: 27px;
+}
+
+/*#tagline { display: none; }*/
+
+/**
+ * BODY
+ */
+
+.order-summary-recap {
+  display: none;
+}
+
+.shop {
+  position:relative;
+  width:100%;
+  height:100%;
+  padding: 0 0px;
+
+  h1.shop__name {
+    display: none;
+  }
+
+  a {
+    position:relative;
+    display:block;
+    width:100%;
+    height:100%;
+
+    &:before {
+      content:'';
+      position:absolute;
+      top:0;left:25px;
+      width: 105px;
+      height: 35px;
+      display: block;
+      background-image: url({{ 'logo-header-white.png' | asset_url }});
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      background-size: 105px 35px; 
+      padding-top: 35px;
+    }
+
+    &:after {
+      content:'';
+      position:absolute;
+      top:0;right:23px;
+      width:178px;
+      height:100%;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      background-image:url('https://s3-us-west-2.amazonaws.com/biolitewebsite/nav/return-to-store-01.svg');
+    }
+  }
+}
+
+.logo__text {
+  content:'';
+      top:0;left:0;
+      width: 200px;
+      height: 64px;
+      display: block;
+      background-image: url({{ 'logo-header.png' | asset_url }});
+      background-repeat: no-repeat;
+      background-position: 0% 0%;
+      background-size: 200px 64px; 
+  text-indent:-9999px;
+}
+
+.btn,
+.btn.btn--primary,
+a.btn,
+a.btn.btn--primary  {
+  display: inline-block;
+  padding: 15px 18px;
+  line-height: 1.1;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid transparent;
+  user-select: none;
+  appearance: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #008fa1;
+  font-family: "reader-regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff !important;
+  text-transform: capitalize;
+
+}
+    .btn, .sp-modal-toggle {
+      background-color: #008fa1 !important;
+          font-weight: 700 !important;
+    }
+    
+    .btn, .sp-modal-toggle:hover {
+      background-color: #067e8d !important;
+    }
+
+.btn:hover,
+.btn.btn--primary:hover,
+.btn:focus,
+.btn.btn--primary:focus {
+  background-color: #319c9b;
+}
+
+.section__summary {
+  font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.section__header {
+  /*margin-bottom: 0;*/
+}
+
+h3, h5 {
+  color: #262729;
+  font-family: "reader-regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 26px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 300;
+  margin: 1rem 0;
+}
+
+h2 {
+   font-family: "reader-regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-transform: capitalize;
+  font-weight:600;
+
+}
+
+
+#contact-information {
+  padding: 35px;
+  background: #fff;
+}
+
+#contact-information h3 { margin-top: 0; }
+
+#checkout {
+  margin-top: 50px !important;
+}
+
+a {
+  color: #008fa1 !important;
+}
+
+
+/**
+ * FORM STUFF
+ */
+.no-js .fieldset>.field[data-shown-if-js]:first-child+.field[data-shown-if-js]+.field, .no-js .fieldset>.field[data-shown-if-js]:first-child+.field[data-shown-if-js]+.field-group, .no-js .fieldset>.field[data-shown-if-js]:first-child+.field[data-shown-if-js]+.field-group>.field:first-child, .no-js .fieldset>.field[data-shown-if-js]:first-child+.field-group[data-shown-if-js]+.field, .no-js .fieldset>.field[data-shown-if-js]:first-child+.field-group[data-shown-if-js]+.field-group, .no-js .fieldset>.field[data-shown-if-js]:first-child+.field-group[data-shown-if-js]+.field-group>.field:first-child, .no-js .fieldset>.field-group[data-shown-if-js]:first-child+.field[data-shown-if-js]+.field, .no-js .fieldset>.field-group[data-shown-if-js]:first-child+.field[data-shown-if-js]+.field-group, .no-js .fieldset>.field-group[data-shown-if-js]:first-child+.field[data-shown-if-js]+.field-group>.field:first-child, .no-js .fieldset>.field-group[data-shown-if-js]:first-child+.field-group[data-shown-if-js]+.field, .no-js .fieldset>.field-group[data-shown-if-js]:first-child+.field-group[data-shown-if-js]+.field-group, .no-js .fieldset>.field-group[data-shown-if-js]:first-child+.field-group[data-shown-if-js]+.field-group>.field:first-child, .fieldset>.field:first-child, .fieldset>.field-group:first-child, .fieldset>.field-group:first-child>.field:first-child, .fieldset>.field-group:first-child>.field-group:first-child>.field:first-child {
+  border: 0px solid #e5e3e3;
+}
+
+.fieldset {
+  border: none;
+  background: transparent;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+}
+.field label {
+  font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+  color: #b3b3b5;
+  border-right: 1px solid #e5e3e3;
+  width: 34%;
+}
+
+.field {
+  margin-bottom: 8px;
+  border: 0px solid #e5e3e3; /* stroke */
+  border-radius: 5px; /* border radius */
+  background-clip: padding-box; /* prevents bg color from leaking outside the border */
+  background-color: #f5f5f5;
+}
+
+.field input, .field select {
+  /*width: 60%;*/
+  width:100%;
+  padding-left: 5% !important;
+}
+
+
+.field__inner--horizontal-padding, .field label, .field input[type="text"], .field input[type="tel"], .field input[type="email"], .field input[type="password"], .field select {
+  padding-top: 14px;
+  padding-bottom: 14px;
+
+}
+
+input[type="text"], input[type="tel"], input[type="email"], input[type="password"], select {
+  font-family: "reader-regular", sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+input[type="text"]:-webkit-autofill, input[type="tel"]:-webkit-autofill, input[type="email"]:-webkit-autofill, input[type="password"]:-webkit-autofill, select:-webkit-autofill {
+/*  box-shadow: 0 0 0 50px #f5f5f5;*/
+}
+
+input:-webkit-autofill {
+  color: #fff !important;
+}
+
+.field.field--focus {
+  box-shadow: 0 0 0 2px #008fa1;
+}
+
+.field.field--focus label {
+  color: #008fa1;
+}
+.boxshadow .field__input:focus {
+    box-shadow: 0 0 0 2px #319c9b;
+  border-color:#008fa1;
+}
+.field__input:focus, {
+  border-color:#008fa1;
+}
+.review-block__link a {
+   font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:600;
+}
+.order-summary-toggle__text {
+    color: #008fa1;  
+  font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:300;
+}
+.sidebar .order-summary__emphasis {
+  font-weight:600;
+}
+.step__footer__previous-link-content {
+   font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:600;
+    text-transform: capitalize;
+}
+.os-header__hanging-icon {
+      stroke: #008fa1;
+}
+.os-order-number {
+  font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:300;
+}
+.total-recap__final-price {
+    font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:600;
+}
+.address {
+  font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:300;
+}
+.order-summary-toggle__icon {
+    fill: #008fa1;
+}
+.breadcrumb__item {
+  font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:600;
+}
+.review-block__label {
+  font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:600;
+}
+.review-block__content {
+    font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:300;
+}
+
+.call-to-action label {
+  font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #b3b3b5 !important;
+}
+.radio__label, .checkbox__label {
+   font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight:300;
+
+}
+
+
+.chrome input[type="checkbox"]:focus, .safari input[type="checkbox"]:focus {
+  box-shadow: 0 0 0 2px #008fa1;
+}
+
+.chrome input[type="checkbox"]:after, .safari input[type="checkbox"]:after {
+    background-image: none;
+    content: '\f00c';
+    font-family: "FontAwesome", FontAwesome;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    position: absolute;
+    line-height: 0px;
+    top: 4px !important;
+    left: -1px !important;
+    width: 100%;
+    padding-left: 0px;
+}
+
+/* Errors */
+p.field__error-message {
+  padding-bottom: 5px;
+  padding-left: 5%;
+  border-left: 1px solid #e5e3e3;
+  margin-left: 34%;
+}
+
+.field.field--error label, .field.field--error input[type="text"] , .field.field--error input[type="tel"] , .field.field--error input[type="email"] , .field.field--error input[type="password"] , .field.field--error select {
+  padding-bottom: 0;
+}
+
+
+/**
+ * ORDER SUMMARY
+ */
+.order-summary {
+  margin-top: 50px;
+  border: none;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  /*background: #fff;*/
+}
+
+.summary-body {
+  border-top: 4px solid #f5f5f5;
+}
+
+.order-summary__section {
+  font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #b3b3b4;
+  font-size: 13px;
+  text-transform: uppercase;
+  border-top: 0px solid #f5f5f5;
+}
+.order-summary__section .fieldset {margin:0;}
+.order-summary__section--total-lines { border-top:1px solid #e1e1e1; }
+
+a#show-discount-form-link {
+  color: #008fa1;
+  font-size: 14px;
+  text-transform: none;
+}
+    
+    .payment-due__price {
+    font-weight: 700 !important;
+    }
+
+.order-summary .payment-due-container .payment-due__label {
+  font-family: "reader-regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 21px;
+  padding: 0;
+  font-weight: 600;
+  color: #262729;
+  text-transform: none;
+}
+.order-summary .payment-due-container .payment-due__price {
+  font-family: "reader-regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 21px;
+  color: #262729;
+  font-weight: 600;
+}
+.payment-due__price {
+    font-weight: 600;
+}
+
+p {
+   font-family: "reader-regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+ 	font-weight: 300;
+}
+
+/**
+ * PAYMENT
+ */
+
+#shipping-method,
+#payment {
+  border-top: none;
+  background: #fff;
+  padding: 35px;
+  margin-top: 40px;
+}
+
+#payment label {
+  border-right: none;
+}
+
+#checkout_credit_card_month {
+  width: 30%;
+}
+
+.chrome input[type="radio"]:checked, .safari input[type="radio"]:checked,
+.chrome input[type="radio"]:active, .safari input[type="radio"]:active,
+.chrome input[type="radio"]:focus, .safari input[type="radio"]:focus {
+  background-color: #008fa1;
+  border-color: #008fa1;
+  box-shadow: none;
+  
+}
+.chrome input[type="radio"], .safari input[type="radio"], .firefox input[type="radio"] {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #d8d8d8;
+  padding: 0 !important;
+  
+}
+
+.chrome input[type="radio"]:after, .safari input[type="radio"]:after {
+    background-image: none;
+    content: '\f00c';
+    font-family: "FontAwesome", FontAwesome;
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    position: absolute;
+    line-height: 18px;
+    top: 0px;
+    left: 1px;
+    width: 100%;
+    padding-left: 0px;
+}
+
+.shipping-option__price {
+  top: 12px;
+}
+
+/**
+ * ORDER COMPLETE
+ */
+.payment-method-total {
+  color: #008fa1;
+}
+
+/**
+ * FOOTER
+ */
+.box-shadow .footer,
+.footer {
+  background: #f5f5f5 !important;
+  box-shadow: none !important;
+  font-family: "reader-regular", "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  margin-top: 100px;
+}
+
+
+/**
+ * FIREFOX
+ */
+.field.field--has-radio-button {
+  input[type="radio"],
+  #checkout_shipping_rate_id_pi_customised_shipping-biolite_custom-000,
+  #checkout_shipping_rate_id_shopify-us20standard20shipping-000,
+  #checkout_different_billing_address_false,
+  #checkout_different_billing_address_true {
+    width: 20px;
+  }
+
+}
+
+
+/**
+ * PRINT
+ */
+
+@media print {
+  body { background: transparent; }
+  footer { 
+    background: transparent !important; 
+    background-color: transparent !important;
+  }
+}
+
+/**
+ * MOBILE
+ */
+@media only screen and (max-width: 767px) {
+  h3, h5 {
+    font-size: 18px;
+  }
+
+  #contact-information, #shipping-method, #payment {
+    padding: 20px;
+  }
+
+  .field label {
+    font-size: 10px;
+  }
+
+  input[type="text"], input[type="tel"], input[type="email"], input[type="password"], select {
+    font-size: 12px;
+  }
+
+  .select-group:after {
+    display: none;
+  }
+
+  .chrome input[type='checkbox'], .safari input[type='checkbox'] {
+    background: none;
+  }
+
+  .chrome input[type='checkbox']:checked:after, .safari input[type='checkbox']:checked:after {
+    left: 0;
+  }
+
+  a#show-discount-form-link {
+    font-size: 15px;
+  }
+  
+  
+}
+
+/**
+ * Interstitial
+ */
+.interstitial {
+  position: relative;
+  width: 100%;
+  min-height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  color: white;
+}
+.interstitial.interstitial--huge {
+  padding-top: 125px;
+  padding-bottom: 205px;
+}
+.interstitial.interstitial--circle_clip:before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  top: -24px;
+  left: 50%;
+  width: 48px;
+  height: 48px;
+  background-color: #fff;
+  border-radius: 24px;
+  margin-left: -24px;
+}
+.interstitial .interstitial__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+.interstitial .interstitial__overlay.interstitial__overlay--green {
+  background-color: transparent;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABXwAAAHJCAIAAAC5W2bZAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAxJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzIyOEZBRjI4MzEzMTFFNDg3NzVCQzlCOTQ3OTlEQUQiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzIyOEZBRjE4MzEzMTFFNDg3NzVCQzlCOTQ3OTlEQUQiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiBNYWNpbnRvc2giPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0iRDkxM0RCM0Y0OEE3MjJDMUFCOTNGRDU2MTkxMzBENkIiIHN0UmVmOmRvY3VtZW50SUQ9IkQ5MTNEQjNGNDhBNzIyQzFBQjkzRkQ1NjE5MTMwRDZCIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+ac632wAAGZBJREFUeNrs3W1u3TqWBdC6imbTQ22gZlxSN8DC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AAARuxLwk2p9hrdtG3Le4to5uWyfprXfdfp6rb4+a/VcZXWNGv9d11uv/ufPfDrl6nnX59Vd699rvr3GP9t40ucdtd5Gfeek97/r8wFq/KYDAAAAECF0AAAAACKEDgAAAECE0AEAAACIEDoAAAAAEUIHAAAAIELoAAAAAETsSsDMWvseb9vXOVqtv/3n/csZa/untc4rvX/6Otbq3GucrecdtZ5bx7PKdRx1Xzzteci91db/Xddbr/nOdr/0Gs+o9dDrO611/1WU92CZ3XXbq26wOr/pAAAAAEQIHQAAAIAIoQMAAAAQIXQAAAAAIoQOAAAAQITQAQAAAIgQOgAAAAARuxKQUOs/XPoYr6vWP3nbti77z1af1j7StXmNqv8q5+11v4yqz6j7vbWfeboO8JPrOX3/3nW+dx1nr+s723xbv0PS+39nnOXdV7a96tnrPh11v4MvMAAAACBC6AAAAABECB0AAACACKEDAAAAECF0AAAAACKEDgAAAECE0AEAAACI2JWAGdT6GG9bn1ystQ9z7byl6/L89Unv32ucteuSrnOv86bX7Sr3V7rOq9cB77UZ1O7H1evQa169xjlqPOnr2/od1br/KnrV4a7PGajxpQUAAABECB0AAACACKEDAAAAECF0AAAAACKEDgAAAECE0AEAAACIEDoAAAAAEbsS8JNq/Ypfr1eX49T6FW9bNl9rPW/r/q31GTWvVcaZXp+zjSc9zl7PgZr0uurV5zxdN8Y+T1Z5n961br3m22ucs42n13lHravW77r0/k+rP6T5QgIAAAAihA4AAABAhNABAAAAiBA6AAAAABFCBwAAACBC6AAAAABECB0AAACAiF0JmFmtj/G29cnLWvs21877er2WqM+oebWet3ZdWsfTa/3cdTyj7rte9+mo+661bq1G1fmu74vV1db/Xevca769xrn6eHqdt3ac1u+o2dbzd6p93a5y361VZ57Alw0AAAAQIXQAAAAAIoQOAAAAQITQAQAAAIgQOgAAAAARQgcAAAAgQugAAAAAROxKwJ209ovetmzu1nre1v1fr9cS9ayNs/U4tfGk69Ban9bx9Fqf6fq09glP31+tfchHrZN0nbnHe+pp6222OjxtnbS+30etw9Zx9prX9Tjl3VG26XHCXflNBwAAACBC6AAAAABECB0AAACACKEDAAAAECF0AAAAACKEDgAAAECE0AEAAACI2JWAGdT6FZeuyJ/V+h5v2xYdT+t5a+Nv1Xre9P7p67v6+uml1zhb+4GPWrejnjOtetWHe7+/ZlO7H1evT6959RrnqDrXzttrXq3fRa37z3b/znYdV3/+gN90AAAAACKEDgAAAECE0AEAAACIEDoAAAAAEUIHAAAAIELoAAAAAEQIHQAAAICIXQl4slo/5G3bpjrv6/Waqm6tfa1b67nKdWmtz2zX8Wn3XXr9u773oO/9nHWrPTdGjXO28Ywa/6jvilF1ax0nUPyfAAMAnQ83q6Vd0R0AAAAASUVORK5CYII=");
+  opacity: 0.82;
+}
+.interstitial .interstitial__overlay.interstitial__overlay--light {
+  background-color: rgba(0, 0, 0, 0.15);
+}
+.interstitial .interstitial__content {
+  position: relative;
+  z-index: 1;
+}
+
+.table-cell {
+  display: table-cell !important;
+  vertical-align: middle;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.section-xlarge {
+  padding: 90px 0;
+}
+
+.cart-checkout-notice {
+  font-weight: 600;
+  font-size: 14px;
+  line-height:17px;
+  font-family: "reader-regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color:#444444;
+  margin-top:22px;
+  clear:both;
+  display:block;
+  position:relative;
+}
+
+.step__footer {
+    margin-bottom: 30px;
+}
+
+.light {
+  font-weight: 300;
+}
+
+.mt40 {
+  margin-top: 40px !important;
+}
+
+#content {
+  width: 100%;
+  background-color: #fff;
+}
+#content:after {
+  display: block;
+  content: '';
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+
+h6 {
+    font-size: 18px;
+  }
+
+h3, .h3 {
+  font-size: 1.57143em;
+}
+
+
+.alt-payment-list__item--paypal .alt-payment-list__item__link {color:#4d4d4d !important;}
+.input-checkbox:after {margin:0;}
+.input-checkbox:checked, .input-radio:checked,
+.chrome input[type="checkbox"]:focus, .safari input[type="checkbox"]:focus {box-shadow: 0 0 0 2px #008fa1;}
+.chrome input[type="radio"]:after, .safari input[type="radio"]:after {background:none;}
+.input-checkbox, .input-radio, .input-checkbox:focus, .input-radio:focus {box-shadow:none;}
+
+@media only screen and (min-width: 1000px) {
+  .sidebar__content {padding:20px;}
+}
+
+@media only screen and (max-width: 999px) {
+  
+}
+@media only screen and (max-width: 399px) {
+  
+  .shop a:after {
+      width: 120px;
+      background-position: -120px 50%;
+  }
+}
+   </style>
+
+
+   {% include 'attribution-purchase' %}
+     {% include 'convert' %}
+
+
+
+   {{ content_for_header }}
+
+   {{ checkout_stylesheets }}
+   {{ checkout_scripts }}
+
+<script src="//load.sumome.com/" data-sumo-site-id="462c2722c34a888c80fb37fd484416ea398b90f7cb51b84d391f5f6eac93d085" async="async"></script>
+   {% comment %}
+    jQuery is loaded here so that surefoot's checkout modifications can be made w/o depending on Convert
+  {% endcomment %}
+  {{ '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js' | script_tag }}
+  
+  {% render 'shogun-head' %}
+</head>
+ <body>
+{{skip_to_content_link}}
+   
+<div class="banner" data-header>
+     <div class="">
+       {{ content_for_banner }}
+     </div>
+   </div>
+   {{ order_summary_toggle }}
+
+   <div class="content" data-content>
+     <div class="wrap">
+  
+       <div class="main" role="main">
+         <div class="main__header">
+           
+           <a class="logo logo--left" href="https://www.bioliteenergy.com">
+    <img alt="BioLite" class="checkout-logo" src="https://cdn.shopify.com/s/files/1/0666/9741/files/BioLiteLogo_checkout.png?1351230505434698289">
+</a>
+
+           {{ breadcrumb }}
+           {{ alternative_payment_methods }}
+         </div>
+         <div class="main__content">
+           {{ content_for_layout }}
+         <!--<span class="cart-checkout-notice">*NOTE: All shipping carriers are currently experiencing delays to due higher than normal volume. <strong>Allow up to 2 weeks for arrival.</strong>  </span>-->
+
+
+         </div>
+         <div class="main__footer" role="contentinfo">
+           {{ content_for_footer }}
+         </div>
+       </div>
+              <div class="sidebar">
+         <div class="sidebar__header">
+           {{ content_for_logo }}
+         </div>
+         <div class="sidebar__content">
+           {{ content_for_order_summary }}
+         </div>
+       </div>
+     </div>
+   </div>
+
+   {{ tracking_code }}
+   {% include 'gtm' %}
+
+ 
+<!-- CSS Convert - Revenue Tracking Goal-->
+
+<script type="text/javascript">
+(function() {
+  // set DEBUG mode if param `debug` is present in url
+  var DEBUG = (window.location.href.indexOf('debug') > 0)
+  if (DEBUG) console.log('Convert Revenue goal tracker - intitialized')
+
+  // only run on Checkout Success pages (that end in /thank_you)
+  var isCheckoutSuccessPage = !!(window.location.href.indexOf('/thank_you') > 0) 
+
+  
+  var $this = this
+  /**
+   * make sure that Shopify.checkout.total_price and Shopify.checkout.line_items are defined before
+   * pushing the goal to Convert.
+   */
+  function checkForRevenue() {
+    if ($this.revenueCheck.count > $this.revenueCheck.max) return $this.revenueCheck.clear()
+
+    // increment our attempt counter
+    $this.revenueCheck.count++
+
+    if (isCheckoutSuccessPage && window.Shopify.checkout && (typeof window.Shopify.checkout.total_price !== 'undefined' && typeof window.Shopify.checkout.line_items !== 'undefined')) {
+      // clear the interval!
+      $this.revenueCheck.clear()
+      if (DEBUG) console.log('Convert Revenue goal tracker - ecom data found. pushing events')
+
+      /**
+       * Convert.com - Revenue tracking goal
+       */
+
+      window._conv_q = window._conv_q || []
+
+      // revenue = total in dollars.cents (e.g. 123.45)
+      var convertRevenue = parseFloat(window.Shopify.checkout.total_price)
+
+      // products_cnt = number of products in cart
+      var convertProductsCount = window.Shopify.checkout.line_items.reduce(function(count, product) {
+        return count += product.quantity
+      }, 0)
+
+      // trigger revenue goal
+      window._conv_q.push(['pushRevenue', convertRevenue, convertProductsCount, '100217949', 'force_multiple'])
+    }
+  }
+
+  /**
+   * initialize interval check
+   */
+  this.revenueCheck = {
+    max: 100,
+    count: 0,
+    interval: setInterval(checkForRevenue, 100),
+    clear: function() {
+      clearInterval(this.interval)
+    }
+  }
+})()
+</script>
+   
+   <!-- Google Code for Remarketing Tag -->
+<!--------------------------------------------------
+--------------------------------------------------->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 990942709;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+   
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/990942709/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+ 
+   
+   
+   
+ <!-- Google Analytics Enhanced Ecommerce - Checkout Labels to be fired on all Checkout pages (after GA tag)-->
+
+<script type="text/javascript">
+/**
+ * Google Analytics Enhanced Ecommerce - Checkout Labels
+ * - to be fired on all Checkout pages (after GA tag)
+ */
+
+(function() {
+  /**
+   * looks at `Shopify.Checkout` to determine which checkout step we're on, 
+   * then pushes that step info to Google Enhanced Ecommerce for Checkout Labeling
+   */
+  function fireEnhancedEcommerce() {
+    var trackerSend = 'send'
+    var ShopifyCheckoutstep = Shopify.Checkout.step;
+
+    switch (ShopifyCheckoutstep) {
+    case 'contact_information':
+      // Step 2: Shipping Address
+      ga('require', 'ec');
+      ga('ec:setAction', 'checkout', {
+        'step': 2,
+        'option': 'contact_information'
+      });
+      ga(trackerSend, 'event', 'Checkout', 'Shipping Address');
+      break; 
+    case 'shipping_method':
+      // Step 3: Shipping Method
+      ga('require', 'ec');
+      ga('ec:setAction', 'checkout', {
+        'step': 3,
+        'option': 'shipping_method'
+      });
+      ga(trackerSend, 'event', 'Checkout', 'Shipping Method');
+      break; 
+    case 'payment_method':
+      // Step 4: Payment Method
+      ga('require', 'ec');
+      ga('ec:setAction', 'checkout', {
+        'step': 4,
+        'option': 'payment_method'
+      });
+      ga(trackerSend, 'event', 'Checkout', 'Payment Method');
+      break;
+    case 'thank_you':
+      // Step 6: Thank You / Confirmation    
+      ga('require', 'ec');
+      ga('ec:setAction', 'checkout', {
+        'step': 5,
+        'option': 'thank_you'
+      });
+      ga(trackerSend, 'event', 'Checkout', 'Thank You');
+      break;
+    }
+  }
+
+  var attempts = 0;
+  var MAX_ATTEMPTS = 20;
+  var TIMEOUT_INTERVAL = 500;
+
+  /**
+   * check for GA functions and make sure the tracker is loaded on the page
+   */
+  function pollForGA() {
+    setTimeout(function(){
+      if (window.ga && window.ga.loaded && typeof window.ga.getAll === 'function' && window.ga.getAll().length) {
+        // GA has been loaded, proceed with event push
+        fireEnhancedEcommerce()
+
+      } else if (attempts < MAX_ATTEMPTS) {
+        // GA not loaded yet, but still under max attempts, so keep looking
+        attempts++;
+        pollForGA();
+      }
+    }, TIMEOUT_INTERVAL)
+  }
+  
+  pollForGA();
+})();
+  </script>
+   
+<!-- Taboola Pixel Code -->
+<script>
+    _tfa.push({notify: 'event', name: 'make_purchase', id: 1184430});
+</script>
+<noscript>
+    <img src='//trc.taboola.com/1184430/log/3/unip?en=make_purchase'
+        width='0' height='0' style='display:none'/>
+</noscript>
+<!-- End of Taboola Pixel Code -->
+   
+   <!-- Hotjar Tracking Code for https://www.bioliteenergy.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1118797,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+   
+{% comment %} surefoot test - bio-8: trust me on this one [Checkout redesign]   {% endcomment %}
+{% if settings.bio_8_enabled %}
+  {% include 'surefoot-bio-8' %}
+{% endif %}
+   
+</body>
+</html>

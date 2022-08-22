@@ -1,0 +1,271 @@
+<!-- Taboola Pixel Code -->
+<script type='text/javascript'>
+  window._tfa = window._tfa || [];
+  window._tfa.push({notify: 'event', name: 'page_view', id: 1184430});
+  !function (t, f, a, x) {
+         if (!document.getElementById(x)) {
+            t.async = 1;t.src = a;t.id=x;f.parentNode.insertBefore(t, f);
+         }
+  }(document.createElement('script'),
+  document.getElementsByTagName('script')[0],
+  '//cdn.taboola.com/libtrc/unip/1184430/tfa.js',
+  'tb_tfa_script');
+</script>
+<noscript>
+  <img src='//trc.taboola.com/1184430/log/3/unip?en=page_view'
+      width='0' height='0' style='display:none'/>
+</noscript>
+<!-- End of Taboola Pixel Code -->
+
+
+{% if first_time_accessed %}
+<!-- New Bing Ads Script 10/10/16 -->
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"5103767"};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script><noscript><img src="//bat.bing.com/action/0?ti=5103767&Ver=2" height="0" width="0" style="display:none; visibility: hidden;" /></noscript>
+<!-- End Bing Ads Script 10/10/16 -->
+
+<!-- Bing - Passing Sales Value -->
+<script>
+window.uetq = window.uetq || [];
+window.uetq.push({ 'gv' : {{ subtotal_price | money_without_currency }} });
+</script>
+<!-- End Bing - Passing Sales Value -->
+{% endif %}
+
+<script type="text/javascript">
+  	var _vis_opt_revenue = "{{ _vis_opt_revenue }}";
+	window._vis_opt_queue = window._vis_opt_queue || [];
+	window._vis_opt_queue.push(function() {_vis_opt_revenue_conversion(_vis_opt_revenue);});
+</script>
+
+<!-- Avant Order Script -->
+<script type="text/javascript">
+var _AvantMetrics = _AvantMetrics || [];
+_AvantMetrics.push(['order',{ order_id:'{{ order.order_number }}', amount:'{{ order.total_price | money_without_currency}}', state:'{{ order.shipping_address.province_code }}', country:'{{ order.shipping_address.country_code }}' }]);
+{% for line_item in order.line_items %}
+_AvantMetrics.push(['item',{ order_id:'{{ order.order_number }}', variant_sku:'{{ line_item.sku }}', parent_sku:'{{ line_item.sku }}', price:'{{ line_item.price | money_without_currency}}', qty:'{{ line_item.quantity }}' }]);
+{% endfor %}
+</script>
+
+<script type="text/javascript">
+(function() {
+var avm = document.createElement('script'); avm.type = 'text/javascript';
+avm.async = true;
+avm.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.avmws.com/1013526/';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(avm, s);
+})();
+</script>
+<!-- End AvantLink Script -->
+
+<!-- LP Adwords conversion -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-990942709"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-990942709');
+</script>
+{% if first_time_accessed %}
+<script>
+  gtag('event', 'conversion', {
+      'send_to': 'AW-990942709/yLCYCLuc0gUQ9avC2AM',
+      'value': {{ subtotal_price | money_without_currency }},
+      'currency': 'USD',
+      'transaction_id': '{{ order_number }}'
+  });
+</script>
+{% endif %}
+
+<!-- Google Dynamic Remarketing for Shopify checkout script -->
+<script type="text/javascript">
+var google_tag_params = {
+	ecomm_prodid: [{% for line_item in order.line_items %}'{{ line_item.id }}'{% unless forloop.last %},{% endunless %}{% endfor %}],
+	ecomm_pagetype: 'purchase',
+	ecomm_totalvalue: {{order.total_price  | money_without_currency }},
+};
+</script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 990942709;
+var google_custom_params = window.google_tag_params;
+var google_remarketing_only = true;
+/* ]]> */
+</script>
+<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/990942709/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+
+<!-- GA Events - https://developers.google.com/analytics/devguides/collection/analyticsjs/events?hl=en -->
+<script>
+   // thank you page loaded
+   addListener(window, 'load', function() {
+       ga('send', 'event', 'page', 'load', 'order-completed');
+   });
+   function addListener(element, type, callback) {
+       if (element.addEventListener) element.addEventListener(type, callback);
+       else if (element.attachEvent) element.attachEvent('on' + type, callback);
+   }
+</script>
+
+
+<!-- Start Experticity Code -->
+{% if first_time_accessed %}
+
+<script type = "text/javascript">
+
+// Define a global JavaScript variable called _exp.
+
+var _exp = window._exp = window._exp || [];
+
+// Activity being recorded
+
+_exp.push(['REDIRECT-ORDERPLACED']);
+
+// Categorization of the page visited
+
+_exp.push(['_setPageCategory', 'order-confirmation']);
+
+// Provide Pixel ID. 
+
+// Ask your Experticity client success manager for this data
+
+_exp.push(['_setPixelId', 'exp-256-148730']);
+
+// Provide order information. 
+
+// Not all information may be relevant to your case.
+
+//   Example: 
+
+//     if you don’t apply tax or shipping charges or 
+
+//     don’t have any discount codes, please leave those items out.
+
+_exp.push(['_setOrderId', '{{ checkout.order_id }}']);
+
+_exp.push(['_setOrderSubtotal', '{{ checkout.subtotal_price | money_without_currency }}']);
+
+_exp.push(['_setOrderDiscount', '{{ checkout.discounts_amount | money_without_currency }}']);
+
+_exp.push(['_setOrderTax', '{{ checkout.tax_price - checkout.subtotal_price | money_without_currency }}']);
+
+_exp.push(['_setOrderShipping', '{{ checkout.shipping_price - checkout.subtotal_price | money_without_currency }}']);
+
+_exp.push(['_setOrderTotal', '{{ checkout.total_price | money_without_currency }}']);
+
+_exp.push(['_setOrderCurrency', '{{ shop.currency }}']);
+
+_exp.push(['_setOrderDiscountCode', '{{ checkout.discounts[0].code }}']);
+
+// Add purchased products individually to the _exp object, if available.
+
+// Your engineers will have to loop through all products purchased 
+
+// and add these lines - one per product.
+
+{% for line_item in checkout.line_items %}
+
+_exp.push(['_addProduct', { id: '{{ line_item.variant.id}}', 
+
+                            name: '{{ line_item.product.title | escape }}',
+
+                            sku: '{{ line_item.variant.sku }}', 
+
+                            upc: '{{ line_item.variant.barcode }}', 
+
+                            price: '{{ line_item.price | money_without_currency}}', 
+
+                            quantity: '{{ line_item.quantity }}'
+
+                          }
+
+]);
+
+{% endfor %}
+
+(function(w, d) {
+
+  function ls() {
+
+    var e = d.createElement('script');
+
+    e.type = 'text/javascript';
+
+    e.async = true;
+
+    e.src = '//plugins.experticity.com/oa/1/plugin.js';
+
+    var s = d.getElementsByTagName('script')[0];
+
+    s.parentNode.insertBefore(e, s);
+
+  }
+
+  if (w.attachEvent) {
+
+    w.attachEvent('onload', ls);
+
+  } else {
+
+    w.addEventListener('load', ls, false);
+
+  }
+
+}(window, document));
+
+</script>
+
+{% endif %}
+
+<!-- End Experticity Code -->
+
+<!-- Hotjar Tracking Code for https://www.bioliteenergy.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1118797,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+{% comment %}
+<!-- Bazaarvoice Pixel code -->
+{% endcomment %}
+<script type="text/javascript">
+if (Shopify.Checkout.step == 'thank_you'){
+window.bvCallback = function (BV) {
+BV.pixel.trackTransaction({
+"orderId" : "{{order_number}}",
+"total" : "{{subtotal_price | money_without_currency }}", "shipping" : "{{shipping_price | money_without_currency }}", "tax" : "{{tax_price | money_without_currency }}",
+"currency" : "{{ shop.currency }}",
+"items"
+: [
+{% for line_item in line_items %}
+{
+"sku" : "{{ line_item.product_id }}",
+"name" : "{{ line_item.title }}",
+"price" : "{{ line_item.price | money_without_currency }}",
+"quantity" : "{{ line_item.quantity }}", },
+{% endfor %}
+],
+{% if customer.first_name %}
+"nickname" : "{{ customer.first_name }}",{% endif %}
+"email" : "{{ customer.email }}",
+"locale" : "en_US"
+});
+};
+}
+</script>
+{% comment %}
+<!-- End Bazaarvoice Ratings & Reviews --> {% endcomment %}
+
+
+<!-- Start CJ Affiliate -->
+<script> cjShopifyData={"ordersCount":"{{customer.orders_count}}","orderId":"{{order_number}}","items":[{%for line_item in line_items%}{"itemId":"{{line_item.sku|handleize}}","unitPrice":{{line_item.price|times:0.01}},"quantity":{{line_item.quantity}},"discount":{{line_item.line_level_total_discount|times:0.01}}},{%endfor%}]} </script>
+<!-- End CJ Affiliate -->

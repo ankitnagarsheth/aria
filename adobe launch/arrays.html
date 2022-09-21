@@ -11,3 +11,93 @@ if (digitalData.page.custom.impressions) {
     return digitalData.page.custom.impressions[key].join('|');
   }).join('|'); // finally, join all of the keys' values
 }
+
+  
+  if(digitalData && digitalData.products && digitalData.products[0]){
+  function getProductString(productVars){
+    var productString = "";
+    var productQuantity = "";
+    var productPrice = ""
+    var planID = "";
+    var optionalCoverageID = "";
+    var dependentsOverFive = "";
+    var dependentsUnderFive = "";
+    for(var i = 0; i < productVars.length; i++){
+      var productID = productVars[i].id;
+      var productName = productVars[i].name;
+      if(productVars[i].optionalCoverageID !== ""){
+        var productCoverageID = productVars[i].optionalCoverageID;
+      }
+      if(productVars[i].planID !== ""){
+        var productPlanID = productVars[i].planID;
+      }
+      if(digitalData.transactionData && digitalData.transactionData.orderID !== ""){
+        productQuantity = 1;
+        productPrice = productVars[i].premiumAmount;
+        planID = "eVar73=" + productVars[i].id;
+        optionalCoverageID = "|eVar74=" + productVars[i].optionalCoverageID;
+        dependentsOverFive = "|eVar75=" + productVars[i].dependant5Over;
+        dependentsUnderFive = "|eVar76=" + productVars[i].dependantUnder5;
+      }
+      productString += ";" + productID + ";" + productQuantity + ";" + productPrice + ";" + ";" + planID + optionalCoverageID + dependentsOverFive + dependentsUnderFive + ","
+    }
+  }
+}
+  
+  
+  
+  
+  
+  /******************************************* BEGIN CODE TO DEPLOY *******************************************/
+/* Adobe Consulting Plugin: apl (appendToList) v4.0 */
+function apl(lv,va,d1,d2,cc){var b=lv,d=va,e=d1,c=d2,g=cc;if("-v"===b)return{plugin:"apl",version:"4.0"};var h=function(){if("undefined"!==typeof window.s_c_il)for(var k=0,b;k<window.s_c_il.length;k++)if(b=window.s_c_il[k],b._c&&"s_c"===b._c)return b}();"undefined"!==typeof h&&(h.contextData.apl="4.0");window.inList=window.inList||function(b,d,c,e){if("string"!==typeof d)return!1;if("string"===typeof b)b=b.split(c||",");else if("object"!==typeof b)return!1;c=0;for(a=b.length;c<a;c++)if(1==e&&d===b[c]||d.toLowerCase()===b[c].toLowerCase())return!0;return!1};if(!b||"string"===typeof b){if("string"!==typeof d||""===d)return b;e=e||",";c=c||e;1==c&&(c=e,g||(g=1));2==c&&1!=g&&(c=e);d=d.split(",");h=d.length;for(var f=0;f<h;f++)window.inList(b,d[f],e,g)||(b=b?b+c+d[f]:d[f])}return b};
+/******************************************** END CODE TO DEPLOY ********************************************/
+if(digitalData.transactionData && digitalData.transactionData.orderID !== ""){
+  var initialAmount = parseFloat(digitalData.transactionData.initialAmount);
+  var monthlyAmount = parseFloat(digitalData.transactionData.monthlyAmount);
+  var optionalCoverageAmount = digitalData.transactionData.optionalCoverageAmount;
+  if (optionalCoverageAmount !== ""){
+   parseFloat(digitalData.transactionData.optionalCoverageAmount); 
+  }  
+  var totalAmount = parseFloat(digitalData.transactionData.totalAmount);
+  
+  s.purchaseID = digitalData.transactionData.orderID;
+  s.events = apl(s.events,"purchase");
+  s.events = apl(s.events,"event58=" + totalAmount);
+  s.events = apl(s.events,"event59=" + initialAmount);
+  s.events = apl(s.events,"event60=" + monthlyAmount);
+  s.events = apl(s.events,"event61=" + optionalCoverageAmount);
+  s.events = apl(s.events,"event153:" + digitalData.transactionData.orderID);
+  s.eVar110 = digitalData.transactionData.orderID;
+  s.eVar111 = digitalData.transactionData.paymentMethod;
+  s.eVar112 = "";
+  if(digitalData.products.length > 1){
+    if(digitalData.transactionData.originalPlanId !== digitalData.products[1].planID){
+      s.eVar112 = digitalData.transactionData.originalPlanId + '|' + digitalData.products[1].planID;
+    }
+  }
+  
+  if(digitalData.products[0] && digitalData.products[0].optionalCoverageID){
+    s.list1 = digitalData.products[0].optionalCoverageID
+  }
+  if(digitalData.products[0] && digitalData.products[0].optionalCoverageID && digitalData.products[1] && digitalData.products[1].optionalCoverageID){
+    s.list1 = digitalData.products[0].optionalCoverageID + '_' + digitalData.products[1].optionalCoverageID;
+  } 
+  if(localStorage.getItem("pdAppStart") !== null){
+    var timeDiffSeconds = (new Date() - parseFloat(localStorage.getItem("pdAppStart"))) / 1000;
+    s.events = apl(s.events, "event154=" + timeDiffSeconds);
+    localStorage.removeItem("pdAppStart");
+  }
+}
+
+if(digitalData.page.pageInfo.pageName === "canada-life:plan-direct:apply online:applyingonline"){
+    s.events = apl(s.events,"scCheckout,event152");
+    localStorage.setItem("pdAppStart", Date.now())
+    }
+
+    //Isaak added 3-8-2022 for account for AB test removing applying-online page - if they land on the Personal Page, check if the mCID is present in the url , if yes, then they came from Quote and are a App start.
+
+    if (digitalData.page.pageInfo.pageName === "canada-life:plan-direct:apply online:personal" && s.getQueryParam('adobe_mc') !== '') {
+        s.events = apl(s.events, "scCheckout,event152");
+        localStorage.setItem("pdAppStart", Date.now())
+    }

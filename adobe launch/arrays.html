@@ -1,0 +1,13 @@
+digitalData.user.0.sessionID
+
+%<dataElement%[index]
+
+_satellite.getVar("<dataElement>")[0] worked. This is really great. Thanks a lot. I wish we could extract values similarly in UI fields as well.
+
+
+if (digitalData.page.custom.impressions) {
+  return Object.keys(digitalData.page.custom.impressions).map(function(key) {
+    // join the array values per key
+    return digitalData.page.custom.impressions[key].join('|');
+  }).join('|'); // finally, join all of the keys' values
+}

@@ -123,4 +123,19 @@ items.forEach(function(product) {
   })();
   
   
-  
+ *******************************************************************************
+    (function(){ 
+ var products = "";
+i=1;
+items = JSON.parse(JSON.stringify(digitalData.products));
+items.forEach(function(product) {
+    		var param = [];
+        param.push("CoverageAmount" + i + "=" + product.coverageAmount);
+         param.push("MonthlyPremium" + i + "=" + product.monthlyPremium);
+    		param.push("InsuranceType" + i + "=" + product.insuranceType);
+    		param.push("UserType" + i + "=" + product.userType);
+    		products += "&" + param.join("&");
+    		i += 1;
+  }); 
+  return products;
+  })();

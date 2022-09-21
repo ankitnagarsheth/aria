@@ -101,3 +101,26 @@ if(digitalData.page.pageInfo.pageName === "canada-life:plan-direct:apply online:
         s.events = apl(s.events, "scCheckout,event152");
         localStorage.setItem("pdAppStart", Date.now())
     }
+  
+  
+  
+  ************************************************************************
+  
+  
+(function(){ 
+ var products = "";
+i=1;
+items = JSON.parse(JSON.stringify(bt.order.items));
+items.forEach(function(product) {
+    		var param = [];
+            param.push("ITEM" + i + "=" + product.valuespecificsku);
+    		param.push("AMT" + i + "=" + product.price * 0.965);
+    		param.push("QTY" + i + "=" + product.quantity);
+    		products += "&" + param.join("&");
+    		i += 1;
+  }); 
+  return products;
+  })();
+  
+  
+  

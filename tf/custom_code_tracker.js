@@ -1,0 +1,748 @@
+// null out old "s" tracking functions
+window.s = {
+	t: function () { return ''; },
+	tl: function () { return ''; },
+	track: function () { return ''; },
+	trackLink: function () { return ''; },
+	registerPostTrackCallback: function () { return ''; },
+	loadModule: function () { }
+};
+window.s_gi = function () {
+	return window.s;
+};
+window.s2 = s;
+if (!(_satellite.getVar('Analytics_Visitor_ID') && _satellite.getVar('Experience_Cloud_ID'))) {
+	s2.registerPostTrackCallback(function () {
+		try {
+			if (!window.s2.postTrackCallbackTriggered) {
+				if (window._dataManager) {
+					document.dispatchEvent(new CustomEvent('registerMerchandisingData', {
+						detail: {
+							analyticsVisitorID: _satellite.getVar('Analytics_Visitor_ID') || '',
+							analyticsVisitorIDHigh: window._dataManager.convert.hexToDec(_satellite.getVar('Analytics_Visitor_ID').split('-')[0]) || '',
+							analyticsVisitorIDLow: window._dataManager.convert.hexToDec(_satellite.getVar('Analytics_Visitor_ID').split('-')[1]) || '',
+							marketingCloudVisitorID: _satellite.getVar('Experience_Cloud_ID') || '',
+							referrer: (function () {
+								var ref = document.referrer || '';
+								if (ref) {
+									var domain = ref.match(/:\/\/([^/]+)(\/|$)/)[1];
+									if (domain.indexOf('thermofisher.com') === -1) {
+										return domain;
+									}
+								}
+								return '';
+							})(),
+							cid: _satellite.getVar('QP_cid') || _satellite.getVar('Cookie_cid') || '',
+							icid: _satellite.getVar('QP_icid') || _satellite.getVar('Cookie_icid') || '',
+							emid: _satellite.getVar('QP_emid') || '',
+							amoid: _satellite.getVar('QP_s_kwcid') || ''
+						}
+					}));
+					s2.postTrackCallbackTriggered = true;
+					window._dataManager.visitorIDsReady = 'true';
+					_satellite.track('visitorIDsReady');
+				}
+			}
+		} catch (ex) { }
+	});
+} else {
+	if (!window._dataManager) {
+		window._dataManager = {};
+	}
+	window._dataManager.visitorIDsReady = 'true';
+}
+
+/* Plugin Config */
+s2.usePlugins = true;
+function s2_doPlugins(s) {
+	/* Add calls to plugins here */
+	s.prop30 = s.version;
+
+	// to expire cookies
+	s.expDate = new Date();
+	s.expDate.setDate(s.expDate.getDate() - 1);
+
+	s.list2 = _satellite.getVar('Form_Error_Fields');
+
+	s.events = s.getEvents();
+	s.products = s.getProducts();
+
+	s.currencyCode = _satellite.getVar('Currency_Code');
+
+	if (s.linkType) {
+		if (s.linkType == 'e') {
+			s.prop9 = 'D=pev1';
+			s.linkTrackVars = s.apl(s.linkTrackVars, 'prop9', ',', 2);
+		} else if (s.linkType == 'd') {
+			s.prop24 = 'D=pev1';
+			s.linkTrackVars = s.apl(s.linkTrackVars, 'prop24', ',', 2);
+			s.linkTrackVars = s.apl(s.linkTrackVars, 'eVar36', ',', 2);
+		}
+	}
+
+	if (s.linkName && s.linkName === 'recommendationClick') {
+		s.eVar5 = 'product recommendation';
+		s.linkTrackVars = s.apl(s.linkTrackVars, 'eVar5', ',', 2);
+	}
+
+	if (!s.linkName && s.pageName) {
+		s.getPercentPageViewed();
+		if (s._ppvPreviousPage) {
+			//s.prop8 = s.eVar14 = s.getPreviousValue(s.pageName, 'c8');
+			s.prop8 = s.eVar14 = s._ppvPreviousPage;
+			s.prop13 = s._ppvHighestPercentViewed + '|' + s._ppvInitialPercentViewed;
+		} else {
+			s.prop8 = s.eVar14 = s.prop13 = 'no previous value';
+		}
+		s.prop31 = s.eVar63 = s.getPreviousValue(s.prop3, 'c31');
+		if (!s.prop31) {
+			s.prop31 = s.eVar63 = 'no previous value';
+		}
+
+		// campaign bounce rate
+		s.clickPast(s.prop19, 'event28', 'event29');
+
+		if (!s.products || !digitalData.products) {
+			s.products = s.products || '';
+			if (s.eVar7 || s.eVar9 || s.eVar44) {
+				s.productNum = s.getProductNum();
+				s.products += (s.products ? ',' : '') + ';productsearch' + s.productNum;
+			} else if (s.eVar20) {
+				s.productNum = s.getProductNum();
+				s.products += (s.products ? ',' : '') + ';searchfilter' + s.productNum;
+			} else if (s.eVar21) {
+				s.productNum = s.getProductNum();
+				s.products += (s.products ? ',' : '') + ';sitenavigation' + s.productNum;
+			} else if (s.eVar42) {
+				s.productNum = s.getProductNum();
+				s.products += (s.products ? ',' : '') + ';internalcampaign' + s.productNum;
+			} else if (s.eVar45) {
+				s.productNum = s.getProductNum();
+				s.products += (s.products ? ',' : '') + ';searchsort' + s.productNum;
+			} else if (s.eVar48) {
+				s.productNum = s.getProductNum();
+				s.products += (s.products ? ',' : '') + ';searchSID' + s.productNum;
+			} else if (s.eVar54) {
+				s.productNum = s.getProductNum();
+				s.products += (s.products ? ',' : '') + ';productcategory' + s.productNum;
+			}
+		}
+
+		if (_satellite.cookie.get('v7')) {
+			_satellite.cookie.remove('v7');
+		}
+		if (_satellite.cookie.get('v22')) {
+			_satellite.cookie.remove('v22');
+		}
+		if (_satellite.cookie.get('v23')) {
+			_satellite.cookie.remove('v23');
+		}
+		if (_satellite.cookie.get('v49')) {
+			_satellite.cookie.remove('v49');
+		}
+		if (_satellite.cookie.get('v66')) {
+			_satellite.cookie.remove('v66');
+		}
+
+		sessionStorage.removeItem('uncountedCartItems');
+		sessionStorage.removeItem('c15');
+
+		if (s.eVar5) {
+			if (!s.eVar7) {
+				s.eVar7 = 'non-internal search';
+			}
+			if (!s.eVar9) {
+				s.eVar9 = 'non-internal search';
+			}
+			if (!s.eVar44) {
+				s.eVar44 = 'non-internal search';
+			}
+			if (!s.eVar21) {
+				s.eVar21 = 'non-site navigation';
+			}
+			if (!s.eVar42) {
+				s.eVar42 = 'non-internal campaign';
+			}
+		}
+		if (s2.eVar3 === "search results") {
+			s2.eVar29 = digitalData.search.experienceType;
+		}
+
+		s.pageLoaded = true;
+	}
+
+	// VARIABLE CONFIG
+	s.eVar16 = s.prop31 ? 'D=c31' : '';
+
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'products', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'channel', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'server', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop2', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop3', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop4', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop5', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop6', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop7', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop8', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop10', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop21', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'prop23', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'eVar1', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'eVar2', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'eVar3', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'eVar14', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'eVar63', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'list2', ',', 2);
+	s.linkTrackVars = s.apl(s.linkTrackVars, 'purchaseID', ',', 2);
+}
+s2.doPlugins = s2_doPlugins;
+
+// PLUGINS GO HERE
+
+s2.getEvents = function () {
+	var s = this;
+
+	var evts = [];
+	if (s.linkName) {
+		switch (s.linkName) {
+			case 'confirmOrder':
+				evts.push('purchase');
+				evts.push('event17');
+				evts.push('event18');
+				evts.push('event19');
+				if (s.eVar57 && s.eVar57 === 'b2b') {
+					evts.push('event3');
+				}
+				break;
+			case 'cartAdd':
+				evts.push('scAdd');
+				evts.push('scOpen');
+				evts.push('event50');
+				if (digitalData.eventData.products[0].recommendationType) {
+					evts.push('event72');
+				}
+				break;
+			case 'recommendationClick':
+				evts.push('event72');
+				break;
+			case 'startCheckout':
+				evts.push('scCheckout:' + s.eVar26);
+				evts.push('event51:' + s.eVar26);
+				break;
+			case 'cartRemove':
+				evts.push('scRemove');
+				break;
+			case 'userLogin':
+				evts.push('event6');
+				break;
+			case 'loginError':
+				evts.push('event7');
+				break;
+			case 'formStart':
+				evts.push('event11');
+				break;
+			case 'formSubmit':
+				evts.push('event12');
+				if (digitalData.form.mqoOptin == "yes") {
+					evts.push('event161');
+				}
+				break;
+			case 'cartTransferComplete':
+				evts.push('event15');
+				evts.push('event16');
+				break;
+			case 'videoStart':
+				evts.push('event25');
+				break;
+			case 'videoComplete':
+				evts.push('event26');
+				break;
+			case 'favoritesAdd':
+				evts.push('event33');
+				evts.push('event35');
+				break;
+			case 'saveToList':
+				evts.push('event34');
+				evts.push('event36');
+				break;
+			case 'saveQuote':
+			case 'generateQuote':
+				evts.push('event20');
+				evts.push('event73');
+				break;
+			case 'faq-bad':
+				evts.push('event90');
+				break;
+			case 'faq-good':
+				evts.push('event90');
+				break;
+			case 'faq-opened':
+				evts.push('event90');
+				break;
+			case 'faq-View more':
+				evts.push('event90');
+				break;
+			case 'openOverlayForm':
+				evts.push('event10');
+				break;
+
+		}
+		//view tour tracking event157  
+		if (s.eVar113) {
+			evts.push('event157')
+		}
+
+
+		if (s.eVar36) {
+			evts.push('event24');
+		}
+		if (s.eVar80) {
+			evts.push('event80');
+			if (window.digitalData && digitalData.eventData && digitalData.eventData.CustomLink && digitalData.eventData.CustomLink.quote_amount) {
+				evts.push('event156');
+
+			}
+		}
+		if (s.eVar91) {
+			evts.push('event80')
+		}
+		//Product Seclector clicks
+		if (s.eVar123) {
+			evts.push('event80')
+		}
+		//spotlight click tracking event158  
+		if (s.eVar118) {
+			evts.push('event158');
+		}
+      //Global filter clicks
+      if (s.eVar135) {
+			evts.push('event166')
+		}
+      //Related products clicks
+      if (s.eVar136) {
+			evts.push('event167')
+		}
+      
+	} else if (!s.linkName) {
+		if (s.prop3) {
+			switch (s.prop3) {
+				case 'product detail':
+				case 'magellan product':
+				case 'taqman assay product':
+					evts.push('prodView');
+					evts.push('event1');
+					break;
+				case 'shopping cart':
+					evts.push('scOpen');
+					evts.push('scView');
+					if (window.sessionStorage && sessionStorage.getItem('uncountedCartItems')) {
+						evts.push('event50');
+					}
+					break;
+				case 'account registration':
+					evts.push('event22');
+					break;
+				case 'account registration confirmation':
+					evts.push('event6');
+					evts.push('event23');
+					break;
+				case 'product family':
+					evts.push('prodView');
+					evts.push('event59');
+					break;
+				case 'product selector':
+					evts.push('prodView');
+			}
+		}
+
+		if (window.digitalData && digitalData.search && digitalData.search.lastType && digitalData.search.type && digitalData.search.lastType === digitalData.search.type) {
+			if (s.eVar45 && digitalData.search.lastSortType && digitalData.search.sortType && digitalData.search.lastSortType !== digitalData.search.sortType) {
+				evts.push('event30');
+			}
+			if (s.eVar20 || s.eVar112) {
+				evts.push('event8');
+			}
+		}
+		if ((["product family", "product detail", "magellan product", "taqman assay product"].indexOf(s.prop3) !== -1) &&
+			document.querySelector("#pdp-recommendations li[id^=crossSell]")) {
+			evts.push('event71');
+		}
+
+		if (s.prop1 || s.eVar9) {
+			var term = s.getValOnce((s.prop1 || 'none') + '|' + (s.eVar9 || 'none'), 'c1');
+			if (term) {
+				evts.push('event4');
+				if (s.eVar44) {
+					if (s.eVar44 == 'zero') {
+						evts.push('event13');
+					} else {
+						evts.push('event66=' + (isNaN(s.eVar44) ? '1' : s.eVar44));
+					}
+				}
+			}
+		}
+		//unique search counts
+		if (s.eVar3 === "search results")
+			var searchTerm = s.getValOnce(s.eVar7, 's_v7', 0);
+		if (searchTerm) {
+			evts.push('event155');
+			console.log(searchTerm)
+		}
+
+
+		if (s.prop15) {
+			evts.push('event14');
+		}
+		if (s.prop20) {
+			evts.push('event69');
+		}
+		if (s.prop29) {
+			evts.push('event32');
+		}
+		if (_satellite.getVar('QP_form-submit-id') || (s.prop3 && s.prop3.indexOf('form confirmation') > -1)) {
+			evts.push('event12');
+		} else if (s.eVar19) {
+			evts.push('event10');
+		}
+		if (s.eVar28) {
+			evts.push('event21');
+		}
+		if (_satellite.cookie.get('v66')) {
+			evts.push('event70');
+		}
+		if (_satellite.cookie.get('v49')) {
+			// de-duped
+			var evt = s.getValOnce('e5', s.eVar7);
+			if (evt) {
+				evts.push('event5');
+			}
+
+			// all
+			evts.push('event31=' + _satellite.cookie.get('v49'));
+			evts.push('event60');
+		}
+
+		if (window.digitalData && digitalData.page && digitalData.page.icids && digitalData.page.icids.length > 0) {
+			evts.push('event37');
+		}
+		//Guided impressions
+		if (window.digitalData && digitalData.page && digitalData.page.guidedSearch === "yes") {
+			evts.push('event160');
+		}
+		//Feature collection impressions
+		if (window.digitalData && digitalData.page && digitalData.page.featuredCollection === "yes") {
+			evts.push('event163');
+		}
+
+		//spotlight impressions
+		if (window.utilities.extractValue(window.digitalData, "page.spotlight") == "yes") {
+			evts.push('event159');
+			window.utilities.debug = { eventName: "Content SpotLight Impression", status: window.digitalData.page.spotlight };
+			window.utilities.consoleDebug();
+
+		}
+		//Category Navigation Clicks 
+		if (window.utilities.urlParams.gptExactMatch) {
+			evts.push("event165");
+		}
+		//Web Offers pages impressions
+		if (window.digitalData && digitalData.page && digitalData.page.onlineOffers === "yes") {
+			evts.push('event164');
+		}
+      
+      
+
+		if (s.eVar42) {
+			evts.push('event38');
+		}
+	}
+
+	if (s.list2) {
+		evts.push('event67');
+	}
+
+	if (s.linkName) {
+		s.linkTrackVars = s.apl(s.linkTrackVars, 'events', ',', 2);
+		for (var i = 0; i < evts.length; i++) {
+			s.linkTrackEvents = s.apl(s.linkTrackEvents, evts[i].indexOf(':') > -1 ? evts[i].substring(0, evts[i].indexOf(':')) : evts[i], ',', 2);
+		}
+	}
+
+	var eList = '';
+	for (var i = 0; i < evts.length; i++) {
+		eList = s.apl(eList, evts[i], ',', 2);
+	}
+	return evts.join(',');
+};
+
+s2.getProducts = function () {
+	var s = this;
+	var prods, prodList = [];
+	if (window.digitalData) {
+		if (digitalData.eventData && digitalData.eventData.products) {
+			prods = digitalData.eventData.products;
+		} else if (digitalData.products) {
+			prods = digitalData.products;
+		}
+	}
+
+	var subTotal = 0, taxTotal, shippingTotal;
+	if (s.eVar26 && s.linkName && s.linkName === 'confirmOrder') {
+		s.purchaseID = s.eVar26;
+
+		if (window.digitalData && digitalData.eventData && digitalData.eventData.order) {
+			taxTotal = digitalData.eventData.order.taxAmount || 0;
+			shippingTotal = digitalData.eventData.order.shippingAmount || 0;
+		}
+		for (var i = 0; i < prods.length; i++) {
+			subTotal += (parseInt(prods[i].quantity || '1') * parseFloat(prods[i].price || '0'));
+		}
+	}
+
+	var curEvent = '';
+	if (s.linkName) {
+		switch (s.linkName) {
+			case 'cartAdd':
+				curEvent = 'event50';
+				break;
+			case 'startCheckout':
+				curEvent = 'event51';
+				break;
+			case 'cartTransferComplete':
+				curEvent = 'event16';
+				break;
+			case 'favoritesAdd':
+				curEvent = 'event35';
+				break;
+			case 'saveToList':
+				curEvent = 'event36';
+				break;
+			case 'saveQuote':
+			case 'generateQuote':
+				curEvent = 'event73';
+				break;
+		}
+	}
+
+	if (prods) {
+		var uncountedCartItems;
+		if (window.sessionStorage && sessionStorage.getItem('uncountedCartItems')) {
+			uncountedCartItems = sessionStorage.getItem('uncountedCartItems');
+		}
+		for (var i = 0; i < prods.length; i++) {
+			var totalPrice = 0;
+			var p = [
+				'',
+				prods[i].id || prods[i].catalogNumber,
+				'',
+				'',
+				'',
+				''
+			], merch = [], evts = [];
+
+			if (prods[i].quantity || curEvent) {
+				prods[i].quantity = prods[i].quantity || '1';
+				p[2] = prods[i].quantity;
+				if (prods[i].price) {
+					totalPrice = parseInt(prods[i].quantity) * parseFloat(prods[i].price);
+					p[3] = totalPrice.toFixed(2);
+
+					if (curEvent) {
+						evts.push(curEvent + '=' + p[3]);
+					}
+
+					if (uncountedCartItems) {
+						if (uncountedCartItems.indexOf((prods[i].id || prods[i].catalogNumber) + ',') > -1) {
+							evts.push('event50=' + p[3]);
+						} else if (uncountedCartItems === 'orderhistory') {
+							evts.push('event50=' + p[3]);
+							merch.push('eVar25=' + uncountedCartItems);
+						}
+					}
+				}
+			}
+
+			if (s.purchaseID && subTotal) {
+				var pctSubtotal = totalPrice / subTotal;
+				if (pctSubtotal) {
+					evts.push('event17=' + (pctSubtotal * shippingTotal).toFixed(2));
+					evts.push('event18=' + (pctSubtotal * taxTotal).toFixed(2));
+				}
+				if (prods[i].discountAmount) {
+					evts.push('event19=' + prods[i].discountAmount);
+				}
+			}
+
+			if (s.prop3 && !s.linkName) {
+				if (s.prop3 === 'product detail') {
+					evts.push('event1=1');
+				} else if (s.prop3 === 'product family') {
+					evts.push('event59=1');
+				}
+
+			}
+			if (prods[i].sku || prods[i].designId) {
+				merch.push('eVar4=' + (prods[i].sku || prods[i].designId));
+			}
+			if (_satellite.cookie.get('v22')) {
+				merch.push('eVar22=' + _satellite.cookie.get('v22'));
+			} else if (_satellite.getVar('Product_View_ID')) {
+				merch.push('eVar22=' + _satellite.getVar('Product_View_ID'));
+			}
+			if (prods[i].recommendationType && prods[i].recommendationLocation && prods[i].recommendationPosition) {
+				merch.push('eVar23=' + prods[i].recommendationType + ':' + prods[i].recommendationLocation + ':' + prods[i].recommendationPosition);
+				evts.push('event72=1');
+			}
+			if (prods[i].addMethod) {
+				merch.push('eVar25=' + prods[i].addMethod.replace('pdp-', s.prop3 + ' ').toLowerCase());
+			} else if (s.linkName && s.linkName === 'cartAdd') {
+				var method = s.eVar52 || s.prop3;
+				merch.push('eVar25=' + method);
+			}
+			if (_satellite.cookie.get('v49')) {
+				merch.push('eVar49=' + _satellite.cookie.get('v49'));
+			}
+			if (prods[i].uom) {
+				merch.push('eVar68=' + prods[i].uom.toLowerCase());
+			}
+
+			p[4] = evts.join('|');
+			p[5] = merch.join('|');
+			prodList.push(p.join(';'))
+		}
+	}
+
+	if (!s.pageLoaded) {
+		if (window.digitalData && digitalData.page && digitalData.page.icids) {
+			for (var i = 0; i < digitalData.page.icids.length; i++) {
+				prodList.push(';internalcampaign;;;event37=1;eVar62=' + digitalData.page.icids[i]);
+			}
+		}
+		if (s.eVar42) {
+			prodList.push(';internalcampaign;;;event38=1;eVar62=' + s.eVar42);
+		}
+
+	}
+	if (window.digitalData && digitalData.eventData && digitalData.eventData.CustomLink && digitalData.eventData.CustomLink.quote_amount) {
+		prodList.push(';cmdQuote;;;event156=' + digitalData.eventData.CustomLink.quote_amount);
+
+	}
+
+	return prodList.join(',');
+}
+
+/*
+ * Get the current "fake" product number
+ */
+s2.getProductNum = function () {
+	var s = this, pn, e = new Date();
+	if (!s.c_r('pn')) pn = 1;
+	else pn = parseInt(s.c_r('pn')) + 1;
+	e.setTime(e.getTime() + (30 * 86400000));
+	s.c_w('pn', pn, e);
+
+	return pn;
+}
+
+/*
+ * Plugin Utility: apl v1.1 (modified for AppMeasurement library)
+ */
+s2.apl = new Function("l", "v", "d", "u", ""
+	+ "var s=this,m=0;if(!l)l='';if(u){var i,n,a=l.split(d);for(i=0;i<a."
+	+ "length;i++){n=a[i];m=m||(u==1?(n==v):(n.toLowerCase()==v.toLowerCas"
+	+ "e()));}}if(!m)l=l?l+d+v:v;return l");
+
+/* Adobe Consulting Plugin: getValOnce v2.01 */
+s2.getValOnce = function (vtc, cn, et, ep) { if (vtc && (cn = cn || "s_gvo", et = et || 0, ep = "m" === ep ? 6E4 : 864E5, vtc !== this.c_r(cn))) { var e = new Date; e.setTime(e.getTime() + et * ep); this.c_w(cn, vtc, 0 === et ? 0 : e); return vtc } return "" };
+
+
+/*
+ * Utility Function: split v1.5 - split a string (JS 1.0 compatible)
+ */
+s2.split = new Function("l", "d", ""
+	+ "var i,x=0,a=new Array;while(l){i=l.indexOf(d);i=i>-1?i:l.length;a[x"
+	+ "++]=l.substring(0,i);l=l.substring(i+d.length);}return a");
+
+/*
+ * Plugin: getPreviousValue_v1.0 - return previous value of designated
+ *   variable (requires split utility)
+ */
+s2.getPreviousValue = new Function("v", "c", "el", ""
+	+ "var s=this,t=new Date,i,j,r='';t.setTime(t.getTime()+1800000);if(el"
+	+ "){if(s.events){i=s.split(el,',');j=s.split(s.events,',');for(x in i"
+	+ "){for(y in j){if(i[x]==j[y]){if(s.c_r(c)) r=s.c_r(c);v?s.c_w(c,v,t)"
+	+ ":s.c_w(c,'no value',t);return r}}}}}else{if(s.c_r(c)) r=s.c_r(c);v?"
+	+ "s.c_w(c,v,t):s.c_w(c,'no value',t);return r}");
+
+/*                                                                  
+ * Plugin: clickPast - version 1.0
+ */
+s2.clickPast = new Function("scp", "ct_ev", "cp_ev", "cpc", ""
+	+ "var s=this,scp,ct_ev,cp_ev,cpc,ev,tct;if(s.p_fo(ct_ev)==1){if(!cpc)"
+	+ "{cpc='s_cpc';}ev=s.events?s.events+',':'';if(scp){s.events=ev+ct_ev"
+	+ ";s.c_w(cpc,1,0);}else{if(s.c_r(cpc)>=1){s.events=ev+cp_ev;s.c_w(cpc"
+	+ ",0,0);}}}");
+
+/* Adobe Consulting Plugin: getPercentPageViewed v3.01 w/handlePPVevents helper function (Requires AppMeasurement and p_fo plugin) */
+s2.getPercentPageViewed = function (pid, ch) {
+	var s = this, a = s.c_r("s_ppv"); a = -1 < a.indexOf(",") ? a.split(",") : []; a[0] = s.unescape(a[0]);
+	pid = pid ? pid : s.pageName ? s.pageName : document.location.href; s.ppvChange = ch ? ch : !0; if ("undefined" === typeof s.linkType || "o" !==
+		s.linkType) s.ppvID && s.ppvID === pid || (s.ppvID = pid, s.c_w("s_ppv", ""), s.handlePPVevents()), s.p_fo("s_gppvLoad") && window
+			.addEventListener && (window.addEventListener("load", s.handlePPVevents, !1), window.addEventListener("click", s.handlePPVevents, !1), window.addEventListener("scroll", s.handlePPVevents, !1), window.addEventListener("resize", s.handlePPVevents, !1)), s._ppvPreviousPage
+			= a[0] ? a[0] : "", s._ppvHighestPercentViewed = a[1] ? a[1] : "", s._ppvInitialPercentViewed = a[2] ? a[2] : "", s._ppvHighestPixelsSeen = a[3] ? a[3] : ""
+};
+
+/* Adobe Consulting Plugin: handlePPVevents helper function (for getPercentPageViewed v3.01 Plugin) */
+s2.handlePPVevents = function () {
+	if ("undefined" !== typeof s_c_il) {
+		for (var c = 0, d = s_c_il.length; c < d; c++)if (s_c_il[c] && s_c_il[c].getPercentPageViewed) { var a = s_c_il[c]; break } if (a && a.ppvID) {
+			var f = Math.max(Math.max(document.body.scrollHeight, document.documentElement.scrollHeight), Math.max(document.body.offsetHeight, document.documentElement.offsetHeight), Math.max(document.
+				body.clientHeight, document.documentElement.clientHeight)); c = (window.pageYOffset || window.document.documentElement.scrollTop || window.document.body.scrollTop) + (window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight); d = Math.min(Math.round
+					(c / f * 100), 100); var e = ""; !a.c_r("s_tp") || a.unescape(a.c_r("s_ppv").split(",")[0]) !== a.ppvID || 1 == a.ppvChange &&
+						a.c_r("s_tp") && f != a.c_r("s_tp") ? (a.c_w("s_tp", f), a.c_w("s_ppv", "")) : e = a.c_r("s_ppv"); var b = e && -1 < e.indexOf(",") ? e.split(",", 4) : []; f = 0 < b.length ? b[0] : escape(a.ppvID); var g = 1 < b.length ? parseInt(b[1]) : d, h = 2 < b.length ? parseInt(b[2]) : d; b = 3 < b.length ? parseInt(b[3]) : c; 0 < d && (e = f + "," + (d > g ? d : g) + "," + h + "," + (c > b ? c : b)); a.c_w("s_ppv", e)
+		}
+	}
+};
+
+/* Adobe Consulting Plugin: p_fo (pageFirstOnly) v2.0 (Requires AppMeasurement) */
+s2.p_fo = function (on) { var s = this; s.__fo || (s.__fo = {}); if (s.__fo[on]) return !1; s.__fo[on] = {}; return !0 };
+
+function AppMeasurement_Module_Media(q) {
+	var b = this; b.s = q; q = window; q.s_c_in || (q.s_c_il = [], q.s_c_in = 0); b._il = q.s_c_il; b._in = q.s_c_in; b._il[b._in] = b; q.s_c_in++; b._c = "s_m"; b.list = []; b.open = function (d, c, e, k) {
+		var f = {}, a = new Date, l = "", g; c || (c = -1); if (d && e) {
+			b.list || (b.list = {}); b.list[d] && b.close(d); k && k.id && (l = k.id); if (l) for (g in b.list) !Object.prototype[g] && b.list[g] && b.list[g].R == l && b.close(b.list[g].name); f.name = d; f.length = c; f.offset = 0; f.e = 0; f.playerName = b.playerName ? b.playerName : e; f.R = l; f.C = 0; f.a = 0; f.timestamp =
+				Math.floor(a.getTime() / 1E3); f.k = 0; f.u = f.timestamp; f.c = -1; f.n = ""; f.g = -1; f.D = 0; f.I = {}; f.G = 0; f.m = 0; f.f = ""; f.B = 0; f.L = 0; f.A = 0; f.F = 0; f.l = !1; f.v = ""; f.J = ""; f.K = 0; f.r = !1; f.H = ""; f.complete = 0; f.Q = 0; f.p = 0; f.q = 0; b.list[d] = f
+		}
+	}; b.openAd = function (d, c, e, k, f, a, l, g) { var h = {}; b.open(d, c, e, g); if (h = b.list[d]) h.l = !0, h.v = k, h.J = f, h.K = a, h.H = l }; b.M = function (d) { var c = b.list[d]; b.list[d] = 0; c && c.monitor && clearTimeout(c.monitor.interval) }; b.close = function (d) { b.i(d, 0, -1) }; b.play = function (d, c, e, k) {
+		var f = b.i(d, 1, c, e, k); f && !f.monitor &&
+			(f.monitor = {}, f.monitor.update = function () { 1 == f.k && b.i(f.name, 3, -1); f.monitor.interval = setTimeout(f.monitor.update, 1E3) }, f.monitor.update())
+	}; b.click = function (d, c) { b.i(d, 7, c) }; b.complete = function (d, c) { b.i(d, 5, c) }; b.stop = function (d, c) { b.i(d, 2, c) }; b.track = function (d) { b.i(d, 4, -1) }; b.P = function (d, c) {
+		var e = "a.media.", k = d.linkTrackVars, f = d.linkTrackEvents, a = "m_i", l, g = d.contextData, h; c.l && (e += "ad.", c.v && (g["a.media.name"] = c.v, g[e + "pod"] = c.J, g[e + "podPosition"] = c.K), c.G || (g[e + "CPM"] = c.H)); c.r && (g[e + "clicked"] =
+			!0, c.r = !1); g["a.contentType"] = "video" + (c.l ? "Ad" : ""); g["a.media.channel"] = b.channel; g[e + "name"] = c.name; g[e + "playerName"] = c.playerName; 0 < c.length && (g[e + "length"] = c.length); g[e + "timePlayed"] = Math.floor(c.a); 0 < Math.floor(c.a) && (g[e + "timePlayed"] = Math.floor(c.a)); c.G || (g[e + "view"] = !0, a = "m_s", b.Heartbeat && b.Heartbeat.enabled && (a = c.l ? b.__primetime ? "mspa_s" : "msa_s" : b.__primetime ? "msp_s" : "ms_s"), c.G = 1); c.f && (g[e + "segmentNum"] = c.m, g[e + "segment"] = c.f, 0 < c.B && (g[e + "segmentLength"] = c.B), c.A && 0 < c.a && (g[e + "segmentView"] =
+				!0)); !c.Q && c.complete && (g[e + "complete"] = !0, c.S = 1); 0 < c.p && (g[e + "milestone"] = c.p); 0 < c.q && (g[e + "offsetMilestone"] = c.q); if (k) for (h in g) Object.prototype[h] || (k += ",contextData." + h); l = g["a.contentType"]; d.pe = a; d.pev3 = l; var q, s; if (b.contextDataMapping) for (h in d.events2 || (d.events2 = ""), k && (k += ",events"), b.contextDataMapping) if (!Object.prototype[h]) {
+					a = h.length > e.length && h.substring(0, e.length) == e ? h.substring(e.length) : ""; l = b.contextDataMapping[h]; if ("string" == typeof l) for (q = l.split(","), s = 0; s < q.length; s++)l =
+						q[s], "a.contentType" == h ? (k && (k += "," + l), d[l] = g[h]) : "view" == a || "segmentView" == a || "clicked" == a || "complete" == a || "timePlayed" == a || "CPM" == a ? (f && (f += "," + l), "timePlayed" == a || "CPM" == a ? g[h] && (d.events2 += (d.events2 ? "," : "") + l + "=" + g[h]) : g[h] && (d.events2 += (d.events2 ? "," : "") + l)) : "segment" == a && g[h + "Num"] ? (k && (k += "," + l), d[l] = g[h + "Num"] + ":" + g[h]) : (k && (k += "," + l), d[l] = g[h]); else if ("milestones" == a || "offsetMilestones" == a) h = h.substring(0, h.length - 1), g[h] && b.contextDataMapping[h + "s"][g[h]] && (f && (f += "," + b.contextDataMapping[h +
+							"s"][g[h]]), d.events2 += (d.events2 ? "," : "") + b.contextDataMapping[h + "s"][g[h]]); g[h] && (g[h] = 0); "segment" == a && g[h + "Num"] && (g[h + "Num"] = 0)
+				} d.linkTrackVars = k; d.linkTrackEvents = f
+	}; b.i = function (d, c, e, k, f) {
+		var a = {}, l = (new Date).getTime() / 1E3, g, h, q = b.trackVars, s = b.trackEvents, t = b.trackSeconds, u = b.trackMilestones, v = b.trackOffsetMilestones, w = b.segmentByMilestones, x = b.segmentByOffsetMilestones, p, n, r = 1, m = {}, y; b.channel || (b.channel = b.s.w.location.hostname); if (a = d && b.list && b.list[d] ? b.list[d] : 0) if (a.l && (t = b.adTrackSeconds,
+			u = b.adTrackMilestones, v = b.adTrackOffsetMilestones, w = b.adSegmentByMilestones, x = b.adSegmentByOffsetMilestones), 0 > e && (e = 1 == a.k && 0 < a.u ? l - a.u + a.c : a.c), 0 < a.length && (e = e < a.length ? e : a.length), 0 > e && (e = 0), a.offset = e, 0 < a.length && (a.e = a.offset / a.length * 100, a.e = 100 < a.e ? 100 : a.e), 0 > a.c && (a.c = e), y = a.D, m.name = d, m.ad = a.l, m.length = a.length, m.openTime = new Date, m.openTime.setTime(1E3 * a.timestamp), m.offset = a.offset, m.percent = a.e, m.playerName = a.playerName, m.mediaEvent = 0 > a.g ? "OPEN" : 1 == c ? "PLAY" : 2 == c ? "STOP" : 3 == c ? "MONITOR" :
+				4 == c ? "TRACK" : 5 == c ? "COMPLETE" : 7 == c ? "CLICK" : "CLOSE", 2 < c || c != a.k && (2 != c || 1 == a.k)) {
+					f || (k = a.m, f = a.f); if (c) {
+						1 == c && (a.c = e); if ((3 >= c || 5 <= c) && 0 <= a.g && (r = !1, q = s = "None", a.g != e)) {
+							h = a.g; h > e && (h = a.c, h > e && (h = e)); p = u ? u.split(",") : 0; if (0 < a.length && p && e >= h) for (n = 0; n < p.length; n++)(g = p[n] ? parseFloat("" + p[n]) : 0) && h / a.length * 100 < g && a.e >= g && (r = !0, n = p.length, m.mediaEvent = "MILESTONE", a.p = m.milestone = g); if ((p = v ? v.split(",") : 0) && e >= h) for (n = 0; n < p.length; n++)(g = p[n] ? parseFloat("" + p[n]) : 0) && h < g && e >= g && (r = !0, n = p.length, m.mediaEvent =
+								"OFFSET_MILESTONE", a.q = m.offsetMilestone = g)
+						} if (a.L || !f) { if (w && u && 0 < a.length) { if (p = u.split(",")) for (p.push("100"), n = h = 0; n < p.length; n++)if (g = p[n] ? parseFloat("" + p[n]) : 0) a.e < g && (k = n + 1, f = "M:" + h + "-" + g, n = p.length), h = g } else if (x && v && (p = v.split(","))) for (p.push("" + (0 < a.length ? a.length : "E")), n = h = 0; n < p.length; n++)if ((g = p[n] ? parseFloat("" + p[n]) : 0) || "E" == p[n]) { if (e < g || "E" == p[n]) k = n + 1, f = "O:" + h + "-" + g, n = p.length; h = g } f && (a.L = !0) } (f || a.f) && f != a.f && (a.F = !0, a.f || (a.m = k, a.f = f), 0 <= a.g && (r = !0)); (2 <= c || 100 <= a.e) && a.c < e &&
+							(a.C += e - a.c, a.a += e - a.c); if (2 >= c || 3 == c && !a.k) a.n += (1 == c || 3 == c ? "S" : "E") + Math.floor(e), a.k = 3 == c ? 1 : c; !r && 0 <= a.g && 3 >= c && (t = t ? t : 0) && a.a >= t && (r = !0, m.mediaEvent = "SECONDS"); a.u = l; a.c = e
+					} if (!c || 3 >= c && 100 <= a.e) 2 != a.k && (a.n += "E" + Math.floor(e)), c = 0, q = s = "None", m.mediaEvent = "CLOSE"; 7 == c && (r = m.clicked = a.r = !0); if (5 == c || b.completeByCloseOffset && (!c || 100 <= a.e) && 0 < a.length && e >= a.length - b.completeCloseOffsetThreshold) r = m.complete = a.complete = !0; l = m.mediaEvent; "MILESTONE" == l ? l += "_" + m.milestone : "OFFSET_MILESTONE" == l && (l +=
+						"_" + m.offsetMilestone); a.I[l] ? m.eventFirstTime = !1 : (m.eventFirstTime = !0, a.I[l] = 1); m.event = m.mediaEvent; m.timePlayed = a.C; m.segmentNum = a.m; m.segment = a.f; m.segmentLength = a.B; b.monitor && 4 != c && b.monitor(b.s, m); b.Heartbeat && b.Heartbeat.enabled && 0 <= a.g && (r = !1); 0 == c && b.M(d); r && a.D == y && (d = { contextData: {} }, d.linkTrackVars = q, d.linkTrackEvents = s, d.linkTrackVars || (d.linkTrackVars = ""), d.linkTrackEvents || (d.linkTrackEvents = ""), b.P(d, a), d.linkTrackVars || (d["!linkTrackVars"] = 1), d.linkTrackEvents || (d["!linkTrackEvents"] =
+							1), b.s.track(d), a.F ? (a.m = k, a.f = f, a.A = !0, a.F = !1) : 0 < a.a && (a.A = !1), a.n = "", a.p = a.q = 0, a.a -= Math.floor(a.a), a.g = e, a.D++)
+		} return a
+	}; b.O = function (d, c, e, k, f) { var a = 0; if (d && (!b.autoTrackMediaLengthRequired || c && 0 < c)) { if (b.list && b.list[d]) a = 1; else if (1 == e || 3 == e) b.open(d, c, "HTML5 Video", f), a = 1; a && b.i(d, e, k, -1, 0) } }; b.attach = function (d) {
+		var c, e, k; d && d.tagName && "VIDEO" == d.tagName.toUpperCase() && (b.o || (b.o = function (c, a, d) {
+			var e, h; b.autoTrack && (e = c.currentSrc, (h = c.duration) || (h = -1), 0 > d && (d = c.currentTime), b.O(e, h, a,
+				d, c))
+		}), c = function () { b.o(d, 1, -1) }, e = function () { b.o(d, 1, -1) }, b.j(d, "play", c), b.j(d, "pause", e), b.j(d, "seeking", e), b.j(d, "seeked", c), b.j(d, "ended", function () { b.o(d, 0, -1) }), b.j(d, "timeupdate", c), k = function () { d.paused || d.ended || d.seeking || b.o(d, 3, -1); setTimeout(k, 1E3) }, k())
+	}; b.j = function (b, c, e) { b.attachEvent ? b.attachEvent("on" + c, e) : b.addEventListener && b.addEventListener(c, e, !1) }; void 0 == b.completeByCloseOffset && (b.completeByCloseOffset = 1); void 0 == b.completeCloseOffsetThreshold && (b.completeCloseOffsetThreshold =
+		1); b.Heartbeat = {}; b.N = function () { var d, c; if (b.autoTrack && (d = b.s.d.getElementsByTagName("VIDEO"))) for (c = 0; c < d.length; c++)b.attach(d[c]) }; b.j(q, "load", b.N)
+}

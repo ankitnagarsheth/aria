@@ -1,0 +1,30 @@
+s.events = "scView";
+
+
+try {
+
+var productString = [], cleanProductString
+
+for (i=0; i<adobeDataLayer.length; i++) {
+
+if (adobeDataLayer[i].event == "scView") {
+	var tmp = i;
+	for (j=0; j < adobeDataLayer[tmp].cart.cartItems.length; j++)
+	{	
+		productString.push(";"+adobeDataLayer[i].cart.cartItems[j].productSKU+";"+adobeDataLayer[i].cart.cartItems[j].quantity+";"+adobeDataLayer[i].cart.cartItems[j].price.toFixed(2));
+	
+}
+}
+
+s.products = productString.toString();
+  
+}
+  
+} catch(e) {}
+
+try {
+    s.eVar54 = adobeDataLayer.getState().cart.cartId;
+} catch(e) {}
+
+s.t();
+s.clearVars();

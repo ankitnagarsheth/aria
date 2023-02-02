@@ -1,0 +1,20 @@
+try {
+
+var productString = [], cleanProductString
+
+for (i=0; i<adobeDataLayer.length; i++) {
+	if (adobeDataLayer[i].event == 'scCheckout') {
+		var tmp = i;
+		for (j=0; j < adobeDataLayer[tmp].checkout.cartItems.length; j++)
+		{	
+			productString.push(";"+adobeDataLayer[tmp].checkout.cartItems[j].productSKU+";"+adobeDataLayer[tmp].checkout.cartItems[j].quantity+";"+adobeDataLayer[tmp].checkout.cartItems[j].price.toFixed(2));
+    		}
+		s.products = productString.toString();
+
+}
+
+} 
+
+} catch(e) {}
+
+s.t();

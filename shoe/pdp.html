@@ -1,0 +1,60 @@
+try {
+for (i=0; i<adobeDataLayer.length; i++) {
+
+if (adobeDataLayer[i].event == "prodView") {
+	if (document.title.indexOf(adobeDataLayer[i].product.productName) > -1) {
+		s.products = ";"+adobeDataLayer[i].product.productSKU;
+        s.events = "prodView,event1,event303";
+	}
+	
+}
+
+}
+
+} catch(e) {}
+
+try {
+    s.eVar5 = s.eVar31;
+    s.eVar35 = adobeDataLayer.getState().product.productName;
+    s.eVar36 = adobeDataLayer.getState().product.productDescription;
+    s.eVar37 = adobeDataLayer.getState().product.productURL;
+    s.eVar38 = adobeDataLayer.getState().product.productImage;
+    s.eVar39 = adobeDataLayer.getState().product.manufacturer;
+    //s.eVar40 = adobeDataLayer.getState().product.primaryCategory;
+    s.eVar41 = adobeDataLayer.getState().product.parentCategory;
+    s.eVar42 = adobeDataLayer.getState().product.productID;
+    s.eVar43 = adobeDataLayer.getState().product.productSKU;
+    s.eVar44 = adobeDataLayer.getState().product.price;
+    s.eVar45 = adobeDataLayer.getState().product.salePrice.toFixed(2);
+    //s.eVar46 = adobeDataLayer.getState().product.  
+    s.eVar47 = adobeDataLayer.getState().product.quantity;
+    s.eVar48 = adobeDataLayer.getState().product.color;
+    s.eVar49 = adobeDataLayer.getState().product.brandColor;
+    s.eVar50 = adobeDataLayer.getState().product.size;
+    s.eVar51 = adobeDataLayer.getState().product.width;
+    s.eVar52 = adobeDataLayer.getState().product.gender;
+    //s.eVar53 = adobeDataLayer.getState().product.
+  
+    s.prop29 = "D=v35";
+    s.prop30 = "D=v36";
+    s.prop31 = "D=v37";
+    s.prop32 = "D=v38";
+    s.prop33 = "D=v39";
+    s.prop34 = "D=v40";
+    s.prop35 = "D=v41";
+    s.prop36 = "D=v42";
+    s.prop37 = "D=v43";
+    s.prop38 = "D=v44";
+    s.prop39 = "D=v45";
+    s.prop40 = "D=v46";
+    s.prop41 = "D=v47";
+    s.prop42 = "D=v48";
+    s.prop43 = "D=v49";
+    s.prop44 = "D=v50";
+    s.prop45 = "D=v51";
+    s.prop46 = "D=v52";
+    //s.prop47 = "D=v53";
+  
+    s.eVar31 = "";
+
+} catch(e) {}

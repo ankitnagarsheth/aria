@@ -50,14 +50,21 @@ function s_doPlugins(s) {
   s.eVar82 = _satellite.getVar('utmSource');
   s.eVar83 = _satellite.getVar('utmMedium');
   s.eVar84 = _satellite.getVar('utmCampaign');
+  s.eVar98 = _satellite.getVar('plugin : dayssincelastvisit');
+   s.eVar103 = _satellite.getVar('plugin : visitnum');
+     s.eVar101 = _satellite.getVar('plugin : newrepeat');   
+         s.eVar101 = _satellite.getVar('plugin : visitduration');  
 
   s.prop1 = "D=v3";
+  s.prop5 = "D=v1";
   s.prop2 = "D=v4";
   s.prop6 = "D=v9";
   s.prop7 = "D=v10";
   s.prop8 = "D=v11";
   s.prop16 = "D=v19";
-  
+    s.prop73 = "D=v101";
+     s.prop70 = "D=v103";   
+         s.prop69 = "D=v98";
   
     /* Added by Ankit  */    
    s.campaign=s.getValOnce(s.campaign,'s_cmp',30);

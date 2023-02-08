@@ -37,6 +37,7 @@ function s_doPlugins(s) {
 
 
   s.pageName = _satellite.getVar('Adobe Page Name');
+  s.eVar1 = _satellite.getVar('Adobe Page Name'); /* Added by Ankit  */
   s.eVar3 = _satellite.getVar('subcategory1');
   s.eVar2 = _satellite.getVar('primaryCategory'); /* Added by Ankit  */
   s.eVar4 = _satellite.getVar('subcategory2');
@@ -58,6 +59,29 @@ function s_doPlugins(s) {
   s.prop16 = "D=v19";
   
   
+    /* Added by Ankit  */    
+   s.campaign=s.getValOnce(s.campaign,'s_cmp',30);
+  s.trackExternalLinks=true
+  s.linkInternalFilters="shoebacca.com,qa.,javascript:,mailto,stg,dev"
+  s.linkLeaveQueryString=false
+        
+ /* Added by Ankit  */       
+ /* set s.campaign */
+  
+s.campaign=_satellite.getVar("cid");
+if (document.location.search.indexOf("utm_") != -1 && (!s.campaign || s.campaign === "")){
+let utm_campaign=_satellite.getVar("utmCampaign") || ""; //grab from the data element (which pulls from the query param), unless the data element returns "undefined", in which case set a blank string
+let utm_source=_satellite.getVar("utmSource")|| "" ;
+let utm_medium=_satellite.getVar("utmMedium")|| "" ;
+let utm_content=_satellite.getVar("utmContent")|| "";
+let utm_term=_satellite.getVar("utmTerm")|| "" ;
+
+s.campaign= utm_campaign + "|" + utm_source + "|" + utm_medium + "|" + utm_content + "|" + utm_term;
+
+if(s.campaign === "||||"){s.campaign = ""}
+
+ }  
+}
 
   try {
   s.channel = adobeDataLayer.getState().pageInfo.primaryCategory;

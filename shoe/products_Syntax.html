@@ -2,3 +2,21 @@
         s.products = ";"+adobeDataLayer.getState().product.productSKU+";"+adobeDataLayer.getState().product.quantity+";"+adobeDataLayer.getState().product.price.toFixed(2);
         console.log('events to Adobe are here' + s.events);
         s.t();
+
+*******************************************************************8
+
+try {
+for (i=0; i<adobeDataLayer.length; i++) {
+
+if (adobeDataLayer[i].event == "prodView") {
+	if (document.title.indexOf(adobeDataLayer[i].product.productName) > -1) {
+		s.products = ";"+adobeDataLayer[i].product.productSKU;
+        s.events = "prodView,event1,event303";
+	}
+	
+}
+
+}
+ 
+ 
+ ******************************************************************

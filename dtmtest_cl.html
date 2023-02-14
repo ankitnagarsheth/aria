@@ -8,31 +8,16 @@
     
     
     
-    digitalData = { 
-	page: {
-		pageInfo:{												
-			pageName:"flexbox:estimate:step-2:coverage", //As per the page name strategy
-			pageLanguage:"en_ca", // Language of page
-			siteName:"flexbox", // always set to flexbox
-			},
-		category:{
-			primaryCategory:"estimate",//Top level page category
-			subCategory1:"estimate:step-2:",//Second Level page category
-			subCategory2:"estimate:step-2:coverage", // Third Level page category
-			pageType:"estimate-page", // set to the type of page
-			},
-		},
-	user[0]: {
-		Profile[0]: {
-			profileInfo: {
-				profileId:"[ID]" // alpha-numeric string
-			},
-		segment: {
-			isLoggedIn:"true"
-			},
-		},
-}
-_satellite.track("pageLoad");
+window.adobeDataLayer = window.adobeDataLayer || [];
+window.adobeDataLayer.push({
+    "event": "navClick",
+    "navInfo": [{
+"linkPage: "<pageName where link is clicked>,",
+"linkName": "<Name of the link which is clicked>", 
+"linkPosition": "<Position of nav the link clicked>",        
+    }]
+});
+
 
     
     <meta charset="UTF-8">

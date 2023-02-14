@@ -6,6 +6,35 @@
     
  <script src="https://assets.adobedtm.com/948d7cb4069c/b3403847193c/launch-e5bbf1ac799a-development.min.js" async></script>
     
+    
+    
+    digitalData = { 
+	page: {
+		pageInfo:{												
+			pageName:"flexbox:estimate:step-2:coverage", //As per the page name strategy
+			pageLanguage:"en_ca", // Language of page
+			siteName:"flexbox", // always set to flexbox
+			},
+		category:{
+			primaryCategory:"estimate",//Top level page category
+			subCategory1:"estimate:step-2:",//Second Level page category
+			subCategory2:"estimate:step-2:coverage", // Third Level page category
+			pageType:"estimate-page", // set to the type of page
+			},
+		},
+	user[0]: {
+		Profile[0]: {
+			profileInfo: {
+				profileId:"[ID]" // alpha-numeric string
+			},
+		segment: {
+			isLoggedIn:"true"
+			},
+		},
+}
+_satellite.track("pageLoad");
+
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Moonwalk Manor - Your Haven in Space</title>
@@ -269,7 +298,8 @@
                 <li><a class="icon-twitter" data-grunticon-embed href="https://twitter.com"><span class="screen-reader-text">Twitter</span></a></li>
                 <li><a class="icon-facebook" data-grunticon-embed href="https://facebook.com"><span class="screen-reader-text">Facebook</span></a></li>
                 <li><a class="icon-instagram" data-grunticon-embed href="https://instagram.com"><span class="screen-reader-text">Instagram</span></a></li>
-                <li><a class="icon-youtube" data-grunticon-embed href="https://youtube.com"><span class="screen-reader-text">YouTube</span></a></li>
+                <li><a class="icon-
+                    be" data-grunticon-embed href="https://youtube.com"><span class="screen-reader-text">YouTube</span></a></li>
             </ul>
         </nav><!-- .social-nav -->
     </footer><!-- .footer -->

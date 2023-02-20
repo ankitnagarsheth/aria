@@ -26,10 +26,44 @@ s.apl=new Function("l","v","d","u",""
 /* Adobe Consulting Plugin: apl (appendToList) v4.0 */
 function apl(lv,va,d1,d2,cc){var b=lv,d=va,e=d1,c=d2,g=cc;if("-v"===b)return{plugin:"apl",version:"4.0"};var h=function(){if("undefined"!==typeof window.s_c_il)for(var k=0,b;k<window.s_c_il.length;k++)if(b=window.s_c_il[k],b._c&&"s_c"===b._c)return b}();"undefined"!==typeof h&&(h.contextData.apl="4.0");window.inList=window.inList||function(b,d,c,e){if("string"!==typeof d)return!1;if("string"===typeof b)b=b.split(c||",");else if("object"!==typeof b)return!1;c=0;for(a=b.length;c<a;c++)if(1==e&&d===b[c]||d.toLowerCase()===b[c].toLowerCase())return!0;return!1};if(!b||"string"===typeof b){if("string"!==typeof d||""===d)return b;e=e||",";c=c||e;1==c&&(c=e,g||(g=1));2==c&&1!=g&&(c=e);d=d.split(",");h=d.length;for(var f=0;f<h;f++)window.inList(b,d[f],e,g)||(b=b?b+c+d[f]:d[f])}return b};
 /******************************************** END CODE TO DEPLOY ********************************************/
+
+/*
+ * Plugin: getValOnce_v1.11
+ */
+s.getValOnce=new Function("v","c","e","t",""
++"var s=this,a=new Date,v=v?v:'',c=c?c:'s_gvo',e=e?e:0,i=t=='m'?6000"
++"0:86400000,k=s.c_r(c);if(v){a.setTime(a.getTime()+e*i);s.c_w(c,v,e"
++"==0?0:a);}return v==k?'':v");
+
+/* Plugin: getTimeParting 3.0 - Set timeparting values based on time zone - valid through 2014
+*/
+
+s.getTimeParting=new Function("t","z",""
++"var s=this,d,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T;d=new Date();A"
++"=d.getFullYear();if(A=='2009'){B='08';C='01'}if(A=='2010'){B='14';C"
++"='07'}if(A=='2011'){B='13';C='06'}if(A=='2012'){B='11';C='04'}if(A="
++"='2013'){B='10';C='03'}if(A=='2014'){B='09';C='02'}if(!B||!C){B='08"
++"';C='01'}B='03/'+B+'/'+A;C='11/'+C+'/'+A;D=new Date('1/1/2000');if("
++"D.getDay()!=6||D.getMonth()!=0){return'Data Not Available'}else{z=p"
++"arseFloat(z);E=new Date(B);F=new Date(C);G=F;H=new Date();if(H>E&&H"
++"<G){z=z+1}else{z=z};I=H.getTime()+(H.getTimezoneOffset()*60000);J=n"
++"ew Date(I+(3600000*z));K=['Sunday','Monday','Tuesday','Wednesday','"
++"Thursday','Friday','Saturday'];L=J.getHours();M=J.getMinutes();N=J."
++"getDay();O=K[N];P='AM';Q='Weekday';R='00';if(M>30){R='30'}if(L>=12)"
++"{P='PM';L=L-12};if(L==0){L=12};if(N==6||N==0){Q='Weekend'}T=L+':'+R"
++"+P;if(t=='h'){return T}if(t=='d'){return O}if(t=='w'){return Q}}");
+
+
+
 /*
  * Get visit start
  */
 s.getVisitStart = new Function("c", "" + "var s=this,v=1,t=new Date;t.setTime(t.getTime()+1800000);if(s.c_r(c" + ")){v=0}if(!s.Util.cookieWrite(c,1,t)){s.Util.cookieWrite(c,1,0)}if(!s.Util.cookieRead(c)){v=0}return v;");
+
+
+/* Adobe Consulting Plugin: getPreviousValue v3.0 */
+function getPreviousValue(v,c){var k=v,d=c;if("-v"===k)return{plugin:"getPreviousValue",version:"3.0"};var a=function(){if("undefined"!==typeof window.s_c_il)for(var c=0,b;c<window.s_c_il.length;c++)if(b=window.s_c_il[c],b._c&&"s_c"===b._c)return b}();"undefined"!==typeof a&&(a.contextData.getPreviousValue="3.0");window.cookieWrite=window.cookieWrite||function(c,b,f){if("string"===typeof c){var h=window.location.hostname,a=window.location.hostname.split(".").length-1;if(h&&!/^[0-9.]+$/.test(h)){a=2<a?a:2;var e=h.lastIndexOf(".");if(0<=e){for(;0<=e&&1<a;)e=h.lastIndexOf(".",e-1),a--;e=0<e?h.substring(e):h}}g=e;b="undefined"!==typeof b?""+b:"";if(f||""===b)if(""===b&&(f=-60),"number"===typeof f){var d=new Date;d.setTime(d.getTime()+6E4*f)}else d=f;return c&&(document.cookie=encodeURIComponent(c)+"="+encodeURIComponent(b)+"; path=/;"+(f?" expires="+d.toUTCString()+";":"")+(g?" domain="+g+";":""),"undefined"!==typeof cookieRead)?cookieRead(c)===b:!1}};window.cookieRead=window.cookieRead||function(c){if("string"===typeof c)c=encodeURIComponent(c);else return"";var b=" "+document.cookie,a=b.indexOf(" "+c+"="),d=0>a?a:b.indexOf(";",a);return(c=0>a?"":decodeURIComponent(b.substring(a+2+c.length,0>d?b.length:d)))?c:""};var l;d=d||"s_gpv";a=new Date;a.setTime(a.getTime()+18E5);window.cookieRead(d)&&(l=window.cookieRead(d));k?window.cookieWrite(d,k,a):window.cookieWrite(d,l,a);return l};
+/******************************************** END CODE TO DEPLOY ********************************************/
 
 
 s.usePlugins=true
@@ -53,7 +87,9 @@ function s_doPlugins(s) {
   s.eVar98 = _satellite.getVar('plugin : dayssincelastvisit');
    s.eVar103 = _satellite.getVar('plugin : visitnum');
    s.eVar101 = _satellite.getVar('plugin : newrepeat');   
-   s.eVar101 = _satellite.getVar('plugin : visitduration');  
+   s.eVar151 = _satellite.getVar('plugin : visitduration');  
+  s.eVar85 = getPreviousValue(s.pageName,"gpv_Page");
+  
 
   s.prop1 = "D=v3";
   s.prop5 = "D=v1";
@@ -62,9 +98,10 @@ function s_doPlugins(s) {
   s.prop7 = "D=v10";
   s.prop8 = "D=v11";
   s.prop16 = "D=v19";
-    s.prop73 = "D=v101";
-     s.prop70 = "D=v103";   
-         s.prop69 = "D=v98";
+  s.prop73 = "D=v101";
+  s.prop70 = "D=v103";   
+  s.prop69 = "D=v98";
+  s.prop74 = getPreviousValue(s.pageName,"gpv_Page");
   
     /* Added by Ankit  */    
    s.campaign=s.getValOnce(s.campaign,'s_cmp',30);
@@ -120,9 +157,9 @@ if(s._ppvPreviousPage)
 }
 
 //if(s.inList(s.events, "purchase")) s.eVar150 = s.getVisitDuration();
-s.eVar151 = s && s.getVisitDuration && s.getVisitDuration();
-s.prop73 = s && s.getVisitDuration && s.getVisitDuration();
-s.eVar152 = s && s.getNewRepeat && s.getNewRepeat();
+//s.eVar151 = s && s.getVisitDuration && s.getVisitDuration();
+//s.prop73 = s && s.getVisitDuration && s.getVisitDuration();
+//s.eVar152 = s && s.getNewRepeat && s.getNewRepeat();
 
 if(s.pageName) s && s.getPageLoadTime && s.getPageLoadTime();
 if(s._pltPreviousPage)
@@ -146,14 +183,11 @@ s.eVar157 = _satellite.getVar('Activity/Experience Name');
 s.eVar158 = _satellite.getVar('Google Client ID');
 s.eVar160 = s.Util.getQueryParam('icmp');
 s.eVar100= _satellite.getVisitorId().getMarketingCloudVisitorID();
-  
-// Riley Johnson (Adobe Consultant) comment out the below campaign logic to set the campaign code via the data element rather than custom code.
-//if(s && s.getQueryParam) {
-//if(s.getQueryParam('utm_medium') || s.getQueryParam('utm_source') || s.getQueryParam('utm_campaign') || s.getQueryParam('utm_term') || s.getQueryParam('utm_content')){ s.campaign = s.getQueryParam('utm_source')+"|"+ s.getQueryParam('utm_medium')+"|"+ s.getQueryParam('utm_campaign')+"|"+ s.getQueryParam('utm_term')+"|"+ s.getQueryParam('utm_content'); }
-//}
-//s.campaign=s && s.getValOnce && s.getValOnce(s.campaign,'s_campaign',0);
- 
-//s.linkTrackVars = apl(s.linkTrackVars, "eVar5,eVar19,eVar21,eVar18,eVar151,eVar152,eVar153,eVar154,eVar155,eVar158,eVar160,prop71,prop70,prop69,prop66"); //ensures that prop1 will be included on the first hit of the visit
 
-//}
+
+s.eVar34 =s.getTimeParting('d', '-5');
+  s.eVar35 =s.getTimeParting('h', '-5');
+  s.eVar32 =s.getTimeParting('w', '-5');
+  
+
 s.doPlugins=s_doPlugins 

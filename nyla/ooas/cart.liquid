@@ -1,0 +1,183 @@
+<section class="content content-area">
+  {% include 'breadcrumbs' %}
+ <!-- <div class="page-title">
+    <h1 class="label">{{ 'cart.header' | t }}</h1>
+  </div> -->
+  {% if cart.item_count > 0 %}
+    <form action="/cart" method="post" id="cart-form">
+      <table class="table">
+        <thead>
+          <tr class="table-header">
+            <th class="first">{{ 'general.product' | t }}</th>
+            <th>{{ 'general.price' | t }}</th>
+            <th>{{ 'general.quantity' | t }}</th>
+            <th>{{ 'general.total' | t }}</th>
+            <th class="last"></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          {% for item in cart.items %}
+          
+          
+           <!----- Free Gift Product  ------>
+ 			<input type="hidden" class="total-item" dataitem="{{cart.item_count}}">
+          <div class="gift-product">
+			{% if item.product.tags contains settings.free_gift_tag %}
+               
+            	{%- assign productsname = all_products[settings.free_gift_product].handle -%}
+				{% assign variantid = all_products[productsname].selected_or_first_available_variant %}
+  				{% assign productvariantid = variantid.id %}
+
+                 <input type="hidden" product-id="{{productvariantid}}" class="free-gift-product">
+            
+            {% else %}
+            
+              {%- assign productsname = all_products[settings.free_gift_product].handle -%}
+			  {% assign variantid = all_products[productsname].selected_or_first_available_variant %}
+  			  {% assign productvariantid = variantid.id %}
+            
+            <input type="hidden" product-ids="{{productvariantid}}" class="carts-gift-product">
+            
+            {% endif %}
+    	 </div>
+  <!----- End Free Gift Product  ------>
+          
+          
+          
+            <tr class="table-row  {{item.product.handle}} {% if item.product.tags contains 'free-gift' %}free-gift-produt{%endif%}" data-tagss="{% if item.product.tags contains settings.free_gift_tag %}true{%else%}false{%endif%}">
+              <td class="product-item first ">
+                <div class="image-wrap">
+                  <a class="image" href="{% if item.product.handle == settings.free_gift_product or item.product.handle == settings.free_gift_product2 or item.product.handle == settings.free_gift_product3 %}javascript:void(0){% else %}{{ item.url }}{%endif %}">
+                    {{ item | img_url: 'compact' | img_tag }}
+                    {% if settings.product-image-borders %}<span class="outline"></span>{% endif %}
+                  </a>
+                </div>
+                <div class="wrap">
+                  <span class="label vendor">{{ item.vendor }}</span>
+                  <span class="label title"><a href="{% if item.product.handle == settings.free_gift_product or item.product.handle == settings.free_gift_product2 or item.product.handle == settings.free_gift_product3 %}javascript:void(0){% else %}{{ item.url }}{%endif %}">{{ item.product.title }}</a></span>
+                  {% unless item.variant.title == 'Default Title' %}<span class="label variant">{{ item.variant.title }}</span>{% endunless %}
+
+									{%- if item.properties != empty -%}
+
+										<ul class="cart-item__property-list">
+											{%- for property in item.properties -%}
+												{%- assign first_character_in_key = property.first | truncate: 1, '' -%}
+
+												{%- if property.last == blank or first_character_in_key == '_' -%}
+													{%- continue -%}
+												{%- endif -%}
+
+												<li class="cart-item__property">{{ property.first }}: {{ property.last }}</li>
+											{%- endfor -%}
+										</ul>
+									{%- endif -%}
+
+									{% comment %}
+										{% if item.product.metafields.custom_fields["cart_text"] != blank %}
+											<div class="custom-field custom-field__cart-text custom-field__type--text">
+												{{ item.product.metafields.custom_fields["cart_text"] }}
+											</div>
+										{% endif %}
+									{% endcomment %}
+{% if settings.free_gift_product and item.product.tags contains settings.free_gift_tag%}
+              	{%- assign productsname = all_products[settings.free_gift_product].handle -%}
+				{% assign variantid = all_products[productsname].selected_or_first_available_variant %}
+  				{% assign productvariantid = variantid.id %}
+      	{% else %}
+              {% assign productvariantid = '' %}
+      	{% endif%}
+      	{% if settings.free_gift_product2 and item.product.tags contains settings.free_gift_tag2%}
+              	{%- assign productsname = all_products[settings.free_gift_product2].handle -%}
+              	{% assign variantid2 = all_products[productsname].selected_or_first_available_variant %}
+  				{% assign productvariantid2 = variantid2.id %}
+      	{% else %}
+              {% assign productvariantid2 = '' %}
+      	{% endif%}
+      	{% if settings.free_gift_product3 and item.product.tags contains settings.free_gift_tag3 %}
+              	{%- assign productsname = all_products[settings.free_gift_product3].handle -%}
+				{% assign variantid3 = all_products[productsname].selected_or_first_available_variant %}
+  				{% assign productvariantid3 = variantid3.id %}
+      	{% else %}
+              {% assign productvariantid3 = '' %}
+      	{% endif%}
+
+                  {% assign overlay_badge_tags = settings.overlay_badges | split:','%}
+
+                  {% for tag in item.product.tags %}
+                    {% assign tag_handle = tag | handle %}
+
+                    {% for badge in overlay_badge_tags %}
+                    {% assign badge_handle = badge | handle %}
+
+                    {% if tag_handle == badge_handle %}
+                      <div class="f7 db w-100 ttu" style="color: {{ settings.badge_cart_color }};">
+                        -{{badge | strip}}-
+                      </div>
+                    {% endif %}
+
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+              </td>
+              <td class="price"><span class="money">{{ item.price | money }}</span></td>
+              <td class="total"><span class="money">{{ item.quantity | times: item.price | money }}</span></td>   
+
+              {% unless item.product.handle == settings.free_gift_product or item.product.handle == settings.free_gift_product2 or item.product.handle == settings.free_gift_product3 %}
+              <td class="quantity"><input type="text" name="updates[]" class="qtychange field {% if item.product.tags contains 'free-gift' %}noquantity{% endif %}" value="{{ item.quantity }}" data-id="{{ item.variant.id }}" varid="{{productvariantid}}" itemid="{{ item.variant.id }}"></td>
+              <td class="remove last item-remove-button"><a href="/cart/change/{{ item.variant.id }}?quantity=0" class="giftcart-item remove_item" varid="{% if item.product.tags contains settings.free_gift_tag %}{{productvariantid}}{% elsif item.product.tags contains settings.free_gift_tag2 %}{{productvariantid2}}{% elsif item.product.tags contains settings.free_gift_tag3 %}{{productvariantid3}}{% endif %}" data-tag-value="{% if item.product.tags contains settings.free_gift_tag %}Free Gift1{% elsif item.product.tags contains settings.free_gift_tag2 %}Free Gift2{% elsif item.product.tags contains settings.free_gift_tag3 %}Free Gift3{% endif %}" itemid="{{ item.variant.id }}"><span aria-hidden="true">×</span></a></td>
+              {% endunless %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+     
+      
+      <div class="cart-tools clearfix">
+        <div class="instructions standard">
+          <p>{{ 'cart.note' | t }}</p>
+          <textarea class="field" name="note">{{ cart.note }}</textarea>
+        </div>
+        <div class="totals">
+          {% comment %}<p><input autocomplete="off" type="text" name="discount" class="input-override field" placeholder="Enter Promo Code"/></p>{% endcomment %}
+          <p class="price"><span class="money">{{ cart.total_price | money }}</span></p>
+          {% comment %} <!-- Insert QuadPay Widget --> 
+          <div style="margin: 0 0 10px 0;min-height:20px;width: 100%;">
+            <quadpay-widget amount="{{ cart.total_price | divided_by: 100.00 }}" size="90%" ></quadpay-widget>
+          </div>
+          {% endcomment %}
+          <div class="checkout">
+            <input class="action-button desaturated cart-update" type="submit" name="update" value="{{ 'cart.update' | t }}" />
+            <input class="action-button" type="submit" name="checkout" value="{{ 'cart.submit' | t }}" />
+          </div>
+        </div>
+        <div class="instructions mobile">
+          <p>{{ 'cart.note' | t }}</p>
+        </div>
+      </div>
+{% comment %}      {% if settings.shipping_calculator %}
+        {% include 'shipping-calculator' %}
+      {% endif %}{% endcomment %}
+    </form>
+  {% else %}
+    <p class="empty">{{ 'cart.empty' | t }} <a href="{{ shop.url }}/collections/all">{{ 'cart.continue' | t }}</a></p>
+  {% endif %}
+</section><!-- SnappicSnipStart -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','//connect.facebook.net/en_US/fbevents.js');
+fbq('init', '171409773406367');
+fbq('track', 'PageView');
+fbq('track', 'AddToCart', {
+  value: '{{cart.total_price | money_without_currency}}',
+  currency: '{{shop.currency}}',
+  content_type: 'product',
+  content_ids: [{% for item in cart.items %}'snappic_{{item.product.id}}',{% endfor %}],
+});
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=171409773406367&ev=PageView&noscript=1" />
+</noscript>
+<!-- SnappicSnipEnd -->
+
+ 

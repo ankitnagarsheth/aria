@@ -1,0 +1,156 @@
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PMNWZH6');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Global site tag (gtag.js) - Google Ads: 941142507 -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-941142507"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-941142507');
+</script>
+
+
+
+<!-- GTM data layer with checkout instead of order  -->
+{% if first_time_accessed %} 
+<script> 
+window.addEventListener('load', function(){ 
+    window.dataLayer = window.dataLayer || []; 
+    {% if customer %} 
+        window.dataLayer.push({
+            "event": "page_view",
+            "visitorType": "Logged In", 
+            "visitorId": "{{ customer.id | remove: "'" }}", 
+            "customerId": "{{ customer.id | remove: "'" }}", 
+            "customerEmail": "{{ customer.email }}", 
+            "customerFirstName": "{{ customer.first_name }}", 
+            "customerPhone": "{{ customer.default_address.phone }}", 
+            "customerLastName": "{{ customer.last_name }}", 
+            "customerCity": "{{ customer.default_address.city }}", 
+            "customerZip": "{{ customer.default_address.zip }}", 
+            "customerAddress1": "{{ customer.default_address.address1 }}", 
+            "customerAddress2": "{{ customer.default_address.address2 }}", 
+            "customerCountryCode": "{{ customer.default_address.country_code }}", 
+            "customerProvince": "{{ customer.default_address.province }}", 
+            "customerOrdersCount": "{{ customer.orders_count }}", 
+            "customerTotalSpent": "{{ customer.total_spent | divided_by: 100 }}", 
+        }); 
+    {% else %} 
+        window.dataLayer.push({ "event": "page_view", "visitorType": "Guest" }); 
+    {% endif %} 
+    var lineItems = {{ order.line_items | json }}; 
+    window.dataLayer.push({ 
+        "pageType": "purchase", 
+        "event": "gtmEvent",
+        "eventCategory": 'enhanced ecommerce',
+	    "eventAction": 'transaction',
+        "eventLabel": '',
+        "customerEmail": '{{customer.email}}',
+        "ecommerce": { 
+            "currencyCode": "{{ order.currency }}", 
+            "purchase": { 
+                "actionField": { 
+                    "id": "{{order.order_number}}", 
+                    "revenue": "{{checkout.subtotal_price | plus: tax_price | plus: shipping_price | times: 0.01}}", 
+                    "tax": "{{tax_price | times: 0.01}}", 
+                    "shipping": "{{shipping_price | times: 0.01}}", 
+                    "affiliation": "{{ shop.name }}", 
+                    "discountAmount": "{{ checkout.discounts_amount | money_without_currency | remove: ',' }}" 
+                    {% if order.discounts %} ,"coupon": "{{ order.discounts[0].code }}" {% endif %} 
+                }, 
+                "products": lineItems.map(function(item, idx) { 
+                    return { 
+                        "name": item.title, 
+                        "id": item.sku, 
+                        "productId": item.product.id.toString(), 
+                        "variantId": item.variant_id.toString(), 
+                        "shopifyId": item.product.id + "_" + item.variant_id, 
+                        "price": parseFloat(item.price), 
+                        "brand": item.vendor, 
+                        "category": item.product.product_type, 
+                        "variant": item.variant.title, 
+                        "quantity": item.quantity 
+                    } 
+                })
+            } 
+        } 
+    }); 
+}, false); 
+</script> 
+{% endif %}
+
+<script src="https://cdn.quadpay.com/latest/quadpay.js"></script>
+<script>
+quadpay.associate("{{ checkout.id }}", "{{ order.name }}");
+</script>
+
+<!-- Hotjar Tracking Code for https://theofficeofangelascott.com/ -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:1566715,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+{% if first_time_accessed %}
+<!-- Google Ads Dynamic Remarketing -->
+<script>
+  gtag('event', 'page_view', {
+  'send_to': 'AW-941142507',
+  'ecomm_pagetype': 'purchase',
+  'ecomm_prodid': [{% for item in checkout.line_items %}'shopify_US_{{ item.product_id }}_{{ item.variant_id }}',{% endfor %}],
+  'ecomm_totalvalue': {{ checkout.total_price | money_without_currency | remove:',' }},
+  'ecomm_lifetimevalue': {{ customer.total_spent }},
+  'ecomm_ordercount': {{customer.orders_count }},
+  'ecomm_category': [{% for item in checkout.line_items %}"{{ item.product.type }}" ,{% endfor %}],
+  });
+</script>
+<!-- End Google Ads Dynamic Remarketing -->
+{% endif %}
+
+<!-- FIT FINDER -->
+{% if first_time_accessed %}
+<div id="_ff_tracker"></div>
+<script>
+(function(){ 
+	var _ff_meta = localStorage.getItem('_ff_userdata') || '';
+	var src_base = 'https://apps.sltwtr.com/behavior/pixel.gif?t=actions'
+	
+	{% for item in line_items %}
+	var img{{forloop.index}} = document.createElement('img')
+		{%- for option in item.product.options %}
+			{% assign option_handle = option | downcase %}
+			{%- if option_handle contains 'color' -%}{%- assign ci = forloop.index | prepend: 'option' -%}{%-endif-%}
+			{%- if option_handle contains 'size' -%}{%- assign si = forloop.index | prepend: 'option' -%}{%-endif-%}
+		{%- endfor %}
+	img{{forloop.index}}.src = src_base + '&user_id={{ customer.email | md5 }}&site_id={{ shop.domain }}&type=order&order_id={{ order.id }}&product_id={{ item.product.id }}&variant_id={{ item.variant.id }}&product_type={{ item.product.type | remove: "'" }}&color={{ item.variant[ci] }}&size={{ item.variant[si]}}'; 
+          if(localStorage.getItem('_ff_session')){
+               img{{forloop.index}}.src = img{{forloop.index}}.src + '&meta='+_ff_meta+'&session_id='+localStorage.getItem('_ff_session')
+          }
+	document.getElementById('_ff_tracker').appendChild(img{{forloop.index}})
+	{% endfor %}
+
+    localStorage.removeItem('_ff_session')
+})();
+</script>
+{% endif %}
+<!-- /FIT FINDER -->
+
+            
+
+<img src="https://api.yotpo.com/conversion_tracking.gif?app_key=AsHGnjZ8XkTZLlaD2VxG5g9nI719Xssp9t8AQElb&order_id={{order_name|handleize}}&order_amount={{subtotal_price|money_without_currency}}&order_currency={{ shop.currency }}" width="1" height="1">
+{% if first_time_accessed %}<img src="https://foursixty.com/conversion-pixel.gif?extension=the-office-of-angela-scott&value={{ total_price | money_without_currency | strip_html }}">{% endif %}
+<script>Grin = window.Grin || (window.Grin = []);var order_number = '{{ order_number }}', amount = '{{ subtotal_price | money_without_currency }}';Grin.push(['conversion', amount, {order_number: order_number}]);</script>

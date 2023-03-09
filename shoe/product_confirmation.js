@@ -88,3 +88,32 @@ try {
 	}
 
 } catch (e) {}
+
+
+
+
+////WORKING PRODUCT LEVEL STRING on the confirmation page
+
+try {
+
+var productString = [], cleanProductString
+
+for (i=0; i<adobeDataLayer.length; i++) {
+	if (adobeDataLayer[i].event == 'scCheckout') {
+    		var tmp = i;
+		for (j=0; j < adobeDataLayer[tmp].checkout.cartItems.length; j++)
+		{	
+			productString.push(";"+adobeDataLayer[tmp].checkout.cartItems[j].productSKU+";"+adobeDataLayer[tmp].checkout.cartItems[j].quantity+";"+adobeDataLayer[tmp].checkout.cartItems[j].price.toFixed(2) +
+				    ";" +
+				    "event1=" + adobeDataLayer.getState().checkout.cartSummary.total + "|event62=" + adobeDataLayer.getState().checkout.cartSummary.subtotal +
+				    ";" +
+				    "eVar25=caps");
+    		}
+		s.products = productString.toString();
+
+}
+
+} 
+
+} catch(e) {}
+

@@ -1,0 +1,23 @@
+s.linkTrackVars="eVar13,eVar5,eVar20,eVar24,eVar10,list2,events";
+s.linkTrackEvents="event8";
+s.events="event8"
+
+s.eVar13=_satellite.getVar("lead: app name");
+s.eVar20=_satellite.getVar("lead: preference");
+s.eVar20=_satellite.getVar("lead :contact preference");
+s.eVar24=_satellite.getVar("lead:contactwindow");
+s.eVar10=_satellite.getVar("content: page name");
+s.eVar5=_satellite.getVar("content: page URL");
+s.list2=_satellite.getVar("lead: app list");
+
+
+/* The below code was added to replace the lead name for Fall brand 2022 south asian page to "lead:southasian campaign:connect with an advisor" */
+
+if (s.eVar5.toString().includes("/campaigns/brand-2022.html")) {
+  
+    s.eVar13 = "lead:south asian campaign:connect with an advisor";
+
+}
+
+/*Code to replace lead name v13 ends above*/
+

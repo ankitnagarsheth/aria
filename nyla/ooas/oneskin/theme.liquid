@@ -1,0 +1,941 @@
+<!doctype html>
+<!--[if IE 9]> <html class="ie9 no-js supports-no-cookies{% if settings.layout_container_enable %} container-layout{% endif %}" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js supports-no-cookies{% if settings.layout_container_enable %} container-layout{% endif %}" lang="{{ shop.locale }}"> <!--<![endif]-->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="{{ settings.accent_secondary }}">
+  <meta name="google-site-verification" content="WETPYJp8Ugn9WabbwD78dFMe8YTK2FJZg1h66bSpXv0" />
+  {%- if request.page_type == 'product' -%}
+  <meta name="keywords" content="{{ product.metafields.custom.keywords }}">
+  {%- endif -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {% if settings.favicon %}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {% endif %}
+  
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MJ654X8');</script>
+<!-- End Google Tag Manager -->
+  
+  {% comment %}
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-NP426LJ');</script>
+  <!-- End Google Tag Manager -->
+  {% endcomment %}
+
+  
+
+  {% capture seo_title %}
+    {{ page_title }}
+    {% if current_tags %}
+      {%- assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {% endif %}
+    {% if current_page != 1 %}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {% endif %}
+    {% unless page_title contains shop.name %}
+      &ndash; {{ shop.name }}
+    {% endunless %}
+  {% endcapture %}
+
+
+  
+  {{ 'scrollreveal.js' | asset_url | script_tag }}
+<!-- LiveConnectTag for advertisers -->
+<script type="text/javascript" src="//b-code.liadm.com/a-079d.min.js" async="true" charset="utf-8"></script>
+<!-- LiveConnectTag for advertisers -->
+
+
+{% if template.name == 'index' %}
+<title>Topical Products for Healthy Aging | OneSkin</title>
+{% else %}
+<title>{{ page_title | escape }}</title>
+{% endif %}
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {% include 'social-meta' %}
+  
+  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'theme2.scss.css' | asset_url | stylesheet_tag }}
+
+  {{ 'tooltip-box.css' | asset_url | stylesheet_tag }}
+  {{ 'font-icon.css' | asset_url | stylesheet_tag }}
+  {{ 'temp.css' | asset_url | stylesheet_tag }}
+  
+  {{ 'slick-theme.css' | asset_url | stylesheet_tag }}
+  {{ 'slick.css' | asset_url | stylesheet_tag }}
+  {{ 'hero.css' | asset_url | stylesheet_tag }}
+  {{ 'elva-newsletter.css' | asset_url | stylesheet_tag }}
+  {{ 'customdev.css' | asset_url | stylesheet_tag }}
+
+  <script src="https://www.googleoptimize.com/optimize.js?id=OPT-N3NSNWQ"></script>
+
+  <!-- <script type="text/javascript">
+
+  if (screen.width <= 699) {
+  document.location = "https://sxjbs31qynhxrn5r-32740999304.shopifypreview.com";
+  }
+  //-->
+  {% if template.directory == 'customers' %}
+    <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script><!--<![endif]-->
+    <!--[if lte IE 9]><script src="{{ 'shopify_common.js' | shopify_asset_url }}"></script><![endif]-->
+  {% endif %}
+
+  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'head.js' | asset_url }}"></script><!--<![endif]-->
+  <!--[if lt IE 9]><script src="{{ 'head.js' | asset_url }}"></script><![endif]-->
+
+  <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'theme.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
+  <!--[if lt IE 9]><script src="{{ 'theme.js' | asset_url }}"></script><![endif]-->
+
+
+
+
+
+
+  {{ content_for_header }}
+
+  {% if settings.enable_yotpo and settings.enable_product_reviews and settings.yotpo_ID != '' %}
+    {% include 'yotpo-script' %}
+  {% endif %}
+
+
+<!-- Start of Littledata - Fix Google Analytics Script-->
+{% include 'LittledataLayer' %}
+<!-- End of Littledata - Fix Google Analytics Script -->
+
+  {{ shop.metafields.okendo.ReviewsWidgetStyleTag }}
+  {{ shop.metafields.okendo.StyleCustomizations }}
+  {% render 'okendo-reviews-json-ld' %}
+
+<meta name="facebook-domain-verification" content="lu0kqjihto12cfgynz104zqkypa29u" />
+  <script type='text/javascript'>
+    
+window.__lo_site_id = 316127;
+
+(function() {
+var wa = document.createElement('script'); wa.type = 'text/javascript'; wa.async = true;
+wa.src = 'https://d10lpsik1i8c69.cloudfront.net/w.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(wa, s);
+ })();
+</script>
+
+<script>(function(d){var e=d.createElement('script');e.src='https://td.yieldify.com/yieldify/code.js?w_uuid=308d70ea-3e98-4e25-8962-b655bba62b87&k=1&loca='+window.location.href;e.async=true;d.getElementsByTagName('head')[0].appendChild(e);}(document));</script>
+
+<style>
+/*   .image-element, .yie-outer-element{ display: none!important;} */
+  .retinol_table{
+    max-width: 1024px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .retinol_table h2{
+    font-family: Maison Neue;
+    font-size: 36px;
+    color: #2c2c2c;
+    font-weight: 400;
+    margin-bottom: 20px;
+    line-height: 41px;
+    text-align: center;
+  }
+  .retinol_table > p{
+    font-size: 16px;
+    color: #474747;
+    font-weight: 400;
+    line-height: 24px;
+    max-width: 780px;
+    margin: 0 auto 30px auto;
+  }
+  .retinol_table table{
+    border: 1px solid #000;
+  }
+  .retinol_table thead td{
+    font-family: Maison Neue;
+    font-size: 18px;
+    color: #2c2c2c;
+    font-weight: 400;
+  }
+  .retinol_table table tr>th, .retinol_table table tr>td {
+    border-bottom: 1px solid #000;
+    border-right: 1px solid #000;
+  }
+  #wrap .os-01_hero{
+    left: 50%;
+    transform: translate(-50%, 0);
+  }
+  .logo-list {
+      width: 100%;
+      margin-top: 0;
+  }
+  .logo-list__wrapper h2 {
+    margin-left: 0;
+  }
+  .c-magnetic-btn{
+    height: auto;
+  }
+  </style>
+
+{% comment %}
+  {% render 'blackfire-pixel-head' %}
+  {% render 'blackfire-pixel-atc' %}
+{% endcomment %}
+
+
+<!-- Start of Superfiliate -->
+<script async src="https://superfiliate-cdn.com/storefront.js?shop=one-skin-technologies.myshopify.com"></script>
+<!-- End of Superfiliate -->
+
+</head>
+<body id="{{ page_title | handle }}" class="preload template-{{ template.name | handle }}{% if customer %} customer-logged-in{% endif %}" data-promo="{{ settings.show_promo_modal }}" >
+<script>window.KlarnaThemeGlobals={};{%case template.name%} {%when"product"%} {% if product.first_available_variant.price %}window.KlarnaThemeGlobals.data_purchase_amount = {{ product.first_available_variant.price }};{% endif %}window.KlarnaThemeGlobals.productVariants={{product.variants|json}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%when"cart"%} window.KlarnaThemeGlobals.data_purchase_amount={{cart.total_price}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%endcase%}</script>
+
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MJ654X8"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<div class="_root">
+  {% section 'header' %}
+
+  <!--<div class="nav prod">
+  	<div class="nav__content" style="display: none;">
+  		<ul class="nav__list product-nav">
+  			<li class="nav__list-item" title="OS-01" alt="OS-01"> OS-01 FACE</li>
+                <ul class="nav__list-secondary">
+                  <li class="nav__list-item-secondary" title="OS-01"><a href="/products/os-01"> Starter kit</a></li>
+                  <li class="nav__list-item-secondary" title="OS-01 Face Refill"><a href="/products/os-01-topical-face-moisturizer-refill"> Refill pouch</a></li>
+                </ul>
+            <li class="nav__list-item" title="OS-01 Body" alt="OS-01-body"><a href="/products/os-01-body-supplement-250ml"> OS-01 BODY</a></li>
+            <li class="nav__list-item" title="OneSkin PREP" alt="OneSkin PREP"><a href="/products/os-01-facial-cleanser">OneSkin PREP</a></li>
+            <li class="nav__list-item" title="All" alt="Shop All"><a href="/collections/all"> Shop All</a></li>
+  		</ul>
+  		<ul class="nav__list learn">
+  			<li class="nav__list-item" title="Our Story" alt="Our Story"><a href="https://www.oneskin.co/pages/our-story">Our Story</a></li>
+  			<li class="nav__list-item" title="The Reference Lab" alt="The Reference Lab"><a href="https://www.oneskin.co/blogs/reference-lab"> The Reference Lab <span class="blog-highlight">(blog)</span></a></li>
+          <li class="nav__list-item" title="Customer Spotlight" alt="Customer Spotlight"><a href="https://www.oneskin.co/blogs/customers"> Customer Spotlight</a></li>  
+          <li class="nav__list-item" title="Events" alt="Events"><a href="https://www.oneskin.co/pages/events"> Events</a></li>
+           	<li class="nav__list-item" title="Events" alt="scientific Publications"><a href="https://www.oneskin.co/pages/scientific-publications"> Scientific Publications</a></li>
+  			<li class="nav__list-item" title="Glossary" alt="Glossary"><a href="https://www.oneskin.co/pages/glossary" title="Glossary">Glossary</a></li>
+            <li class="nav__list-item" title="Skin Quiz" alt="Get to know your skin"><a href="https://oneskin.typeform.com/to/FvaKWEXy" title="Get to know your skin">Get to know your skin</a></li>
+            <li class="nav__list-item" title="Partner with us" alt="Partner with us"><a href="https://www.oneskin.co/pages/partner" title="Partner with us">Partner with us</a></li>
+			<li class="nav__list-item" title="FAQ" alt="FAQ"><a href="/pages/faq" title="FAQ">FAQ</a></li>
+        	<li class="nav__list-item" title="Referral" alt="Referral"><a href="/pages/referral-program" title="Referral">Referral</a></li>
+          <li class="nav__list-item" title="Careers" alt="Careers">
+            <a title="Careers" alt="Careers" href="https://www.oneskin.co/pages/careers">Careers</a>
+         </li>
+    
+       </ul>
+  	</div>
+  </div>-->
+    <main role="main" id="MainContent">
+	<div class="index-sections-alt">
+      <div id="SiteContainer">
+            <div class="scrll" >
+             {{ content_for_layout }}
+              <div class="klaviyo-form__container">
+                <div class="klaviyo-form__column">
+                  <h2> Discoveries are for those that seek them. </h2>
+                  <span>Get science-backed skin tips, longevity insights, exclusive brand updates, and more in your inbox.</span>
+                </div>
+                <div class="klaviyo-form-RpT3Vz"></div></div>
+         	{% comment %}<div class="klaviyo-form-TbwQVR" id="frm_news">
+              <div class="ln_input"></div>
+             </div>{% endcomment %}
+		<div class="footer_r">
+        <a href="#" class="arrow">
+          <svg width="23px" height="12px" viewbox="0 0 23 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <title>down-arrow</title>
+            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="oneskin" transform="translate(-1354.000000, -729.000000)" fill="#CCCCCC" fill-rule="nonzero">
+                <g id="down-arrow" transform="translate(1354.000000, 729.000000)">
+                  <path d="M21.013343,0.911363726 C21.3074286,0.629545425 21.7799399,0.629545425 22.0740255,0.911363726 C22.3752977,1.20006882 22.3753204,1.67440494 22.0740683,1.96322955 L22.0740683,1.96322955 L12.0314497,11.5869305 C11.888312,11.725489 11.6974872,11.8 11.5004681,11.8 C11.3046579,11.8 11.1146552,11.7263156 10.9696775,11.5888413 L10.9696775,11.5888413 L0.925969152,1.96409085 C0.624676949,1.67536659 0.624676949,1.20099031 0.925969152,0.912266045 C1.22005478,0.630447744 1.69256605,0.630447744 1.9866412,0.912256002 L1.9866412,0.912256002 L11.5,10.028 Z" id="Path" transform="translate(11.499997, 6.250000) scale(1, -1) translate(-11.499997, -6.250000) "></path>
+                </g>
+              </g>
+            </g>
+        </svg>
+        </a>
+        
+
+          {% section 'footer-megamenu' %}
+        <div class="post-footer">
+                  <a href="/policies/terms-of-service" class="terms">Terms and Conditions</a>
+            <a href="/policies/privacy-policy" class="privacy">Privacy</a>
+            <span class="copy">© 2020 One Skin Technology</span>
+        </div>
+   
+  </div>
+          </div>
+        </div>
+        </div>
+    </main>
+    </div>
+  
+
+
+    
+   
+
+
+  {{ 'api.jquery.js' | shopify_asset_url | script_tag }}
+
+  {%- if template.name == 'article' or template.name == 'blog' -%}
+    {% if settings.enable_disqus %}
+      {% include 'disqus' %}
+    {% endif % %}
+  {%- endif -%}
+
+
+  
+ 
+  {{ 'lottie-player.js' | asset_url | script_tag }}
+ {{ 'velocity.min.js' | asset_url | script_tag }}
+ {{ 'motion.js' | asset_url | script_tag }}
+ {{ 'jquery-3.4.1.js' | asset_url | script_tag }}
+ <!-- {{ 'rellax.js' | asset_url | script_tag }} -->
+<!--  {{ 'modernizr.custom.js' | asset_url | script_tag }} -->
+  {{ 'readMoreJS.min.js' | asset_url | script_tag }}
+ {{ 'menu.js' | asset_url | script_tag }}
+ {{ 'tilt.jquery.js' | asset_url | script_tag }}
+<!--  {{ 'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.js' | script_tag }} -->
+  {{ 'slick.js' | asset_url | script_tag }}
+
+  {% if template == "index" %}
+  {{ 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js' | script_tag }}
+  {% endif %}
+    {{ 'hero.js' | asset_url | script_tag }}
+
+<script>
+
+ window.theme = {
+      routes: {
+        assets: '{{ nothing.jpg | asset_url | split: nothing.jpg | first }}',
+        product_recommendations_url: '{{ routes.product_recommendations_url }}',
+        search_url: '{{ routes.search_url }}'
+      },
+      strings: {
+        addToCart: '{{ products.product.add_to_cart | t | json}}',
+        soldOut: '{{ products.product.sold_out | t | json }}',
+        unavailable: '{{ products.product.unavailable | t | json }}'
+      },
+      moneyFormat: '{{ shop.money_format | json }}',
+      info: {
+        name: 'broadcast'
+      },
+      version: '1.6.1'
+    };
+// const scroll = new LocomotiveScroll({
+//     el: document.querySelector('[data-scroll-container]'),
+//     smooth: true
+// });
+
+$readMoreJS.init({
+   target: '.dummy p',           // Selector of the element the plugin applies to (any CSS selector, eg: '#', '.'). Default: ''
+   numOfWords: 9,               // Number of words to initially display (any number). Default: 50
+   toggle: true,                 // If true, user can toggle between 'read more' and 'read less'. Default: true
+   moreLink: '[ READ MORE ]',    // The text of 'Read more' link. Default: 'read more ...'
+   lessLink: '[ READ LESS ]'         // The text of 'Read less' link. Default: 'read less'
+
+});
+
+    $(function() {
+        // this will get the full URL at the address bar
+        var url = window.location.href;
+
+        // passes on every "a" tag
+        $(".nv a").each(function() {
+            // checks if its the same on the address bar
+            if (url == (this.href)) {
+                $(this).closest("li").addClass("active");
+                //for making parent of submenu active
+               $(this).closest("li").parent().parent().addClass("active");
+            }
+        });
+    });
+</script>
+
+
+  <script> 
+    window.liQ = window.liQ || []; 
+    window.liQ.push 
+        ({ 
+          event: "viewContent", 
+          email: "{{ customer.email }}", 
+          contentType: "Product", 
+          name: "{{ product.type }}", 
+          contentId: "{{ current_variant.sku }}" 
+    }); </script>
+<script type="text/javascript">
+
+// Hide Header on on scroll down
+var didScroll;
+var lastScrollTop = 0;
+var delta = 5;
+var navbarHeight = $('header').outerHeight();
+var navbarHeight = $('.ft_call').outerHeight();
+
+$(window).scroll(function(event){
+    didScroll = true;
+});
+
+setInterval(function() {
+    if (didScroll) {
+        hasScrolled();
+        didScroll = false;
+    }
+}, 250);
+
+function hasScrolled() {
+    var st = $(this).scrollTop();
+
+    // Make sure they scroll more than delta
+    if(Math.abs(lastScrollTop - st) <= delta)
+        return;
+
+    // If they scrolled down and are past the navbar, add class .nav-up.
+    // This is necessary so you never see what is "behind" the navbar.
+    if (st > lastScrollTop && st > navbarHeight){
+        // Scroll Down
+        $('header').removeClass('nav-down').addClass('nav-up');
+        $('.ft_call').removeClass('nav-down').addClass('nav-up');
+              $('.ft_call').removeClass('nav-down').addClass('nav-up');
+      	$('#attentive_overlay').addClass('up');
+//         	$('#refcandy-poprocks').addClass('up');
+
+    } else {
+        // Scroll Up
+        if(st + $(window).height() < $(document).height()) {
+            $('header').removeClass('nav-up').addClass('nav-down');
+            $('.ft_call').removeClass('nav-up').addClass('nav-down');
+                	$('#attentive_overlay').removeClass('up');
+//                   	$('#refcandy-poprocks').removeClass('up');
+
+
+        }
+    }
+
+    lastScrollTop = st;
+}
+
+    </script>
+{% if page.handle != "referral-programmmmm"%}
+
+<script>
+
+const app = (() => {
+	let body;
+	let menu;
+	let menuItems;
+
+	const init = () => {
+		body = document.querySelector('body');
+		menu = document.querySelector('.menu-icon');
+		menuItems = document.querySelectorAll('.nav__list-item');
+
+		applyListeners();
+	}
+
+	const applyListeners = () => {
+		menu.addEventListener('click', () => toggleClass(body, 'nav-active'));
+	}
+
+	const toggleClass = (element, stringClass) => {
+		if(element.classList.contains(stringClass))
+			element.classList.remove(stringClass);
+		else
+			element.classList.add(stringClass);
+	}
+
+	init();
+})();
+
+// $('.single-item').slick({
+//   autoplay: true,
+//   autoplaySpeed: 2000,
+// });
+
+
+</script>
+{% endif %}
+  
+     
+
+        <link rel="stylesheet" href="https://use.typekit.net/ljn4kgu.css">
+        
+        <script>
+          document.documentElement.className = "js";
+          var supportsCssVars = function() {
+            var e, t = document.createElement("style");
+            return t.innerHTML = "root: { --tmp-var: bold; }", document.head.appendChild(t), e = !!(window.CSS && window.CSS.supports && window.CSS.supports("font-weight", "var(--tmp-var)")), t.parentNode.removeChild(t), e
+          };
+          supportsCssVars() || alert("Please view this demo in a modern browser that supports CSS Variables.");
+        </script>
+        <script>
+          var CORSProxy = "https://oneskin.co";
+          var activeArticle = 0;
+          var totalArticle = 4;
+
+          var xDown = null;
+          var yDown = null;
+
+          function trimString(string, maxLength) {
+            if (string.length > maxLength) {
+              string = string.substring(0, maxLength);
+              string = string.substr(0, Math.min(string.length, string.lastIndexOf(" ")));
+              string += "[...]";
+            }
+            return string;
+          }
+
+          // function replaceText(original, before, after) {
+          //   if (before.constructor !== Array) {
+          //     before = [before];
+          //     after = [after];
+          //   }
+          //   var result = original;
+          //   for (var i = 0; i < before.length; i++) {
+          //     result = result.split(before[i]).join(after[i]);
+          //   }
+          //   return result;
+          // }
+
+          function fetchImage(url, i) {
+            $.ajax({
+              url: CORSProxy + url,
+              type: "GET"
+            }).done(function(html) {
+              var image = $(html).find(".image-wrapper").first().html();
+              image = $(image).attr("src").replace("7x5", "408x300");
+
+              $("#articles li")
+                .eq(i)
+                .find(".card-image")
+                .css("background-image", "url(" + image + ")");
+            });
+          }
+
+          function fetchFeed(url) {
+            $.ajax({
+              url: CORSProxy + url,
+              type: "GET",
+              dataType: "xml",
+           
+              success: function(xml) {
+                generateCards(xml, true);
+              }
+            });
+          }
+
+          function generateHtml(data) {
+            var html = $("#article-template").html();
+            var before = [
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ];
+
+            
+          }
+
+          function generateCards(xml, isCDATA) {
+            var items = $(xml).find("item");
+            for (var i = 0; i < totalArticle; i++) {
+              var url = $(items[i]).find("link").text();
+              var title = $(items[i]).find("title").text();
+              title = trimString(title, 65);
+              var description = $(items[i]).find("description").text();
+
+              if (!isCDATA) description = $(items[i]).find("description").html();
+
+              var category = $(items[i]).find("category").last().text().toLowerCase();
+              var html = generateHtml([
+                category,
+                title,
+                description,
+                url,
+                i * -2
+              ]);
+
+              $("#articles").append(html);
+              fetchImage(url, i);
+            }
+            $("#articles").css("max-height", "600px");
+            arrangeCards();
+
+            $("#articles li").click(function() {
+              $(this).find(".card-content").toggleClass("open");
+              if ($(this).find(".card-content").hasClass("open")) {
+                $("#articles li").eq(activeArticle).find("a").removeAttr("tabindex");
+              }
+            });
+
+            $("#articles li").keypress(function(e) {
+              var key = e.which;
+              if (key == 13) {
+                // the enter key code
+                $(this).find(".card-content").toggleClass("open");
+                if ($(this).find(".card-content").hasClass("open")) {
+                  $("#articles li").eq(activeArticle).find("a").removeAttr("tabindex");
+                } else {
+                  $("#articles li").eq(activeArticle).find("a").attr("tabindex", -1);
+                }
+                return false;
+              }
+            });
+
+            $(".card-content a").click(function(e) {
+              e.stopPropagation();
+            });
+          }
+
+          function arrangeCards() {
+            var order = 0;
+            for (var i = activeArticle; i < totalArticle; i++) {
+              $("#articles li").removeAttr("tabindex");
+              $("#articles li")
+                .eq(i)
+                .css(
+                  "transform",
+                  "translate3d(" + order * -33 + "px, " + order * -3 + "px, " + order * -50 + "px) rotateX(0deg)"
+                );
+              order++;
+            }
+            $("#articles .card-content").removeClass("open");
+            $("#articles li").eq(activeArticle).attr("tabindex", 0);
+            $("#articles li").eq(activeArticle).addClass("current");
+            $("#articles li").eq(activeArticle).find("a").attr("tabindex", -1);
+            $("#articles li").eq(activeArticle).find(".open a").removeAttr("tabindex");
+          }
+
+          function nextCard() {
+            if (activeArticle < totalArticle - 1) {
+              $("nav button").removeAttr("disabled");
+              $("#articles li").eq(activeArticle).addClass("go-away");
+              $("#articles li").eq(activeArticle).removeClass("current");
+              activeArticle++;
+              arrangeCards();
+
+              if (activeArticle == totalArticle - 1)
+                $(".next-article").attr("disabled", "");
+            }
+          }
+
+          function prevCard() {
+            if (activeArticle > 0) {
+              $("nav button").removeAttr("disabled");
+              activeArticle--;
+              $("#articles li").eq(activeArticle).removeClass("go-away");
+              arrangeCards();
+
+              if (activeArticle == 0) $(".prev-article").attr("disabled", "");
+            }
+          }
+
+
+          $(function() {
+            fetchFeed("https://oneskin.co");
+
+            $(".prev-article").click(function() {
+              prevCard();
+            });
+            $(".next-article").click(function() {
+              nextCard();
+            });
+
+            //navigate with arrow keyboard
+            $(document).keydown(function(e) {
+              switch (e.which) {
+                case 37: // left
+                  prevCard();
+                  break;
+
+                case 38: // up
+                  prevCard();
+                  break;
+
+                case 39: // right
+                  nextCard();
+                  break;
+
+                case 40: // down
+                  nextCard();
+                  break;
+
+                default:
+                  return;
+              }
+              e.preventDefault();
+            });
+
+            function inViewport(elem, callback, options = {}) {
+              return new IntersectionObserver((entries) => {
+                entries.forEach((entry) => callback(entry));
+              }, options).observe(document.querySelector(elem));
+            }
+
+            inViewport(
+              ".black",
+              (element) => {
+                // document.querySelector(".box span strong").textContent =
+                var xx = element.isIntersecting;
+                if (xx == true) {
+
+                  document.body.classList.add("xxxx");
+                } else {
+
+                  document.body.classList.remove("xxxx");
+                }
+              }, {
+                root: document.querySelector(".scroll")
+              }
+            );
+             inViewport(
+              ".footer_r",
+              (element) => {
+                // document.querySelector(".box span strong").textContent =
+                var xx = element.isIntersecting;
+                if (xx == true) {
+
+                  document.body.classList.add("zzz");
+                } else {
+
+                  document.body.classList.remove("zzz");
+                }
+              }, {
+                root: document.querySelector(".scroll")
+              }
+            );
+            
+              inViewport(
+              ".klaviyo-form__container",
+              (element) => {
+                // document.querySelector(".box span strong").textContent =
+                var xx = element.isIntersecting;
+                if (xx == true) {
+
+                  document.body.classList.add("zzz");
+                } else {
+
+                  document.body.classList.remove("zzz");
+                }
+              }, {
+                root: document.querySelector(".scroll")
+              }
+            );
+            inViewport(
+              ".klaviyo-form__container",
+              (element) => {
+                // document.querySelector(".box span strong").textContent =
+                var xx = element.isIntersecting;
+                if (xx == true) {
+
+                  document.body.classList.add("zzz");
+                } else {
+
+                  document.body.classList.remove("zzz");
+                }
+              }, {
+                root: document.querySelector(".scroll")
+              }
+            );
+             inViewport(
+              "#shopify-section-eye-accordian",
+              (element) => {
+                // document.querySelector(".box span strong").textContent =
+                var xx = element.isIntersecting;
+                if (xx == true) {
+
+                  document.body.classList.add("zzz");
+                } else {
+
+                  document.body.classList.remove("zzz");
+                }
+              }, {
+                root: document.querySelector(".scroll")
+              }
+            );
+          
+     
+           
+            inViewport(
+              ".fix",
+              (element) => {
+                // document.querySelector(".box span strong").textContent =
+                var xx = element.isIntersecting;
+                if (xx == true) {
+
+                  document.body.classList.add("zzz");
+                } else {
+
+                  document.body.classList.remove("zzz");
+                }
+              }, {
+                root: document.querySelector(".scroll")
+              }
+            );
+
+          });
+        </script>
+        <script>
+          var divisor = document.getElementById("divisor"),
+            slider = document.getElementById("slider");
+
+          function moveDivisor() {
+            divisor.style.width = slider.value + "%";
+          }
+
+          var divisorb = document.getElementById("divisorb"),
+            sliderb = document.getElementById("sliderb");
+
+          function moveDivisorb() {
+            divisorb.style.width = sliderb.value + "%";
+          }
+
+          var divisorc = document.getElementById("divisorc"),
+            sliderc = document.getElementById("sliderc");
+
+          function moveDivisorc() {
+            divisorc.style.width = sliderc.value + "%";
+          }
+
+          var divisord = document.getElementById("divisord"),
+            sliderd = document.getElementById("sliderd");
+
+          function moveDivisord() {
+            divisord.style.width = sliderd.value + "%";
+          }
+        </script>
+
+
+{{ 'charming.min.js' | asset_url | script_tag }}
+{{ 'imagesloaded.pkgd.min.js' | asset_url | script_tag }}
+{{ 'TweenMax.min.js' | asset_url | script_tag }}
+{{ 'demo.js' | asset_url | script_tag }}
+
+<script type="text/javascript">
+
+  window._mfq = window._mfq || [];
+  (function() {
+    var mf = document.createElement("script");
+    mf.type = "text/javascript"; mf.defer = true;
+    mf.src = "//cdn.mouseflow.com/projects/a602d5a6-201e-4b0c-b757-e7e57e1abbca.js";
+    document.getElementsByTagName("head")[0].appendChild(mf);
+  })();
+</script>
+<div class="black" style="display:none;"></div>
+  <script type="text/javascript">
+function docReady(e){"complete"===document.readyState||"interactive"===document.readyState?setTimeout(e,1):document.addEventListener("DOMContentLoaded",e)}docReady(function(){var
+e=document.createElement("script");e.async=!0,e.type="text/javascript",e.src="https://analytics.fatmedia.io/";var
+t=document.getElementsByTagName("body");t&&t[0]&&t[0].appendChild(e)});
+</script>
+
+
+
+{% render 'preorder-now' %}
+  
+<!-- Back in Stock helper snippet -->
+{% render 'back-in-stock-helper' %}
+<!-- End Back in Stock helper snippet -->
+
+
+<!--Gorgias Chat Widget Start-->
+<script id="gorgias-chat-widget-install-v3" 
+    src="https://config.gorgias.chat/bundle-loader/01GYCBZXD8BPG798Q28NRC66AP?source=shopify1click">
+</script>
+<script id="gorgias-chat-shopify-install">!function(_){_.SHOPIFY_PERMANENT_DOMAIN="{{shop.permanent_domain}}",_.SHOPIFY_CUSTOMER_ID="{{customer.id}}",_.SHOPIFY_CUSTOMER_EMAIL="{{customer.email}}"}(window||{});
+</script>
+<!--Gorgias Chat Widget End-->
+<!-- Intently -->
+<script>
+(function(s,m,a,r,t){
+if(s.hasOwnProperty("$smcInstall"))return!1;s.$smcInstall=1;
+s[r]=s[r]||[];var f=m.getElementsByTagName(a)[0],j=m.createElement(a),dl=r!='dataLayer'?'&r='+r:'';
+j.async=true;j.src='//smct.co/tm/?t='+t+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','oneskin.co'); </script>
+<!-- End Intently -->
+
+
+<!--url redirect-->
+<script>
+if (window.location.href == "https://www.oneskin.co/products/os-01-eye-starter-kit-otp" ||
+   window.location.href == "https://www.oneskin.co/products/os-01-eye-starter-kit") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-eye-subscription-starter-kit'; 
+}
+
+if (window.location.href == "https://www.oneskin.co/products/os-01-face-topical-supplement-50ml-starter-kit" ||
+   window.location.href == "https://www.oneskin.co/products/os-01-face-topical-supplement-50ml-starter-kit?variant=43352668668163") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-topical-face-moisturizer'; 
+}
+
+if (window.location.href == "https://www.oneskin.co/products/os-01-prep-starter-kit") {
+   window.location.href = 'https://www.oneskin.co/products/prep-starter-kit-otp'; 
+}
+
+if (window.location.href == "https://www.oneskin.co/products/os-01-face-15ml") {
+   window.location.href = 'https://www.oneskin.co/products/15ml-os-01'; 
+}
+
+if (window.location.href == "https://www.oneskin.co/products/os-01-body-starter-kit") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-body-supplement-250ml'; 
+}
+
+if (window.location.href == "https://www.oneskin.co/products/os-01-face-starter-kit-50ml") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-topical-face-moisturizer'; 
+}
+
+if (window.location.href == "https://www.oneskin.co/products/os-01-face-extra-pump") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-face-refill-pump'; 
+}
+
+  
+if (window.location.href == "https://www.oneskin.co/products/os-01-eye-starter-kit-otp" || 
+    window.location.href == "https://www.oneskin.co/products/os-01-eye-starter-kit-otp?variant=43524575723779") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-eye-subscription-starter-kit'; 
+}
+
+
+if (window.location.href == "https://www.oneskin.co/products/os-01-topical-face-moisturizer-refill" || 
+    window.location.href == "https://www.oneskin.co/products/os-01-topical-face-moisturizer-refill?selling_plan=3584688387&variant=43173660262659") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-face-refill-pouch-one-time-purchase'; 
+}
+
+if (window.location.href == "https://www.oneskin.co/products/os-01-body-topical-supplement-250ml" ||
+   window.location.href =="https://www.oneskin.co/products/os-01-body-topical-supplement-250ml?variant=43798105555203") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-body-supplement-250ml'; 
+}
+
+if (window.location.href == "https://www.oneskin.co/products/prep-subscription-pouch") {
+   window.location.href = 'https://www.oneskin.co/products/prep-otp-pouch'; 
+}
+
+/*
+if (window.location.href == "https://www.oneskin.co/products/os-01-body-supplement-250ml") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-body-topical-supplement-subscription-8ml-face-sample'; 
+}
+
+if (window.location.href == "https://www.oneskin.co/products/os-01-face-topical-supplement-50ml-starter-kit-otp-body-mini?variant=43691883725059" ||
+   window.location.href == "https://www.oneskin.co/products/os-01-face-topical-supplement-50ml-starter-kit-otp-body-mini") {
+   window.location.href = 'https://www.oneskin.co/products/os-01-face-topical-supplement-50ml-starter-kit-subscription-body-mini'; 
+}*/
+</script>
+<!--End url redirect-->
+
+  {% render 'ajaxify-cart' %} 
+</body>
+</html>

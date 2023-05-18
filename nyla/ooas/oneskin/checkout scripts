@@ -1,0 +1,84 @@
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MJ654X8');</script>
+<!-- End Google Tag Manager -->
+
+
+{% if first_time_accessed %}
+<script type="text/javascript" async="" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=QVScKh">
+</script>
+
+<!-- Klaviyo Non Recurring -->
+<script>
+const options = {
+  method: 'POST',
+  headers: {Accept: 'text/html', 'Content-Type': 'application/x-www-form-urlencoded'},
+  body: new URLSearchParams({
+    data:  `{
+    "token": "QVScKh", 
+    "event": "Non Recurring Order", 
+    "customer_properties": {
+        "$email": "{{ checkout.email }}"
+    },
+    "properties": {
+        "$value": {{ checkout.total_price | money_without_currency }},
+        "OrderId": "{{ checkout.id }}",
+        "OrderType": "One Time Purchase"
+      }
+    }`
+  })
+}
+
+fetch('https://a.klaviyo.com/api/track', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+
+</script>
+
+<!-- Klaviyo Non Recurring Revenue -->
+<script>
+const optionstwo = {
+  method: 'POST',
+  headers: {Accept: 'text/html', 'Content-Type': 'application/x-www-form-urlencoded'},
+  body: new URLSearchParams({
+    data:  `{
+    "token": "QVScKh", 
+    "event": "Non Recurring Revenue", 
+    "customer_properties": {
+        "$email": "{{ checkout.email }}"
+    },
+    "properties": {
+        "$value": {{ checkout.total_price | money_without_currency }},
+        "OrderId": "{{ checkout.id }}",
+        "OrderType": "One Time Purchase"
+      }
+    }`
+  })
+}
+
+fetch('https://a.klaviyo.com/api/track', optionstwo)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+</script>
+{% endif %}
+
+
+<script>
+
+window.dataLayer = window.dataLayer || [];  // this initializes the datalayer
+
+window.dataLayer.push({
+event: 'Container Loaded',
+transaction_id: "{{ checkout.name }}",
+currency: "{{ checkout.currency }}",
+value: {{ total_price | money_without_currency }} // this is your total order value.
+});
+
+</script>
+
+ 

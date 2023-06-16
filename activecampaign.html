@@ -200,7 +200,32 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </html>
 This is Body
   
+<!-- BEGIN: Custom JavaScript -->
+<script>
+var activeForms = document.getElementsByClassName('_form_1');
+var myForm = activeForms[0];
+myForm.addEventListener("submit", () => {
+  console.log('The form was submitted');
+  ga('send', {
+    hitType: 'event',
+    eventCategory: 'Forms',
+    eventAction: 'Submit',
+    eventLabel: 'Modal Form'
+  });
+});
+</script>
 
+myForm.addEventListener("submit", () => {
+  console.log('The form was submitted');
+  /* other stuff here */
+});
+
+ga('send', {
+  hitType: 'event',
+  eventCategory: 'Forms',
+  eventAction: 'Submit',
+  eventLabel: 'Modal Form'
+});
 </body>
 
 </head>

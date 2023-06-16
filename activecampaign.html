@@ -206,26 +206,17 @@ var activeForms = document.getElementsByClassName('_form_1');
 var myForm = activeForms[0];
 myForm.addEventListener("submit", () => {
   console.log('The form was submitted');
-  ga('send', {
-    hitType: 'event',
-    eventCategory: 'Forms',
-    eventAction: 'Submit',
-    eventLabel: 'Modal Form'
-  });
+ window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({
+	'event' : 'formSubmit',
+	'loginMethod' : 'email' // this should be replaced with an actual login method
+});
 });
 </script>
 
-myForm.addEventListener("submit", () => {
-  console.log('The form was submitted');
-  /* other stuff here */
-});
 
-ga('send', {
-  hitType: 'event',
-  eventCategory: 'Forms',
-  eventAction: 'Submit',
-  eventLabel: 'Modal Form'
-});
+
+
 </body>
 
 </head>

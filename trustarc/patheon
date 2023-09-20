@@ -1,0 +1,166 @@
+var bottomLink = document.querySelector("#patheonFooter .container-fluid:last-of-type .bottom-link");
+var cookieLink = document.createElement("div");
+cookieLink.id = "teconsent";
+cookieLink.classList.add("bottom-link", "bottom-link","pb-1","pt-1","text-center");
+bottomLink.parentElement.insertBefore(cookieLink, bottomLink);
+ 
+var consentBlackbar = document.createElement("div");
+consentBlackbar.id = "consent_blackbar";
+bottomLink.parentElement.insertBefore(consentBlackbar, bottomLink);
+
+// Deployment Script
+// This script is to be included in each site where TrustArc Consent Manager needs to be deployed.
+// window.trustArc.init: Initializes TrustArc by inserting necessary scripts into the site.
+// window.trustArc.injectCM: Inserts Consent Manager script into the site.
+// window.trustArc.monitorChanges: Function monitors any changes to the preferences and reloads the page.
+// window.trustArc.preferences: Function returns the value of the notice_gdpr_prefs cookie.
+// window.trustArc.requiredReady: Function returns true since the default value for the notice_gdpr_prefs cookie is 0 by default.
+// window.trustArc.functionalReady: Function returns the value true/false based on the value of 1 being included in the string for notice_gdpr_prefs cookie.
+// window.trustArc.advertisingReady: Function returns the value true/false based on the value of 2 being included in the string for notice_gdpr_prefs cookie.
+// window.trustArc.enable: Function returns the value true/false based following conditions:
+//                      1.) Either it is the production site OR
+//                      2.) It is a lower environment and there is eta=true in the url
+ 
+window.trustArc = {
+  consentInsights: {
+    api_key: "",
+    secret: ""
+  },
+  init: function() {
+    window.trustArc.privacyURL = document.querySelector('[href*="privacy-policy"]').getAttribute("href");
+    window.trustArc.cookieURL = document.querySelector('[href*="cookies"]').getAttribute("href");
+    window.trustArc.ut = window.trustArc.preferences() ? "RETURNING" : "NEW";
+    window.trustArc.CMurl = "//consent.truste.com/notice?c=teconsent&pcookie=true&js=nj&gtm=true&noticeType=bb&text=true&domain=thermofishermicrosites.com&privacypolicylink=";
+    window.trustArc.injectCM();
+ 
+    if(_satellite.environment.stage !== "production"){
+      window.trustArc.consentInsights.api_key = "CI-3220915044";
+      window.trustArc.consentInsights.secret = "39544618921102636051590080643511497978615751927489671747874841158994921938351593020978053244962926745387794432";
+    } else {
+      if(/\.com/g.test(window.location.host)){
+        window.trustArc.consentInsights.api_key = "CI-6331425410";
+        window.trustArc.consentInsights.secret = "812259880515956356621537808861151723506120766999901553993608411007635576290993918604103378678138629506828599296";
+      } else if (/\.kr/g.test(window.location.host)){
+        window.trustArc.consentInsights.api_key = "CI-1768200368";
+        window.trustArc.consentInsights.secret = "782888291162645404750529939055015274873273422380471374881765520690511183861256010097886227348897404203980292096";
+      }
+    }
+    
+    document.body.addEventListener("truste-consent", function() {
+      if(!window.localStorage.consentInsightsConsentRecorded){
+        window.trustArc.sendMetric("consent");
+      }
+    });
+    
+     
+    setTimeout(function(){
+      window.trustArc.countryCode = window.truste.eu.bindMap.country;
+      window.trustArc.languageCode = window.truste.eu.bindMap.language;
+      if(!window.sessionStorage.ciVisitId && !window.localStorage.consentInsightsVisitRecorded){
+        var ciVisitId = URL.createObjectURL(new Blob())
+        window.sessionStorage.ciVisitId = ciVisitId.substring(ciVisitId.lastIndexOf('/')+1)
+        window.trustArc.sendMetric("visit")
+      }
+    }, 1000)
+    
+     
+    setTimeout(function(){
+      var banner = document.querySelector("#truste-consent-track");
+      if(banner && banner.style.display === "block"){
+        window.trustArc.sendMetric("impression")
+      }
+    }, 1000)
+ 
+    window.addEventListener("message", function(e){
+      try{
+        var json = JSON.parse(e.data);
+        if((json.message === "cm_loading") && !window.localStorage.consentInsightsImpressionRecorded){
+          window.trustArc.sendMetric("impression")
+        }
+      }catch(e){
+        e.name != 'SyntaxError' && console.log(e);
+      }
+    }, false);
+  },
+  injectCM: function() {
+    var script = document.createElement("script");
+    script.async = true;
+    script.src = window.trustArc.CMurl + window.trustArc.privacyURL + "&cookieLink=" + window.trustArc.cookieURL;
+    script.setAttribute("crossorigin", true);
+    document.head.appendChild(script);
+  },
+  preferences: function() {
+    return _satellite.cookie.get("notice_gdpr_prefs");
+  },
+  requiredReady: function() {
+    return true;
+  },
+  functionalReady: function() {
+    return window.trustArc.preferences().includes("1");
+  },
+  advertisementReady: function() {
+    return window.trustArc.preferences().includes("2");
+  },
+  enable: function(prodEnv) {
+    return (prodEnv || (!prodEnv && window.location.href.includes("eta=true")))
+  },
+  sendMetric: function(metric){
+    var visitUrl = new URL("https://consent-insights-3c23a978f31a.herokuapp.com/api/v1/visits/capture")
+    var impressionUrl = new URL("https://consent-insights-3c23a978f31a.herokuapp.com/api/v1/impressions/capture")
+    var consentUrl = new URL("https://consent-insights-3c23a978f31a.herokuapp.com/api/v1/consents/capture")
+    var rootUrl = ""
+    switch(metric){
+      case "visit":
+        rootUrl = visitUrl
+        break;
+      case "impression":
+        rootUrl = impressionUrl
+        break;
+      case "consent":
+        rootUrl = consentUrl
+        break;
+      }
+    
+    rootUrl.searchParams.append("api_key", window.trustArc.consentInsights.api_key)
+    rootUrl.searchParams.append("secret", window.trustArc.consentInsights.secret)
+    rootUrl.searchParams.append("country", window.trustArc.countryCode)
+    rootUrl.searchParams.append("language", window.trustArc.languageCode)
+    rootUrl.searchParams.append("visit_id", window.sessionStorage.ciVisitId)
+    rootUrl.searchParams.append("ut", window.trustArc.ut)
+    if(window.trustArc.preferences()){
+      rootUrl.searchParams.append("preferences", window.trustArc.preferences()) 
+    }
+    rootUrl.searchParams.append("ua", navigator.userAgent)
+    rootUrl.searchParams.append("title", document.title)
+    rootUrl.searchParams.append("url", window.location.href)
+ 
+    var img = document.createElement("img");
+    img.src = rootUrl;
+    img.alt="1x1 image pixel for data collection";
+    document.body.appendChild(img);
+ 
+    if(metric === "visit"){
+      window.localStorage.consentInsightsVisitRecorded = true;
+    }
+    
+    if(metric === "impression"){
+      window.localStorage.consentInsightsImpressionRecorded = true;
+    }
+    if(metric === "consent"){
+      window.localStorage.consentInsightsConsentRecorded = true;
+    }
+  }
+}
+
+
+// window.trustArc.init call --> Initialize the TrustArc Manager
+// window.trustArc.enable call --> Check if you are ready to deploy trustArc.
+// Manually pass the true value to keep it on while developing for testing in QA.
+// Prior to going to production, update the "true" parameter with the following:
+// _satellite.environment.stage === "production"
+// The above ternary check will ensure the value is a boolean.
+// If production it will set true, if not, it will only deploy if eta=true attribute is present in the URL.
+ 
+if (window.trustArc.enable(true)) {
+    window.trustArc.init();
+}

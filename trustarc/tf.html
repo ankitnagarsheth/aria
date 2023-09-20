@@ -1,0 +1,61 @@
+window.trustArc = {
+  excludeCountries: new RegExp("AR|BR|CL|CN|HK|JP|MX|KR|TW", "i"),
+  init: function(countryCode, languageCode, domain, tagManagerURL) {
+    window.trustArc.privacyURL = document.location.origin + "/" + countryCode + "/" + languageCode + "/home/global/privacy-policy.html";
+    window.trustArc.cookieURL = document.location.origin + "/" + countryCode + "/" + languageCode + "/home/global/how-cookies-are-used.html";
+    if(countryCode === "uk"){ countryCode = "gb"; }
+    if(countryCode === "ic"){ countryCode = "es"; }
+    window.trustArc.CMurl = "//consent.truste.com/notice?c=teconsent&pcookie=true&js=nj&gtm=true&noticeType=bb&text=true&domain=" + domain + "&country=" + countryCode + "&language=" + languageCode + "&privacypolicylink=";
+    window.trustArc.tagManagerURL = tagManagerURL;
+    window.trustArc.injectCM();
+ 
+    document.body.addEventListener("truste-consent", function() {
+      if (window.trustArc.tagManagerURL && !document.querySelector("#tagmanager") && (preferences.includes("1") || preferences.includes("2"))) {
+        var script = document.createElement("script");
+        script.id = "tagmanager";
+        script.src = window.trustArc.tagManagerURL;
+        script.type = "text/javascript";
+        document.head.appendChild(script);
+      }
+    });
+  },
+  injectCM: function() {
+    var script = document.createElement("script");
+    script.async = true;
+    script.src = window.trustArc.CMurl + window.trustArc.privacyURL + "&cookieLink=" + window.trustArc.cookieURL;
+    script.setAttribute("crossorigin", true);
+    document.head.appendChild(script);
+  },
+  preferences: function() {
+    return getCookie("notice_gdpr_prefs");
+  },
+  requiredReady: function() {
+    return true;
+  },
+  functionalReady: function() {
+    return window.trustArc.preferences().includes("1");
+  },
+  advertisementReady: function() {
+    return window.trustArc.preferences().includes("2");
+  },
+  enable: function(prodEnv) {
+    return (!(window.trustArc.excludeCountries).test(getCookie("CK_ISO_CODE"))) &&
+      (prodEnv || (!prodEnv && window.location.href.includes("eta=true")))
+  }
+}
+
+
+if(!document.querySelector("#teconsent")){
+  var pD = document.createElement('div');
+  pD.innerHTML = '<li class="trustarc-link"><div id="teconsent"></div><div id="consent_blackbar"></div></li>';
+
+  var container = document.body.querySelector("ul.footer-legal-list") || document.body.querySelector("#footer-links ul");
+  container.style.display = 'flex';
+  container.appendChild(pD.firstChild);
+}
+
+if (window.trustArc.enable(_satellite.environment.stage==="production")) {
+    window.trustArc.init(getCookie("CK_ISO_CODE"),
+                        getCookie("CK_LANG_CODE"),
+                        "thermofisher.com");
+}

@@ -1,0 +1,35 @@
+// Rule Name: Library Loaded:[All pages]:[Tags: TrustArc]
+// Events: Library Loaded
+// Conditions: Add any pages that are not to have this eligibility check.
+//
+// Custom JavaScript for Action
+// Depends on utility functions.
+ 
+if (_satellite.getVar('trustarcEligibleCountry') && _satellite.getVar('trustarcEligiblePage')){
+  // Reloads the page when there are any changes to the GDPR preferences.
+  document.addEventListener('cookieStatus', function(e){
+    if (e.detail.status){
+      if (e.detail.change.hasOwnProperty('notice_gdpr_prefs')){
+        window.location.reload();
+      }
+    }
+  });
+  // Sets a repeatative check for cookies.
+  setInterval(window.utilities.cookieStatus, 1000);
+  // Initiate TrustArc script to fetch in the modal with custom privacy link.
+  var cc = _satellite.cookie.get('CK_ISO_CODE'), lc = _satellite.cookie.get('CK_LANG_CODE'),
+      pu = 'https://www.thermofisher.com/'+cc+'/'+lc+'/home/global/privacy-policy.html';
+  if (!document.getElementById('teconsent')){
+    var pD = document.createElement('div');
+    pD.innerHTML = '<div id="cookieWrapper"><div id="consent_blackbar"></div><div id="teconsent" class="hide"></div></div>';
+    var script = document.createElement('script');
+    script.id='trustarc-script'; script.defer=true;
+    script.src='//consent.trustarc.com/notice?domain=thermofisher.com&c=teconsent&text=true&pcookie=true&js=bb&noticeType=bb7gtm=true&privacypolicylink='+pu;
+    document.head.appendChild(script);
+    window.utilities.debug = {eventName: 'TrustArc: Initiated', countryCode: cc, validPage: _satellite.getVar('trustarcEligiblePage')};
+    window.utilities.consoleDebug();
+  } else {
+    window.utilities.debug = {eventName: 'TrustArc: Skipped', countryCode: cc, validPage: _satellite.getVar('trustarcEligiblePage')};
+    window.utilities.consoleDebug();
+  }
+}

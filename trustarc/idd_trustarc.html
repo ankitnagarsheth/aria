@@ -1,0 +1,83 @@
+$('#tfsFooter .col-xs-12').eq(1).find('div > div').first().prepend("<a href='#' id='teconsent'></a>&nbsp;|");
+
+$('body').append('<div id="consent_blackbar"></div>');
+
+
+// Define the CSS rules
+
+var cssRules = 'div.truste-consent-track-class { max-width: none !important; }' +
+               '#truste-consent-track { margin: 0 auto !important; top: unset !important; }' + '#truste-consent-buttons .right{ flex-direction:row-reverse; }';
+
+// Create a style element with the CSS rules
+var styleElement = $('<style>' + cssRules + '</style>');
+
+// Append the style element to the head of the document
+$('head').append(styleElement);
+
+
+// Deployment Script
+// This script is to be included in each site where TrustArc Consent Manager needs to be deployed.
+// window.trustArc.init: Initializes TrustArc by inserting necessary scripts into the site.
+// window.trustArc.injectCM: Inserts Consent Manager script into the site.
+// window.trustArc.monitorChanges: Function monitors any changes to the preferences and reloads the page.
+// window.trustArc.preferences: Function returns the value of the notice_gdpr_prefs cookie.
+// window.trustArc.requiredReady: Function returns true since the default value for the notice_gdpr_prefs cookie is 0 by default.
+// window.trustArc.functionalReady: Function returns the value true/false based on the value of 1 being included in the string for notice_gdpr_prefs cookie.
+// window.trustArc.advertisingReady: Function returns the value true/false based on the value of 2 being included in the string for notice_gdpr_prefs cookie.
+// window.trustArc.enable: Function returns the value true/false based following conditions:
+//                      1.) Either it is the production site OR
+//                      2.) It is a lower environment and there is eta=true in the url
+ 
+window.trustArc = {
+  
+  init: function() {
+    window.trustArc.privacyURL = document.querySelector('[href*="privacy-policy"]').getAttribute("href");
+    window.trustArc.cookieURL = "https://www.thermofisher.com/"+_satellite.cookie.get("CK_ISO_CODE")+"/"+_satellite.cookie.get("CK_LANG_CODE")+"/home/global/how-cookies-are-used.html";
+window.trustArc.CMurl = "//consent.truste.com/notice?c=teconsent&pcookie=true&js=nj&gtm=true&noticeType=bb&text=true&domain=thermofishermicrosites.com"+ "&country=" +_satellite.getVar("countrycode from url") + "&language=" +_satellite.getVar("languagecode from url") + "&privacypolicylink=";
+ 
+    window.trustArc.injectCM();
+ 
+      
+    document.body.addEventListener("truste-consent", function() {
+         });
+    
+     
+     
+    },
+  injectCM: function() {
+    var script = document.createElement("script");
+    script.async = true;
+    script.src = window.trustArc.CMurl + window.trustArc.privacyURL + "&cookieLink=" + window.trustArc.cookieURL;
+    script.setAttribute("crossorigin", true);
+    document.head.appendChild(script);
+  },
+  preferences: function() {
+    return _satellite.cookie.get("notice_gdpr_prefs");
+  },
+  requiredReady: function() {
+    return true;
+  },
+  functionalReady: function() {
+    return window.trustArc.preferences().includes("1");
+  },
+  advertisementReady: function() {
+    return window.trustArc.preferences().includes("2");
+  },
+  enable: function(prodEnv) {
+    return (prodEnv || (!prodEnv && window.location.href.includes("eta=true")))
+  },
+  
+}
+
+
+// window.trustArc.init call --> Initialize the TrustArc Manager
+// window.trustArc.enable call --> Check if you are ready to deploy trustArc.
+// Manually pass the true value to keep it on while developing for testing in QA.
+// Prior to going to production, update the "true" parameter with the following:
+// _satellite.environment.stage === "production"
+// The above ternary check will ensure the value is a boolean.
+// If production it will set true, if not, it will only deploy if eta=true attribute is present in the URL.
+ 
+if (window.trustArc.enable(true)) {
+    window.trustArc.init();
+}

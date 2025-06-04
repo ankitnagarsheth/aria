@@ -147,12 +147,10 @@ __DL__jQueryinterval = setInterval(function(){
         $.cookie.raw = true;
         if ($.cookie('landingPage') === undefined || $.cookie('landingPage').length === 0) {
             var landingPage = true;
-            $.cookie('landingPage', unescape);
             $.removeCookie('landingPage', {path: '/'});
             $.cookie('landingPage', 'landed', {path: '/'});
         } else {
             var landingPage = false;
-            $.cookie('landingPage', unescape);
             $.removeCookie('landingPage', {path: '/'});
             $.cookie('landingPage', 'refresh', {path: '/'});
         }
@@ -169,16 +167,13 @@ __DL__jQueryinterval = setInterval(function(){
         var isLoggedIn = false;
         {% endif %}
         if (!isLoggedIn) {
-            $.cookie('logState', unescape);
             $.removeCookie('logState', {path: '/'});
             $.cookie('logState', 'loggedOut', {path: '/'});
         } else {
             if ($.cookie('logState') === 'loggedOut' || $.cookie('logState') === undefined) {
-                $.cookie('logState', unescape);
                 $.removeCookie('logState', {path: '/'});
                 $.cookie('logState', 'firstLog', {path: '/'});
             } else if ($.cookie('logState') === 'firstLog') {
-                $.cookie('logState', unescape);
                 $.removeCookie('logState', {path: '/'});
                 $.cookie('logState', 'refresh', {path: '/'});
             }

@@ -1,0 +1,17 @@
+name: Build RSS
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - run: pip install feedgen requests beautifulsoup4
+      - run: python build_feed.py
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: "auto: update RSS"

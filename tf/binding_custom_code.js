@@ -14,7 +14,7 @@ function s_doPlugins(s) {
   s.eVar1 = _satellite.getVar("content: page name");
   s.eVar34 = s.getTimeParting('d', '-5');
   s.eVar35 = s.getTimeParting('h', '-5');
-  s.eVar37 = s.getTimeParting('w', '-5');
+  s.eVar32 = s.getTimeParting('w', '-5');
   s.prop36 = "D=v34";
   s.prop37 = "D=v35";
   s.prop38 = "D=v32";

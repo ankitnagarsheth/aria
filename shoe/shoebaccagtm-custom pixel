@@ -1,6 +1,7 @@
 analytics.subscribe('checkout_completed', (event) => {
-  // Enhanced GTM implementation with error handling
+  // Initialize dataLayer and gtag globally
   window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
   
   // Push GTM start event with error protection
   window.dataLayer.push({
@@ -14,10 +15,17 @@ analytics.subscribe('checkout_completed', (event) => {
     email: event.data.checkout.order.customer?.email || '',
     phone: event.data.checkout.billingAddress?.phone || '',
     firstName: event.data.checkout.billingAddress?.firstName || '',
-    lastName: event.data.checkout.billingAddress?.lastName || ''
+    lastName: event.data.checkout.billingAddress?.lastName || '',
+    address: {
+      street: event.data.checkout.billingAddress?.address1 || '',
+      city: event.data.checkout.billingAddress?.city || '',
+      region: event.data.checkout.billingAddress?.province || '',
+      postal_code: event.data.checkout.billingAddress?.zip || '',
+      country: event.data.checkout.billingAddress?.countryCode || ''
+    }
   };
   
-  // Build comprehensive products array matching your GTM variables
+  // Build comprehensive products array
   var products = (event.data.checkout.lineItems || []).map(function (li) {
     return {
       id: li.variant.product.id,
@@ -30,11 +38,11 @@ analytics.subscribe('checkout_completed', (event) => {
     };
   });
 
-  // Calculate transaction values
-  const transactionTotal = parseFloat(event.data.checkout.totalPrice.amount);
-  const transactionTax = parseFloat(event.data.checkout.totalTax?.amount || 0);
-  const transactionShipping = parseFloat(event.data.checkout.shippingLine?.price?.amount || 0);
-  const transactionSubtotal = parseFloat(event.data.checkout.subtotalPrice?.amount || 0);
+  // Calculate transaction values - ensure they're numbers
+  const transactionTotal = parseFloat(event.data.checkout.totalPrice.amount) || 0;
+  const transactionTax = parseFloat(event.data.checkout.totalTax?.amount) || 0;
+  const transactionShipping = parseFloat(event.data.checkout.shippingLine?.price?.amount) || 0;
+  const transactionSubtotal = parseFloat(event.data.checkout.subtotalPrice?.amount) || 0;
 
   // Push comprehensive purchase context for ALL your tags
   window.dataLayer.push({
@@ -46,166 +54,204 @@ analytics.subscribe('checkout_completed', (event) => {
     transactionSubtotal: transactionSubtotal,
     products: products,
     
-    // Customer data for enhanced conversions
-    customerEmail: customerData.email,
-    customerPhone: customerData.phone,
-    customerFirstName: customerData.firstName,
-    customerLastName: customerData.lastName,
-    customerId: event.data.checkout.order.customer?.id || '',
+    // Customer data for your GTM variables
+    'Customer Email': customerData.email,
+    'Billing Phone': customerData.phone,
+    'Billing First Name': customerData.firstName,
+    'Billing Last Name': customerData.lastName,
+    'Billing Address 1': customerData.address.street,
+    'Billing City': customerData.address.city,
+    'Billing Province': customerData.address.region,
+    'Billing Country': customerData.address.country,
+    'Billing Zip': customerData.address.postal_code,
     
-    // Platform-specific fields for your tags
+    // Platform-specific fields
     bing_revenue_value: transactionTotal,
-    bing_currency: event.data.checkout.currencyCode,
+    bing_currency: event.data.checkout.currencyCode || 'USD',
     
-    // Facebook Pixel fields (for FB - Purchase tag)
+    // Facebook Pixel fields
     content_ids: products.map(p => p.sku || p.id),
     content_category: products.map(p => p.category).join(','),
     content_type: 'product',
-    currency: event.data.checkout.currencyCode,
+    currency: event.data.checkout.currencyCode || 'USD',
     value: transactionTotal,
     
     // Shipping data for enhanced conversions
-    shipping_zip: event.data.checkout.shippingAddress?.zip || '',
-    shipping_country: event.data.checkout.shippingAddress?.countryCode || ''
+    'Shipping Zip': event.data.checkout.shippingAddress?.zip || '',
+    'Shipping Country': event.data.checkout.shippingAddress?.countryCode || ''
   });
 
-  // Standard GA4 ecommerce format (for ga4-event-transaction complete)
-  window.dataLayer.push({
-    event: 'purchase',
-    ecommerce: {
-      transaction_id: event.data.checkout.order.id,
-      value: transactionTotal,
-      currency: event.data.checkout.currencyCode,
-      tax: transactionTax,
-      shipping: transactionShipping,
-      items: products.map(p => ({
-        item_id: p.sku || p.id,
-        item_name: p.name,
-        item_brand: p.brand,
-        item_category: p.category,
-        quantity: p.quantity,
-        price: p.price
-      }))
-    }
-  });
-
-  // Direct Google Ads implementation to ensure values are passed
-  setTimeout(() => {
-    // Define gtag function globally if not already defined
-    if (typeof window.gtag === 'undefined') {
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function(){window.dataLayer.push(arguments);};
-      window.gtag('js', new Date());
-    }
-    
-    // Google Ads conversions with explicit value passing
-    
-    // GAds Conversion - LC_Purchase
-    window.gtag('event', 'conversion', {
-      'send_to': 'AW-1044105507/hv-ICJCTn9wDEKOS7_ED',
-      'value': transactionTotal,
-      'currency': event.data.checkout.currencyCode || 'USD',
-      'transaction_id': event.data.checkout.order.id
-    });
-    
-    // GAds Conversion - OnSitePurchase
-    window.gtag('event', 'conversion', {
-      'send_to': 'AW-1044105507/a9aACNH3zM8BEKOS7_ED',
-      'value': transactionTotal,
-      'currency': event.data.checkout.currencyCode || 'USD',
-      'transaction_id': event.data.checkout.order.id
-    });
-    
-    // Google AdWords Tracking Code
-    window.gtag('event', 'conversion', {
-      'send_to': 'AW-1044105507/9mX-CIeskgEQo5Lv8QM',
-      'value': transactionTotal,
-      'currency': event.data.checkout.currencyCode || 'USD',
-      'transaction_id': event.data.checkout.order.id
-    });
-    
-    console.log('✅ Google Ads conversion events fired with value:', transactionTotal);
-  }, 2000);
-
-  // Direct Bing UET implementation (backup for GTM)
-  setTimeout(() => {
-    if (typeof window.uetq === 'undefined') {
-      window.uetq = window.uetq || [];
-    }
-    
-    if (window.uetq) {
-      window.uetq.push('event', 'purchase', {
-        'event_category': 'eCommerce',
-        'event_label': 'sale',
-        'revenue_value': transactionTotal,
-        'currency': event.data.checkout.currencyCode || 'USD'
-      });
-      
-      console.log('✅ Bing UET purchase event fired with value:', transactionTotal);
-    }
-  }, 2000);
-
-  // Direct Facebook Pixel implementation
-  setTimeout(() => {
-    // Initialize Facebook Pixel if not already loaded
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    
-    // Initialize your pixel
-    fbq('init', '258100868038208');
-    
-    // Track purchase event
-    fbq('track', 'Purchase', {
-      content_ids: products.map(p => p.sku || p.id),
-      content_type: 'product',
-      value: transactionTotal,
-      currency: event.data.checkout.currencyCode || 'USD',
-      contents: products.map(p => ({
-        id: p.sku || p.id,
-        quantity: p.quantity,
-        item_price: p.price
-      }))
-    });
-    
-    console.log('✅ Facebook Pixel purchase event fired with value:', transactionTotal);
-  }, 2000);
-
-  console.log('🎯 ALL 13 TAGS SHOULD FIRE WITH COMPLETE DATA');
-  console.log('Transaction ID:', event.data.checkout.order.id);
-  console.log('Transaction Total:', transactionTotal);
-  console.log('Transaction Tax:', transactionTax);
-  console.log('Transaction Shipping:', transactionShipping);
-
-  // Load GTM with sandbox-safe configuration
+  // Load GTM first
   if (!document.querySelector('script[src*="googletagmanager.com/gtm.js"]')) {
     const script = document.createElement('script');
     script.async = true;
-    script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-N68WRS&gtm_auth=&gtm_preview=&gtm_cookies_win=x';
+    script.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-N68WRS';
     
     script.onload = () => {
-      console.log('✅ GTM loaded successfully - All 13 tags should fire');
-      console.log('🔍 Check Network tab for tracking requests');
+      console.log('✅ GTM loaded successfully');
       
-      // Suppress GTM errors in sandbox
-      window.addEventListener('error', (e) => {
-        if (e.message && e.message.includes('Cannot read properties of undefined')) {
-          e.preventDefault();
-          console.warn('GTM sandbox error suppressed:', e.message);
-          return false;
+      // Fire Google Ads conversions AFTER GTM loads with user-provided data
+      setTimeout(() => {
+        // Ensure gtag is available
+        window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+        
+        // Set user-provided data for enhanced conversions with ALL fields
+        window.gtag('set', 'user_data', {
+          email: customerData.email,
+          phone_number: customerData.phone,
+          first_name: customerData.firstName,
+          last_name: customerData.lastName,
+          address: {
+            first_name: customerData.firstName,
+            last_name: customerData.lastName,
+            street: customerData.address.street,
+            city: customerData.address.city,
+            region: customerData.address.region,
+            postal_code: customerData.address.postal_code,
+            country: customerData.address.country
+          }
+        });
+        
+        // GAds Conversion - LC_Purchase
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-1044105507/hv-ICJCTn9wDEKOS7_ED',
+          'value': transactionTotal,
+          'currency': event.data.checkout.currencyCode || 'USD',
+          'transaction_id': event.data.checkout.order.id
+        });
+        
+        // GAds Conversion - OnSitePurchase
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-1044105507/a9aACNH3zM8BEKOS7_ED',
+          'value': transactionTotal,
+          'currency': event.data.checkout.currencyCode || 'USD',
+          'transaction_id': event.data.checkout.order.id
+        });
+        
+        // Google AdWords Tracking Code
+        window.gtag('event', 'conversion', {
+          'send_to': 'AW-1044105507/9mX-CIeskgEQo5Lv8QM',
+          'value': transactionTotal,
+          'currency': event.data.checkout.currencyCode || 'USD',
+          'transaction_id': event.data.checkout.order.id
+        });
+        
+        console.log('✅ Google Ads conversions fired with value:', transactionTotal);
+        console.log('✅ User-provided data sent for enhanced conversions with all fields');
+      }, 1000); // Wait for GTM to initialize
+      
+      // Direct Facebook Pixel implementation
+      setTimeout(() => {
+        // Initialize Facebook Pixel if not already loaded
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        
+        // Initialize your pixel with advanced matching
+        fbq('init', '258100868038208', {
+          em: customerData.email,
+          ph: customerData.phone,
+          fn: customerData.firstName,
+          ln: customerData.lastName,
+          ct: customerData.address.city,
+          st: customerData.address.region,
+          zp: customerData.address.postal_code,
+          country: customerData.address.country
+        });
+        
+        // Track purchase event
+        fbq('track', 'Purchase', {
+          content_ids: products.map(p => p.sku || p.id),
+          content_type: 'product',
+          value: transactionTotal,
+          currency: event.data.checkout.currencyCode || 'USD',
+          contents: products.map(p => ({
+            id: p.sku || p.id,
+            quantity: p.quantity,
+            item_price: p.price
+          }))
+        });
+        
+        console.log('✅ Facebook Pixel purchase event fired with value:', transactionTotal);
+      }, 2000);
+      
+      // Direct Bing UET implementation
+      setTimeout(() => {
+        if (typeof window.uetq === 'undefined') {
+          window.uetq = window.uetq || [];
         }
-      });
-    };
-    
-    script.onerror = () => {
-      console.error('Failed to load GTM script');
+        
+        if (window.uetq) {
+          window.uetq.push('event', 'purchase', {
+            'event_category': 'eCommerce',
+            'event_label': 'sale',
+            'revenue_value': transactionTotal,
+            'currency': event.data.checkout.currencyCode || 'USD'
+          });
+          
+          console.log('✅ Bing UET purchase event fired with value:', transactionTotal);
+        }
+      }, 2000);
     };
     
     document.head.appendChild(script);
+  } else {
+    // GTM already loaded, fire conversions immediately
+    setTimeout(() => {
+      window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+      
+      // Set user-provided data for enhanced conversions with ALL fields
+      window.gtag('set', 'user_data', {
+        email: customerData.email,
+        phone_number: customerData.phone,
+        first_name: customerData.firstName,
+        last_name: customerData.lastName,
+        address: {
+          first_name: customerData.firstName,
+          last_name: customerData.lastName,
+          street: customerData.address.street,
+          city: customerData.address.city,
+          region: customerData.address.region,
+          postal_code: customerData.address.postal_code,
+          country: customerData.address.country
+        }
+      });
+      
+      // Fire all Google Ads conversions
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-1044105507/hv-ICJCTn9wDEKOS7_ED',
+        'value': transactionTotal,
+        'currency': event.data.checkout.currencyCode || 'USD',
+        'transaction_id': event.data.checkout.order.id
+      });
+      
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-1044105507/a9aACNH3zM8BEKOS7_ED',
+        'value': transactionTotal,
+        'currency': event.data.checkout.currencyCode || 'USD',
+        'transaction_id': event.data.checkout.order.id
+      });
+      
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-1044105507/9mX-CIeskgEQo5Lv8QM',
+        'value': transactionTotal,
+        'currency': event.data.checkout.currencyCode || 'USD',
+        'transaction_id': event.data.checkout.order.id
+      });
+      
+      console.log('✅ Google Ads conversions fired with value:', transactionTotal);
+    }, 500);
   }
+
+  console.log('🎯 TRACKING DATA SUMMARY:');
+  console.log('Transaction ID:', event.data.checkout.order.id);
+  console.log('Transaction Total:', transactionTotal);
+  console.log('Currency:', event.data.checkout.currencyCode || 'USD');
+  console.log('Products:', products);
+  console.log('Customer Data:', customerData);
 });
